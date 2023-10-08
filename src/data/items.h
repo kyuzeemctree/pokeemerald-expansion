@@ -8735,17 +8735,6 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
 
-    [ITEM_TM_CASE] =
-    {
-        .name = _("TM Case"),
-        .price = 0,
-        .description = sTMCaseDesc,
-        .importance = 1,
-        .pocket = POCKET_KEY_ITEMS,
-        .type = ITEM_USE_BAG_MENU,
-        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-    },
-
     [ITEM_BERRY_POUCH] =
     {
         .name = _("Berry Pouch"),
@@ -9154,6 +9143,17 @@ const struct Item gItems[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    },
+
+    [ITEM_TM_CASE] =
+    {
+        .name = _("TM Case"),
+        .price = 0,
+        .description = sTMCaseDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_TmCase,
     },
 
     [ITEM_TRI_PASS] =
