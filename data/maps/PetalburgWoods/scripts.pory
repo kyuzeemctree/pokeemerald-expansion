@@ -66,6 +66,8 @@ PetalburgWoods_EventScript_RivalMayRight::
 	waitmovement 0
     applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalApproachPlayerRight
 	waitmovement 0
+    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	msgbox PetalburgWoods_Text_MayLetsBattle, MSGBOX_DEFAULT
     trainerbattle_no_intro TRAINER_MAY_ROUTE_103_MUDKIP, PetalburgWoods_Text_MayDefeated
     msgbox PetalburgWoods_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
@@ -83,6 +85,8 @@ PetalburgWoods_EventScript_RivalBrendanRight::
 	waitmovement 0
     applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalApproachPlayerRight
 	waitmovement 0
+    applymovement OBJ_EVENT_ID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
 	msgbox PetalburgWoods_Text_BrendanLetsBattle, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_103_MUDKIP, PetalburgWoods_Text_BrendanDefeated
     msgbox PetalburgWoods_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
@@ -91,14 +95,12 @@ PetalburgWoods_EventScript_RivalBrendanRight::
 	end
 
 PetalburgWoods_EventScript_RivalExitLeft::
-	applymovement OBJ_EVENT_ID_PLAYER, PetalburgWoods_Movement_WatchRivalLeave
 	applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalExitLeft
 	waitmovement 0
 	goto PetalburgWoods_EventScript_RivalEnd
 	end
 
 PetalburgWoods_EventScript_RivalExitRight::
-	applymovement OBJ_EVENT_ID_PLAYER, PetalburgWoods_Movement_WatchRivalLeave
 	applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalExitRight
 	waitmovement 0
 	goto PetalburgWoods_EventScript_RivalEnd
@@ -106,7 +108,6 @@ PetalburgWoods_EventScript_RivalExitRight::
 
 PetalburgWoods_EventScript_RivalEnd::
 	removeobject LOCALID_RIVAL
-	setvar VAR_BIRCH_LAB_STATE, 4
 	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_RIVAL
 	setflag FLAG_DEFEATED_RIVAL_ROUTE103
 	setvar VAR_PETALBURG_WOODS_STATE, 1

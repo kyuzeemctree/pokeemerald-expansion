@@ -101,30 +101,6 @@ LittlerootTown_ProfessorBirchsLab_MapScripts::
 LittlerootTown_ProfessorBirchsLab_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call ProfBirch_EventScript_UpdateLocation
-	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout
-	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout
-	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter
-	end
-
-LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter::
-	specialvar VAR_RESULT, HasAllHoennMons
-	goto_if_eq VAR_RESULT, TRUE, LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter
-	setobjectmovementtype LOCALID_RIVAL, MOVEMENT_TYPE_WANDER_UP_AND_DOWN
-	setobjectxyperm LOCALID_RIVAL, 5, 10
-	end
-
-LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter::
-	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4
-	goto LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout
-
-LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout::
-	setmaplayoutindex LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE
-	end
-
-LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout::
-	setmaplayoutindex LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE
-	setobjectmovementtype LOCALID_RIVAL, MOVEMENT_TYPE_WANDER_UP_AND_DOWN
-	setobjectxyperm LOCALID_RIVAL, 5, 10
 	end
 
 LittlerootTown_ProfessorBirchsLab_OnWarp:
@@ -176,9 +152,6 @@ LittlerootTown_ProfessorBirchsLab_EventScript_SetObjectPosForJohtoStarters::
 
 LittlerootTown_ProfessorBirchsLab_OnFrame:
 	map_script_2 VAR_BIRCH_LAB_STATE, 2, LittlerootTown_ProfessorBirchsLab_EventScript_GiveStarterEvent
-	map_script_2 VAR_BIRCH_LAB_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_GivePokedexEvent
-	map_script_2 VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_ProfessorBirchsLab_EventScript_UpgradeToNationalDex
-	map_script_2 VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_ChooseJohtoStarter
 	.2byte 0
 
 @ The starter is technically given prior to this on Route 101 by special ChooseStarter
@@ -203,6 +176,9 @@ LittlerootTown_ProfessorBirchsLab_EventScript_NicknameStarter::
 
 LittlerootTown_ProfessorBirchsLab_EventScript_GoSeeRival::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival
+	playfanfare MUS_OBTAIN_ITEM
+	message LittlerootTown_ProfessorBirchsLab_Text_ReceivedPokedex
+	waitfanfare
 	setflag FLAG_SYS_POKEDEX_GET
 	special SetUnlockedPokedexFlags
 	setflag FLAG_RECEIVED_POKEDEX_FROM_BIRCH
@@ -784,15 +760,15 @@ LittlerootTown_ProfessorBirchsLab_Text_MightBeGoodIdeaToGoSeeRival:
 	.string "PROF. BIRCH: If you work at POKéMON\n"
 	.string "and gain experience, I think you'll make\l"
 	.string "an extremely good TRAINER.\p"
-	.string "My kid, {RIVAL}, is also studying\n"
-	.string "POKéMON while helping me out.\p"
 	.string "Here, {PLAYER}{KUN}, I ordered this for my\n"
 	.string "research, but I think you should have\l"
 	.string "this POKéDEX.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_GetRivalToTeachYou:
-	.string "PROF. BIRCH: I think\n"
-	.string "{RIVAL} is on Route 104.\p"
+	.string "My kid, {RIVAL}, is also studying\n"
+	.string "POKéMON while helping me out.\p"
+	.string "PROF. BIRCH: I think they're doing\n"
+	.string "research out in Petalburg Woods.\p"
 	.string "Get {RIVAL} to teach you what it\n"
 	.string "means to be a TRAINER.$"
 
