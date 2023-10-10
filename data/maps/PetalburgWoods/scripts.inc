@@ -94,14 +94,12 @@ PetalburgWoods_EventScript_RivalBrendanRight::
 	end
 
 PetalburgWoods_EventScript_RivalExitLeft::
-	applymovement OBJ_EVENT_ID_PLAYER, PetalburgWoods_Movement_WatchRivalLeave
 	applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalExitLeft
 	waitmovement 0
 	goto PetalburgWoods_EventScript_RivalEnd
 	end
 
 PetalburgWoods_EventScript_RivalExitRight::
-	applymovement OBJ_EVENT_ID_PLAYER, PetalburgWoods_Movement_WatchRivalLeave
 	applymovement LOCALID_RIVAL, PetalburgWoods_Movement_RivalExitRight
 	waitmovement 0
 	goto PetalburgWoods_EventScript_RivalEnd
