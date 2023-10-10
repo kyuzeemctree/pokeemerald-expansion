@@ -1,3 +1,4 @@
+raw`
 gText_Birch_Welcome::
 	.string "Hi! Sorry to keep you waiting!\p"
 	.string "My name is BIRCH.\p"
@@ -46,3 +47,5 @@ gText_Birch_AreYouReady::
 	.string "Please get through the exposition\n"
 	.string "and come help me out.\p"
 	.string "$"
+
+`
