@@ -1,5 +1,4 @@
-.set LOCALID_GRUNT, 3
-.set LOCALID_DEVON_EMPLOYEE, 4
+.set LOCALID_RIVAL, 12
 
 PetalburgWoods_MapScripts::
 	.byte 0
@@ -35,6 +34,7 @@ PetalburgWoods_EventScript_RivalMayLeft::
 	msgbox PetalburgWoods_Text_MayLetsBattle, MSGBOX_DEFAULT
     trainerbattle_no_intro TRAINER_MAY_ROUTE_103_MUDKIP, PetalburgWoods_Text_MayDefeated
 	msgbox PetalburgWoods_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
+    closemessage
 	goto PetalburgWoods_EventScript_RivalExitLeft
 	end
 
@@ -51,6 +51,7 @@ PetalburgWoods_EventScript_RivalBrendanLeft::
 	msgbox PetalburgWoods_Text_BrendanLetsBattle, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_103_MUDKIP, PetalburgWoods_Text_BrendanDefeated
 	msgbox PetalburgWoods_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
+    closemessage
 	goto PetalburgWoods_EventScript_RivalExitLeft
 	end
 
@@ -67,6 +68,7 @@ PetalburgWoods_EventScript_RivalMayRight::
 	msgbox PetalburgWoods_Text_MayLetsBattle, MSGBOX_DEFAULT
     trainerbattle_no_intro TRAINER_MAY_ROUTE_103_MUDKIP, PetalburgWoods_Text_MayDefeated
     msgbox PetalburgWoods_Text_BrendanTimeToHeadBack, MSGBOX_DEFAULT
+    closemessage
     goto PetalburgWoods_EventScript_RivalExitRight
 	end
 
@@ -83,6 +85,7 @@ PetalburgWoods_EventScript_RivalBrendanRight::
 	msgbox PetalburgWoods_Text_BrendanLetsBattle, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_BRENDAN_ROUTE_103_MUDKIP, PetalburgWoods_Text_BrendanDefeated
     msgbox PetalburgWoods_Text_MayTimeToHeadBack, MSGBOX_DEFAULT
+    closemessage
     goto PetalburgWoods_EventScript_RivalExitRight
 	end
 
@@ -122,6 +125,9 @@ PetalburgWoods_Movement_RivalExitLeft:
 	walk_left
 	walk_left
 	walk_left
+    walk_left
+	walk_left
+	walk_left
 	step_end
 
 PetalburgWoods_Movement_RivalApproachPlayerLeft:
@@ -147,6 +153,9 @@ PetalburgWoods_Movement_RivalExitRight:
 	walk_left
 	walk_left
 	walk_left
+	walk_left
+	walk_left
+    walk_left
 	walk_left
 	walk_left
 	step_end
