@@ -1,4 +1,4 @@
-.set LOCALID_RIVAL, 12
+.set LOCALID_RIVAL, 6
 
 PetalburgWoods_MapScripts::
 	.byte 0
