@@ -9,11 +9,11 @@ Route114_FossilManiacsHouse_OnTransition:
 Route114_FossilManiacsHouse_EventScript_FossilManiacsBrother::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_DIG, Route114_FossilManiacsHouse_EventScript_ReceivedDig
+	goto_if_set FLAG_RECEIVED_TM_DRILL_RUN, Route114_FossilManiacsHouse_EventScript_ReceivedDig
 	msgbox Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother, MSGBOX_DEFAULT
-	giveitem ITEM_TM_DIG
+	giveitem ITEM_TM_DRILL_RUN
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM_DIG
+	setflag FLAG_RECEIVED_TM_DRILL_RUN
 	release
 	end
 
@@ -35,12 +35,12 @@ Route114_FossilManiacsHouse_Text_HaveThisToDigLikeMyBrother:
 	.string "He's a nice guy who loves FOSSILS…\p"
 	.string "He loves digging holes, too…\n"
 	.string "He dug this hole by himself…\p"
-	.string "You can have this, so you can DIG\n"
+	.string "You can have this, so you can make\n"
 	.string "holes just like my big brother…$"
 
 Route114_FossilManiacsHouse_Text_DigReturnsYouToEntrance:
-	.string "If you make a POKéMON DIG inside a\n"
-	.string "cave, you're returned to the entrance…$"
+	.string "We used to use the move DIG to escape\n"
+	.string "caves, but now we use an ESCAPE ROPE.$"
 
 Route114_FossilManiacsHouse_Text_RocksFillDisplayCase:
 	.string "Rocks in peculiar shapes fill\n"

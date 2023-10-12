@@ -4,8 +4,8 @@ FortreeCity_House2_MapScripts::
 FortreeCity_House2_EventScript_HiddenPowerGiver::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_HIDDEN_POWER, FortreeCity_House2_EventScript_ExplainHiddenPower
-	call_if_unset FLAG_MET_HIDDEN_POWER_GIVER, FortreeCity_House2_EventScript_Greeting
+	goto_if_set FLAG_RECEIVED_TM_PSYCHIC, FortreeCity_House2_EventScript_ExplainHiddenPower
+	call_if_unset FLAG_MET_PSYCHIC_GIVER, FortreeCity_House2_EventScript_Greeting
 	msgbox FortreeCity_House2_Text_CoinInWhichHand, MSGBOX_DEFAULT
 	multichoice 21, 8, MULTI_RIGHTLEFT, TRUE
 	switch VAR_RESULT
@@ -19,16 +19,16 @@ FortreeCity_House2_EventScript_HiddenPowerGiver::
 	switch VAR_RESULT
 	case 0, FortreeCity_House2_EventScript_WrongGuess
 	msgbox FortreeCity_House2_Text_YourHiddenPowerHasAwoken, MSGBOX_DEFAULT
-	giveitem ITEM_TM_HIDDEN_POWER
+	giveitem ITEM_TM_PSYCHIC
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM_HIDDEN_POWER
+	setflag FLAG_RECEIVED_TM_PSYCHIC
 	msgbox FortreeCity_House2_Text_ExplainHiddenPower, MSGBOX_DEFAULT
 	release
 	end
 
 FortreeCity_House2_EventScript_Greeting::
 	msgbox FortreeCity_House2_Text_HiddenPowersArousedByNature, MSGBOX_DEFAULT
-	setflag FLAG_MET_HIDDEN_POWER_GIVER
+	setflag FLAG_MET_PSYCHIC_GIVER
 	return
 
 FortreeCity_House2_EventScript_ExplainHiddenPower::
@@ -43,11 +43,11 @@ FortreeCity_House2_EventScript_WrongGuess::
 
 FortreeCity_House2_Text_HiddenPowersArousedByNature:
 	.string "People… POKéMON…\p"
-	.string "Their hidden powers are aroused by\n"
+	.string "Their powers are awakened by\n"
 	.string "living in natural environments…$"
 
 FortreeCity_House2_Text_CoinInWhichHand:
-	.string "Let this old woman see if your hidden\n"
+	.string "Let this old woman see if your\n"
 	.string "power has awoken…\p"
 	.string "I hold a coin in my hand.\p"
 	.string "Now, tell me, have I palmed it in\n"
@@ -67,13 +67,13 @@ FortreeCity_House2_Text_CorrectTryAgainWhichHand2:
 
 FortreeCity_House2_Text_YourHiddenPowerHasAwoken:
 	.string "Oh! Splendid!\n"
-	.string "Your hidden power has awoken!\p"
-	.string "Here, take this and awaken the hidden\n"
+	.string "You must be a psychic!\p"
+	.string "Here, take this and awaken the psychic\n"
 	.string "power of your POKéMON.$"
 
 FortreeCity_House2_Text_ExplainHiddenPower:
-	.string "HIDDEN POWER is a move that changes\n"
-	.string "with the POKéMON.$"
+	.string "Psychics have been through a\n"
+	.string "lot since their origin.$"
 
 FortreeCity_House2_Text_YouGuessedWrong:
 	.string "No, too bad.\n"

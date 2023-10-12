@@ -252,19 +252,6 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 33,
-      "y": 104,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route111_EventScript_ItemTMSandstorm",
-      "flag": "FLAG_ITEM_ROUTE_111_TM_SANDSTORM"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
       "x": 18,
       "y": 5,
@@ -341,19 +328,6 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "GabbyAndTy_EventScript_TyBattle6",
       "flag": "FLAG_HIDE_ROUTE_111_GABBY_AND_TY_2"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 12,
-      "y": 54,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route111_EventScript_ItemStardust",
-      "flag": "FLAG_ITEM_ROUTE_111_STARDUST"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -562,19 +536,6 @@
       "trainer_sight_or_berry_tree_id": "7",
       "script": "Route111_EventScript_Branden",
       "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 19,
-      "y": 118,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route111_EventScript_ItemElixir",
-      "flag": "FLAG_ITEM_ROUTE_111_ELIXIR"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
@@ -1051,14 +1012,6 @@
       "secret_base_id": "SECRET_BASE_YELLOW_CAVE4_3"
     },
     {
-      "type": "hidden_item",
-      "x": 26,
-      "y": 70,
-      "elevation": 0,
-      "item": "ITEM_STARDUST",
-      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_STARDUST"
-    },
-    {
       "type": "secret_base",
       "x": 27,
       "y": 27,
@@ -1086,22 +1039,6 @@
       "y": 19,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_TREE1_1"
-    },
-    {
-      "type": "hidden_item",
-      "x": 19,
-      "y": 55,
-      "elevation": 0,
-      "item": "ITEM_PROTEIN",
-      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_PROTEIN"
-    },
-    {
-      "type": "hidden_item",
-      "x": 35,
-      "y": 66,
-      "elevation": 0,
-      "item": "ITEM_RARE_CANDY",
-      "flag": "FLAG_HIDDEN_ITEM_ROUTE_111_RARE_CANDY"
     },
     {
       "type": "sign",
