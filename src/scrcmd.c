@@ -50,6 +50,7 @@
 #include "window.h"
 #include "constants/event_objects.h"
 #include "pokevial.h" //Pokevial Branch
+#include "qol_field_moves.h" // qol_field_moves
 
 typedef u16 (*SpecialFunc)(void);
 typedef void (*NativeFunc)(struct ScriptContext *ctx);

@@ -2039,3 +2039,24 @@ const u32 gItemIcon_Pokevial[] = INCBIN_U32("graphics/items/icons/pokevial.4bpp.
 
 const u32 gItemIconPalette_Pokevial[] = INCBIN_U32("graphics/items/icon_palettes/pokevial.gbapal.lz");
 //End Pokevial Branch
+//HM Items
+const u32 gItemIcon_Axe[] = INCBIN_U32("graphics/items/icons/axe.4bpp.lz");
+const u32 gItemIconPalette_Axe[] = INCBIN_U32("graphics/items/icon_palettes/axe.gbapal.lz");
+const u32 gItemIcon_Surfboard[] = INCBIN_U32("graphics/items/icons/surfboard.4bpp.lz");
+const u32 gItemIconPalette_Surfboard[] = INCBIN_U32("graphics/items/icon_palettes/surfboard.gbapal.lz");
+const u32 gItemIcon_PowerGlove[] = INCBIN_U32("graphics/items/icons/power_glove.4bpp.lz");
+const u32 gItemIconPalette_PowerGlove[] = INCBIN_U32("graphics/items/icon_palettes/power_glove.gbapal.lz");
+const u32 gItemIcon_Lantern[] = INCBIN_U32("graphics/items/icons/lantern.4bpp.lz");
+const u32 gItemIconPalette_Lantern[] = INCBIN_U32("graphics/items/icon_palettes/lantern.gbapal.lz");
+const u32 gItemIcon_Pickaxe[] = INCBIN_U32("graphics/items/icons/pickaxe.4bpp.lz");
+const u32 gItemIconPalette_Pickaxe[] = INCBIN_U32("graphics/items/icon_palettes/pickaxe.gbapal.lz");
+const u32 gItemIcon_ScubaGear[] = INCBIN_U32("graphics/items/icons/scuba_gear.4bpp.lz");
+const u32 gItemIconPalette_ScubaGear[] = INCBIN_U32("graphics/items/icon_palettes/scuba_gear.gbapal.lz");
+const u32 gItemIcon_TaxiPager[] = INCBIN_U32("graphics/items/icons/taxi_pager.4bpp.lz");
+const u32 gItemIconPalette_TaxiPager[] = INCBIN_U32("graphics/items/icon_palettes/taxi_pager.gbapal.lz");
+const u32 gItemIcon_AscendCharm[] = INCBIN_U32("graphics/items/icons/ascend_charm.4bpp.lz");
+const u32 gItemIconPalette_AscendCharm[] = INCBIN_U32("graphics/items/icon_palettes/ascend_charm.gbapal.lz");
+const u32 gItemIcon_WarpOrb[] = INCBIN_U32("graphics/items/icons/warp_orb.4bpp.lz");
+const u32 gItemIconPalette_WarpOrb[] = INCBIN_U32("graphics/items/icon_palettes/warp_orb.gbapal.lz");
+const u32 gItemIcon_HoneyJar[] = INCBIN_U32("graphics/items/icons/honey_jar.4bpp.lz");
+const u32 gItemIconPalette_HoneyJar[] = INCBIN_U32("graphics/items/icon_palettes/honey_jar.gbapal.lz");

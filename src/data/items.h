@@ -5013,6 +5013,117 @@ const struct Item gItems[] =
         .flingPower = 10,
     },
 
+//Start qol_field_moves
+    [ITEM_CUT_TOOL] =
+    {
+        .name = _("Axe"),
+        .price = 0,
+        .description = sCutToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_CutTool,
+    },
+
+    [ITEM_FLY_TOOL] =
+    {
+        .name = _("Taxi Pager"),
+        .price = 0,
+        .description = sFlyToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_FlyTool,
+    },
+
+    [ITEM_SURF_TOOL] =
+    {
+        .name = _("Surfboard"),
+        .price = 0,
+        .description = sSurfToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_SurfTool,
+    },
+
+    [ITEM_STRENGTH_TOOL] =
+    {
+        .name = _("Power Glove"),
+        .price = 0,
+        .description = sStrengthToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_StrengthTool,
+    },
+
+    [ITEM_FLASH_TOOL] =
+    {
+        .name = _("Lantern"),
+        .price = 0,
+        .description = sFlashToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_FlashTool,
+    },
+
+    [ITEM_ROCKSMASH_TOOL] =
+    {
+        .name = _("Pickaxe"),
+        .price = 0,
+        .description = sRockSmashToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_RockSmashTool,
+    },
+
+    [ITEM_WATERFALL_TOOL] =
+    {
+        .name = _("Ascend Charm"),
+        .price = 0,
+        .description = sWaterfallToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_WaterfallTool,
+    },
+
+    [ITEM_DIVE_TOOL] =
+    {
+        .name = _("Snorkle"),
+        .price = 0,
+        .description = sDiveToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_DiveTool,
+    },
+
+    [ITEM_TELEPORT_TOOL] =
+    {
+        .name = _("Warp Orb"),
+        .price = 0,
+        .description = sTeleportToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_TeleportTool,
+    },
+
+    [ITEM_SWEETSCENT_TOOL] =
+    {
+        .name = _("Honey Jar"),
+        .price = 0,
+        .description = sSweetScentToolDesc,
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_SweetScentTool,
+    },
+
 // Contest Scarves
 
     [ITEM_RED_SCARF] =

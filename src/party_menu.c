@@ -164,6 +164,7 @@ enum {
 #define MENU_DIR_RIGHT    2
 #define MENU_DIR_LEFT    -2
 
+
 enum {
     CAN_LEARN_MOVE,
     CANNOT_LEARN_MOVE,

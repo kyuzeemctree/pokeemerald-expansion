@@ -10689,4 +10689,26 @@ extern const u32 gUnknown_8E85068[];
 extern const u8 gUnknown_8E99118[];
 extern const u16 gTMCaseMainWindowPalette[];
 
+//HM Items
+extern const u32 gItemIcon_Axe[];
+extern const u32 gItemIconPalette_Axe[];
+extern const u32 gItemIcon_Surfboard[];
+extern const u32 gItemIconPalette_Surfboard[];
+extern const u32 gItemIcon_PowerGlove[];
+extern const u32 gItemIconPalette_PowerGlove[];
+extern const u32 gItemIcon_Lantern[];
+extern const u32 gItemIconPalette_Lantern[];
+extern const u32 gItemIcon_Pickaxe[];
+extern const u32 gItemIconPalette_Pickaxe[];
+extern const u32 gItemIcon_ScubaGear[];
+extern const u32 gItemIconPalette_ScubaGear[];
+extern const u32 gItemIcon_WarpOrb[];
+extern const u32 gItemIconPalette_WarpOrb[];
+extern const u32 gItemIcon_TaxiPager[];
+extern const u32 gItemIconPalette_TaxiPager[];
+extern const u32 gItemIcon_HoneyJar[];
+extern const u32 gItemIconPalette_HoneyJar[];
+extern const u32 gItemIcon_AscendCharm[];
+extern const u32 gItemIconPalette_AscendCharm[];
+
 #endif //GUARD_GRAPHICS_H

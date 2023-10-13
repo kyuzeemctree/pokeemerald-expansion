@@ -2156,6 +2156,58 @@ static const u8 sPureIncenseDesc[] = _(
     "helps repel wild\n"
     "Pokémon.");
 
+// Start qol_field_moves
+
+static const u8 sCutToolDesc[] = _(
+	"A tool\n"
+    "used for\n"
+    "cutting trees.");
+
+static const u8 sFlyToolDesc[] = _(
+	"A small pager\n"
+    "used for calling\n"
+    "a flying taxi.");
+
+static const u8 sSurfToolDesc[] = _(
+	"A surfboard to\n"
+    "prevent clothes\n"
+    "from getting wet.");
+
+static const u8 sStrengthToolDesc[] = _(
+	"A glove that emits\n"
+    "a force that can\n"
+    "push boulders.");
+
+static const u8 sFlashToolDesc[] = _(
+	"A lantern\n"
+    "used for lighting\n"
+    "up dark places.");
+
+static const u8 sRockSmashToolDesc[] = _(
+	"A trusty pickaxe\n"
+    "that can smash\n"
+    "small rocks.");
+
+static const u8 sWaterfallToolDesc[] = _(
+	"A powerful charm\n"
+    "capable of riding\n"
+    "up waterfalls.");
+
+static const u8 sDiveToolDesc[] = _(
+	"A mask that allows\n"
+    "the wearer to stay\n"
+    "underwater longer.");
+
+static const u8 sTeleportToolDesc[] = _(
+	"A high tech device\n"
+    "that can transport\n"
+    "the user to safety.");
+
+static const u8 sSweetScentToolDesc[] = _(
+	"A jar filled with\n"
+    "sweet smelling\n"
+    "liquid Pokémon love.");
+
 // Contest Scarves
 static const u8 sRedScarfDesc[] = _(
     "A hold item that\n"
