@@ -159,7 +159,7 @@
       "y": 14,
       "elevation": 0,
       "item": "ITEM_HEALTH_FEATHER",
-      "flag": "FLAG_TEMP_1"
+      "flag": "FLAG_HIDDEN_ITEM_R1021"
     },
     {
       "type": "hidden_item",
@@ -167,7 +167,7 @@
       "y": 4,
       "elevation": 0,
       "item": "ITEM_BIG_ROOT",
-      "flag": "FLAG_TEMP_2"
+      "flag": "FLAG_HIDDEN_ITEM_R1022"
     },
     {
       "type": "hidden_item",
@@ -175,7 +175,7 @@
       "y": 2,
       "elevation": 0,
       "item": "ITEM_GENIUS_FEATHER",
-      "flag": "FLAG_TEMP_3"
+      "flag": "FLAG_HIDDEN_ITEM_R1023"
     }
   ]
 }

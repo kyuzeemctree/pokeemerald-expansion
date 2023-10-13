@@ -45,8 +45,8 @@ PetalburgCity_Gym_OnTransition:
 PetalburgCity_Gym_EventScript_Norman::
 	lock
 	faceplayer
-    call_if_set FLAG_METDAD, PetalburgCity_Gym_EventScript_NormanGyms
-    goto_if_eq VAR_RESULT, FALSE, PetalburgCity_Gym_EventScript_NormanMeet
+    goto_if_set FLAG_METDAD, PetalburgCity_Gym_EventScript_NormanGyms
+    call_if_unset FLAG_METDAD, PetalburgCity_Gym_EventScript_NormanMeet
     end
 
 PetalburgCity_Gym_EventScript_NormanMeet::
