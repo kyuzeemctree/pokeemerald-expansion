@@ -71,6 +71,7 @@
 #define NATURE_CAREFUL  23
 #define NATURE_QUIRKY   24
 #define NUM_NATURES     25
+#define HIDDEN_NATURE_NONE 26
 
 // Pokemon Stats
 #define STAT_HP      0
