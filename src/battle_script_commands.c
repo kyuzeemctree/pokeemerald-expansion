@@ -3431,7 +3431,7 @@ void SetMoveEffect(bool32 primary, u32 certain)
                 }
                 break;
             case MOVE_EFFECT_RECOIL_HP_25: // Struggle
-                gBattleMoveDamage = (gBattleMons[gEffectBattler].maxHP) / 4;
+                gBattleMoveDamage = (gBattleMons[gEffectBattler].maxHP) / 6;
                 if (gBattleMoveDamage == 0)
                     gBattleMoveDamage = 1;
                 if (GetBattlerAbility(gEffectBattler) == ABILITY_PARENTAL_BOND)
