@@ -75,6 +75,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "pokevial.h" //Pokevial Branch
+#include "move_relearner.h"
 
 enum {
     MENU_SUMMARY,
@@ -84,6 +85,7 @@ enum {
     MENU_GIVE,
     MENU_TAKE_ITEM,
     MENU_MOVE_ITEM,
+    MENU_MOVES,
     MENU_NICKNAME,
     MENU_MAIL,
     MENU_TAKE_MAIL,
@@ -199,7 +201,7 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[8];
+    u8 actions[10];
     u8 numActions;
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
@@ -345,7 +347,6 @@ static void Task_UpdateHeldItemSprite(u8);
 static void Task_HandleSelectionMenuInput(u8);
 static void CB2_ShowPokemonSummaryScreen(void);
 static void UpdatePartyToBattleOrder(void);
-static void CB2_ReturnToPartyMenuFromSummaryScreen(void);
 static void SlidePartyMenuBoxOneStep(u8);
 static void Task_SlideSelectedSlotsOffscreen(u8);
 static void SwitchPartyMon(void);
@@ -469,6 +470,7 @@ static void CursorCb_Item(u8);
 static void CursorCb_Give(u8);
 static void CursorCb_TakeItem(u8);
 static void CursorCb_MoveItem(u8);
+static void CursorCb_Moves(u8);
 static void CursorCb_Nickname(u8);
 static void CursorCb_Mail(u8);
 static void CursorCb_Read(u8);
@@ -2655,6 +2657,9 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
     {
         if (GetMonData(&mons[1], MON_DATA_SPECIES) != SPECIES_NONE)
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SWITCH);
+        if (GetNumberOfRelearnableMoves(&mons[slotId]) != 0) {
+			AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_MOVES);
+		}
         if (ItemIsMail(GetMonData(&mons[slotId], MON_DATA_HELD_ITEM)))
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_MAIL);
         else
@@ -2814,7 +2819,7 @@ static void CB2_ShowPokemonSummaryScreen(void)
     }
 }
 
-static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
+void CB2_ReturnToPartyMenuFromSummaryScreen(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
     gPartyMenu.slotId = gLastViewedMonIndex;
@@ -7414,6 +7419,19 @@ void CursorCb_MoveItem(u8 taskId)
         ScheduleBgCopyTilemapToVram(2);
         gTasks[taskId].func = Task_UpdateHeldItemSprite;
     }
+}
+
+//Move Relearner
+static void CursorCb_Moves(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+	FlagSet(FLAG_PARTY_MOVES);
+    gSpecialVar_0x8004 = gPartyMenu.slotId;
+	gSpecialVar_0x8005 = GetNumberOfRelearnableMoves(&gPlayerParty[gSpecialVar_0x8004]);
+	DisplayPartyPokemonDataForRelearner(gSpecialVar_0x8004);
+	TeachMoveRelearnerMove();
+    sPartyMenuInternal->exitCallback = TeachMoveRelearnerMove;
+    Task_ClosePartyMenu(taskId);
 }
 
 //Nickname
