@@ -665,6 +665,7 @@ struct
     [MENU_GIVE] = {gMenuText_Give, CursorCb_Give},
     [MENU_TAKE_ITEM] = {gText_Take, CursorCb_TakeItem},
     [MENU_MOVE_ITEM] = {gMenuText_Move, CursorCb_MoveItem},
+    [MENU_NICKNAME] = {gText_Nickname, CursorCb_Nickname},
     [MENU_MAIL] = {gText_Mail, CursorCb_Mail},
     [MENU_TAKE_MAIL] = {gText_Take2, CursorCb_TakeMail},
     [MENU_READ] = {gText_Read2, CursorCb_Read},

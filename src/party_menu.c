@@ -84,6 +84,7 @@ enum {
     MENU_GIVE,
     MENU_TAKE_ITEM,
     MENU_MOVE_ITEM,
+    MENU_NICKNAME,
     MENU_MAIL,
     MENU_TAKE_MAIL,
     MENU_READ,
@@ -468,6 +469,7 @@ static void CursorCb_Item(u8);
 static void CursorCb_Give(u8);
 static void CursorCb_TakeItem(u8);
 static void CursorCb_MoveItem(u8);
+static void CursorCb_Nickname(u8);
 static void CursorCb_Mail(u8);
 static void CursorCb_Read(u8);
 static void CursorCb_TakeMail(u8);
@@ -2634,6 +2636,7 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 
     sPartyMenuInternal->numActions = 0;
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_NICKNAME);
 
     // Add field moves to action list
     for (i = 0; i < MAX_MON_MOVES; i++)
@@ -7411,4 +7414,14 @@ void CursorCb_MoveItem(u8 taskId)
         ScheduleBgCopyTilemapToVram(2);
         gTasks[taskId].func = Task_UpdateHeldItemSprite;
     }
+}
+
+//Nickname
+void ChangePokemonNickname(void);
+static void CursorCb_Nickname(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    gSpecialVar_0x8004 = gPartyMenu.slotId;
+    sPartyMenuInternal->exitCallback = ChangePokemonNickname;
+    Task_ClosePartyMenu(taskId);
 }
