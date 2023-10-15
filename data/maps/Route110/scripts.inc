@@ -596,18 +596,8 @@ Route110_EventScript_BirchScene4::
 	goto Route110_EventScript_BirchScene
 
 Route110_EventScript_BirchScene::
-	addobject LOCALID_BIRCH
-	applymovement LOCALID_BIRCH, Route110_Movement_BirchEntrance
-	waitmovement 0
-	playse SE_PIN
-	applymovement LOCALID_BIRCH, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_BIRCH, Common_Movement_Delay48
-	waitmovement 0
-	call_if_eq VAR_0x8008, 1, Route110_EventScript_BirchApproachPlayer1
-	call_if_eq VAR_0x8008, 2, Route110_EventScript_BirchApproachPlayer2
-	call_if_eq VAR_0x8008, 3, Route110_EventScript_BirchApproachPlayer3
-	call_if_eq VAR_0x8008, 4, Route110_EventScript_BirchApproachPlayer4
+	lock
+	faceplayer
 	msgbox Route110_Text_ImagineSeeingYouHere, MSGBOX_DEFAULT
 	closemessage
 	delay 20

@@ -14,7 +14,7 @@
     {
       "id": "LAYOUT_SLATEPORT_CITY",
       "name": "SlateportCity_Layout",
-      "width": 40,
+      "width": 60,
       "height": 60,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Slateport",
@@ -1834,8 +1834,8 @@
     {
       "id": "LAYOUT_NEW_MAUVILLE_ENTRANCE",
       "name": "NewMauville_Entrance_Layout",
-      "width": 9,
-      "height": 9,
+      "width": 15,
+      "height": 25,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/NewMauville_Entrance/border.bin",

@@ -566,8 +566,20 @@ SlateportCity_EventScript_PowerTMClerk::
 
 	.align 2
 SlateportCity_Pokemart_PowerTMs:
+	.2byte ITEM_TM_PROTECT
+	.2byte ITEM_TM_BULK_UP
+	.2byte ITEM_TM_CALM_MIND
+	.2byte ITEM_TM_ROAR
+	.2byte ITEM_TM_THUNDER_WAVE
+	.2byte ITEM_TM_WILL_O_WISP
+	.2byte ITEM_TM_TOXIC
+	.2byte ITEM_TM_TAUNT
 	.2byte ITEM_TM_REFLECT
 	.2byte ITEM_TM_LIGHT_SCREEN
+	.2byte ITEM_TM_REST
+	.2byte ITEM_TM_SLEEP_TALK
+	.2byte ITEM_TM_SLACK_OFF
+	.2byte ITEM_TM_SPIKES
 	.2byte ITEM_NONE
 	release
 	end
@@ -737,11 +749,28 @@ SlateportCity_EventScript_Man3::
 SlateportCity_EventScript_BerryPowderClerk::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_POWDER_JAR, SlateportCity_EventScript_ReceivedPowderJar
-	msgbox SlateportCity_Text_ExplainBerries, MSGBOX_DEFAULT
-	giveitem ITEM_POWDER_JAR
-	setflag FLAG_RECEIVED_POWDER_JAR
-	msgbox SlateportCity_Text_ExplainBerryPowder, MSGBOX_DEFAULT
+	message gText_HowMayIServeYou
+	waitmessage
+	pokemart SlateportCity_Pokemart_Pokeballs
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+SlateportCity_Pokemart_Pokeballs:
+	.2byte ITEM_LEVEL_BALL
+	.2byte ITEM_LURE_BALL
+	.2byte ITEM_MOON_BALL
+	.2byte ITEM_FRIEND_BALL
+	.2byte ITEM_LOVE_BALL
+	.2byte ITEM_FAST_BALL
+	.2byte ITEM_HEAVY_BALL
+	.2byte ITEM_DREAM_BALL
+	.2byte ITEM_SAFARI_BALL
+	.2byte ITEM_SPORT_BALL
+	.2byte ITEM_PARK_BALL
+	.2byte ITEM_CHERISH_BALL
+	.2byte ITEM_NONE
 	release
 	end
 
