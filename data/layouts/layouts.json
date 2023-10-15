@@ -144,8 +144,8 @@
     {
       "id": "LAYOUT_VERDANTURF_TOWN",
       "name": "VerdanturfTown_Layout",
-      "width": 20,
-      "height": 20,
+      "width": 24,
+      "height": 24,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
       "border_filepath": "data/layouts/VerdanturfTown/border.bin",
@@ -254,7 +254,7 @@
     {
       "id": "LAYOUT_ROUTE110",
       "name": "Route110_Layout",
-      "width": 40,
+      "width": 60,
       "height": 100,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mauville",
