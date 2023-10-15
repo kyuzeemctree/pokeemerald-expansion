@@ -4192,16 +4192,16 @@ u32 AbilityBattleEffects(u32 caseID, u32 battler, u32 ability, u32 special, u32 
             switch (VarGet(VAR_TERRAIN) & STATUS_FIELD_TERRAIN_ANY)
             {
             case STATUS_FIELD_ELECTRIC_TERRAIN:
-                gBattleCommunication[MULTISTRING_CHOOSER] = 2;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TERRAIN_SET_ELECTRIC;
                 break;
             case STATUS_FIELD_MISTY_TERRAIN:
-                gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TERRAIN_SET_MISTY;
                 break;
             case STATUS_FIELD_GRASSY_TERRAIN:
-                gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TERRAIN_SET_GRASSY;
                 break;
             case STATUS_FIELD_PSYCHIC_TERRAIN:
-                gBattleCommunication[MULTISTRING_CHOOSER] = 3;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TERRAIN_SET_PSYCHIC;
                 break;
             }
 
@@ -6617,6 +6617,7 @@ static u8 DamagedStatBoostBerryEffect(u32 battler, u8 statId, u8 split)
         else
             SET_STATCHANGER(statId, 1, FALSE);
 
+        gBattleScripting.battler = battler;
         gBattleScripting.animArg1 = 14 + statId;
         gBattleScripting.animArg2 = 0;
         BattleScriptPushCursor();
@@ -8897,9 +8898,9 @@ static inline u32 CalcMoveBasePowerAfterModifiers(u32 move, u32 battlerAtk, u32 
            modifier = uq4_12_multiply(modifier, UQ_4_12(1.3));
         break;
     case ABILITY_RIVALRY:
-        if (AreBattlersOfOppositeGender(battlerAtk, battlerDef))
+        if (AreBattlersOfSameGender(battlerAtk, battlerDef))
             modifier = uq4_12_multiply(modifier, UQ_4_12(1.25));
-        else
+        else if (AreBattlersOfOppositeGender(battlerAtk, battlerDef))
             modifier = uq4_12_multiply(modifier, UQ_4_12(0.75));
         break;
     case ABILITY_ANALYTIC:
@@ -11166,6 +11167,14 @@ bool32 AreBattlersOfOppositeGender(u32 battler1, u32 battler2)
     return (gender1 != MON_GENDERLESS && gender2 != MON_GENDERLESS && gender1 != gender2);
 }
 
+bool32 AreBattlersOfSameGender(u32 battler1, u32 battler2)
+{
+    u8 gender1 = GetBattlerGender(battler1);
+    u8 gender2 = GetBattlerGender(battler2);
+
+    return (gender1 != MON_GENDERLESS && gender2 != MON_GENDERLESS && gender1 == gender2);
+}
+
 u32 CalcSecondaryEffectChance(u32 battler, u8 secondaryEffectChance)
 {
     if (GetBattlerAbility(battler) == ABILITY_SERENE_GRACE)
@@ -11181,7 +11190,7 @@ bool32 IsAlly(u32 battlerAtk, u32 battlerDef)
 
 bool32 IsGen6ExpShareEnabled(void)
 {
-#if I_EXP_SHARE_ITEM < GEN_6
+#if I_EXP_SHARE_FLAG <= TEMP_FLAGS_END
     return FALSE;
 #else
     return FlagGet(I_EXP_SHARE_FLAG);
@@ -11190,7 +11199,7 @@ bool32 IsGen6ExpShareEnabled(void)
 
 
 u8 GetBattlerType(u32 battler, u8 typeIndex)
-{    
+{
     u16 types[3] = {0};
     types[0] = gBattleMons[battler].type1;
     types[1] = gBattleMons[battler].type2;
