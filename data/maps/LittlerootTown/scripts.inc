@@ -913,18 +913,6 @@ LittlerootTown_EventScript_SetReceivedRunningShoes::
 	additem ITEM_QUICK_BALL, 10
 	additem ITEM_REPEAT_BALL, 10
 	additem ITEM_LUXURY_BALL, 10
-	additem ITEM_LEVEL_BALL, 10
-	additem ITEM_LURE_BALL, 10
-	additem ITEM_MOON_BALL, 10
-	additem ITEM_FRIEND_BALL, 10
-	additem ITEM_LOVE_BALL, 10
-	additem ITEM_FAST_BALL, 10
-	additem ITEM_HEAVY_BALL, 10
-	additem ITEM_DREAM_BALL, 10
-	additem ITEM_SAFARI_BALL, 10
-	additem ITEM_SPORT_BALL, 10
-	additem ITEM_PARK_BALL, 10
-	additem ITEM_CHERISH_BALL, 10
 	additem ITEM_FULL_RESTORE, 25
 	additem ITEM_MAX_ELIXIR, 25
 	additem ITEM_HP_UP, 50
