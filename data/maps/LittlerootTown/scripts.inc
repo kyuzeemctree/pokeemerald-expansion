@@ -899,6 +899,8 @@ LittlerootTown_EventScript_SetReceivedRunningShoes::
 	additem ITEM_ESCAPE_ROPE, 1
 	additem ITEM_EXP_SHARE, 1
 	additem ITEM_POKEVIAL, 1
+	additem ITEM_FLY_TOOL, 1
+	additem ITEM_SURF_TOOL, 1
 	additem ITEM_AMULET_COIN, 1
 	additem ITEM_POKE_BALL, 10
 	additem ITEM_GREAT_BALL, 10

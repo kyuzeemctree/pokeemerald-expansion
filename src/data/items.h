@@ -6384,7 +6384,7 @@ const struct Item gItems[] =
 
     [ITEM_HEAVY_DUTY_BOOTS] =
     {
-        .name = _("Heavy-DtyBts"),
+        .name = _("HvyDutyBoots"),
         .price = 4000,
         .holdEffect = HOLD_EFFECT_HEAVY_DUTY_BOOTS,
         .description = sHeavyDutyBootsDesc,

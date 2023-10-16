@@ -94,6 +94,13 @@
 
   ],
   "bg_events": [
-
+    {
+      "type": "hidden_item",
+      "x": 3,
+      "y": 6,
+      "elevation": 0,
+      "item": "ITEM_LEFTOVERS",
+      "flag": "FLAG_HIDDEN_ITEM_ABANDONED_SHIP2"
+    }
   ]
 }

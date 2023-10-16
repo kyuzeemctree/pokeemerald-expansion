@@ -125,7 +125,7 @@
 #define FLAG_RECEIVED_HM_STRENGTH            0x6A
 #define FLAG_RECEIVED_HM_ROCK_SMASH          0x6B
 #define FLAG_WHITEOUT_TO_LAVARIDGE           0x6C // Set after defeating Flannery, so the player cant white out from poison before receiving Go Goggles
-#define FLAG_RECEIVED_HM_FLASH               0x6D
+#define FLAG_RECEIVED_FLASH_TOOL             0x6D
 #define FLAG_RECEIVED_HM_FLY                 0x6E
 #define FLAG_GROUDON_AWAKENED_MAGMA_HIDEOUT  0x6F
 #define FLAG_TEAM_AQUA_ESCAPED_IN_SUBMARINE  0x70
@@ -563,23 +563,23 @@
 #define FLAG_HIDDEN_ITEM_METEORFALLS1F1                      (FLAG_HIDDEN_ITEMS_START + 0x15)
 #define FLAG_HIDDEN_ITEM_METEORFALLS1F2                      (FLAG_HIDDEN_ITEMS_START + 0x16)
 #define FLAG_HIDDEN_ITEM_METEORFALLS1F3                      (FLAG_HIDDEN_ITEMS_START + 0x17)
-#define FLAG_HIDDEN_ITEM_UNDERWATER_127_RED_SHARD            (FLAG_HIDDEN_ITEMS_START + 0x18)
-#define FLAG_HIDDEN_ITEM_UNDERWATER_128_PROTEIN              (FLAG_HIDDEN_ITEMS_START + 0x19)
-#define FLAG_HIDDEN_ITEM_UNDERWATER_128_PEARL                (FLAG_HIDDEN_ITEMS_START + 0x1A)
-#define FLAG_HIDDEN_ITEM_LILYCOVE_CITY_HEART_SCALE           (FLAG_HIDDEN_ITEMS_START + 0x1B)
-#define FLAG_HIDDEN_ITEM_FALLARBOR_TOWN_NUGGET               (FLAG_HIDDEN_ITEMS_START + 0x1C)
-#define FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_ULTRA_BALL         (FLAG_HIDDEN_ITEMS_START + 0x1D)
-#define FLAG_HIDDEN_ITEM_ROUTE_113_TM_DOUBLE_TEAM            (FLAG_HIDDEN_ITEMS_START + 0x1E)
-#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_1_KEY             (FLAG_HIDDEN_ITEMS_START + 0x1F)
-#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_2_KEY             (FLAG_HIDDEN_ITEMS_START + 0x20)
-#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_4_KEY             (FLAG_HIDDEN_ITEMS_START + 0x21)
-#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_6_KEY             (FLAG_HIDDEN_ITEMS_START + 0x22)
-#define FLAG_HIDDEN_ITEM_SS_TIDAL_LOWER_DECK_LEFTOVERS       (FLAG_HIDDEN_ITEMS_START + 0x23)
-#define FLAG_HIDDEN_ITEM_UNDERWATER_124_CALCIUM              (FLAG_HIDDEN_ITEMS_START + 0x24)
-#define FLAG_HIDDEN_ITEM_ROUTE_104_POTION                    (FLAG_HIDDEN_ITEMS_START + 0x25)
-#define FLAG_HIDDEN_ITEM_UNDERWATER_124_HEART_SCALE_2        (FLAG_HIDDEN_ITEMS_START + 0x26)
-#define FLAG_HIDDEN_ITEM_ROUTE_121_HP_UP                     (FLAG_HIDDEN_ITEMS_START + 0x27)
-#define FLAG_HIDDEN_ITEM_ROUTE_121_NUGGET                    (FLAG_HIDDEN_ITEMS_START + 0x28)
+#define FLAG_HIDDEN_ITEM_R1051                               (FLAG_HIDDEN_ITEMS_START + 0x18)
+#define FLAG_HIDDEN_ITEM_R1052                               (FLAG_HIDDEN_ITEMS_START + 0x19)
+#define FLAG_HIDDEN_ITEM_R1053                               (FLAG_HIDDEN_ITEMS_START + 0x1A)
+#define FLAG_HIDDEN_ITEM_R1061                               (FLAG_HIDDEN_ITEMS_START + 0x1B)
+#define FLAG_HIDDEN_ITEM_R1062                               (FLAG_HIDDEN_ITEMS_START + 0x1C)
+#define FLAG_HIDDEN_ITEM_DEWFORD_GROTTO1                     (FLAG_HIDDEN_ITEMS_START + 0x1D)
+#define FLAG_HIDDEN_ITEM_DEWFORD_GROTTO2                     (FLAG_HIDDEN_ITEMS_START + 0x1E)
+#define FLAG_HIDDEN_ITEM_DEWFORD_GROTTO3                     (FLAG_HIDDEN_ITEMS_START + 0x1F)
+#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP1                     (FLAG_HIDDEN_ITEMS_START + 0x20)
+#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP2                     (FLAG_HIDDEN_ITEMS_START + 0x21)
+#define FLAG_HIDDEN_ITEM_ABANDONED_SHIP3                     (FLAG_HIDDEN_ITEMS_START + 0x22)
+#define FLAG_HIDDEN_ITEM_R1081                               (FLAG_HIDDEN_ITEMS_START + 0x23)
+#define FLAG_HIDDEN_ITEM_R1091                               (FLAG_HIDDEN_ITEMS_START + 0x24)
+#define FLAG_HIDDEN_ITEM_R1092                               (FLAG_HIDDEN_ITEMS_START + 0x25)
+#define FLAG_HIDDEN_ITEM_GRANITE_CAVE1                       (FLAG_HIDDEN_ITEMS_START + 0x26)
+#define FLAG_HIDDEN_ITEM_GRANITE_CAVE2                       (FLAG_HIDDEN_ITEMS_START + 0x27)
+#define FLAG_HIDDEN_ITEM_GRANITE_CAVE3                       (FLAG_HIDDEN_ITEMS_START + 0x28)
 #define FLAG_HIDDEN_ITEM_ROUTE_123_REVIVE                    (FLAG_HIDDEN_ITEMS_START + 0x29)
 #define FLAG_HIDDEN_ITEM_ROUTE_114_REVIVE                    (FLAG_HIDDEN_ITEMS_START + 0x2A)
 #define FLAG_HIDDEN_ITEM_LILYCOVE_CITY_PP_UP                 (FLAG_HIDDEN_ITEMS_START + 0x2B)
@@ -1057,17 +1057,17 @@
 #define FLAG_ITEM_NM2                                               0x3F0
 #define FLAG_ITEM_NM3                                               0x3F1
 #define FLAG_ITEM_NM4                                               0x3F2
-#define FLAG_ITEM_ROUTE_112_NUGGET                                  0x3F3
-#define FLAG_ITEM_ROUTE_113_MAX_ETHER                               0x3F4
-#define FLAG_ITEM_ROUTE_113_SUPER_REPEL                             0x3F5
-#define FLAG_ITEM_ROUTE_114_RARE_CANDY                              0x3F6
-#define FLAG_ITEM_ROUTE_114_PROTEIN                                 0x3F7
-#define FLAG_ITEM_ROUTE_115_SUPER_POTION                            0x3F8
-#define FLAG_ITEM_ROUTE_115_TM_FOCUS_PUNCH                          0x3F9
-#define FLAG_ITEM_ROUTE_115_IRON                                    0x3FA
-#define FLAG_ITEM_ROUTE_116_ETHER                                   0x3FB
-#define FLAG_ITEM_ROUTE_116_REPEL                                   0x3FC
-#define FLAG_ITEM_ROUTE_116_HP_UP                                   0x3FD
+#define FLAG_ITEM_DEWFORD1                                          0x3F3
+#define FLAG_ITEM_DEWFORD_GROTTO1                                   0x3F4
+#define FLAG_ITEM_ABANDONED_SHIP1                                   0x3F5
+#define FLAG_ITEM_ABANDONED_SHIP2                                   0x3F6
+#define FLAG_ITEM_ABANDONED_SHIP3                                   0x3F7
+#define FLAG_ITEM_ABANDONED_SHIP4                                   0x3F8
+#define FLAG_ITEM_R1091                                             0x3F9
+#define FLAG_ITEM_GRANITE_CAVE1                                     0x3FA
+#define FLAG_ITEM_GRANITE_CAVE2                                     0x3FB
+#define FLAG_ITEM_GRANITE_CAVE3                                     0x3FC
+#define FLAG_ITEM_GRANITE_CAVE4                                     0x3FD
 #define FLAG_ITEM_ROUTE_117_GREAT_BALL                              0x3FE
 #define FLAG_ITEM_ROUTE_117_REVIVE                                  0x3FF
 #define FLAG_ITEM_ROUTE_119_SUPER_REPEL                             0x400

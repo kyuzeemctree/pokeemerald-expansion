@@ -7,21 +7,9 @@ GraniteCave_StevensRoom_EventScript_Steven::
 	lock
 	faceplayer
 	msgbox GraniteCave_StevensRoom_Text_ImStevenLetterForMe, MSGBOX_DEFAULT
-	setvar VAR_0x8004, ITEM_LETTER
-	call Common_EventScript_PlayerHandedOverTheItem
-	setflag FLAG_DELIVERED_STEVEN_LETTER
-	msgbox GraniteCave_StevensRoom_Text_ThankYouTakeThis, MSGBOX_DEFAULT
+	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
 	giveitem ITEM_TM_SPIKES
 	call_if_eq VAR_RESULT, FALSE, GraniteCave_StevensRoom_EventScript_BagFull
-	msgbox GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister, MSGBOX_DEFAULT
-	closemessage
-	delay 30
-	playfanfare MUS_REGISTER_MATCH_CALL
-	msgbox GraniteCave_StevensRoom_Text_RegisteredSteven, MSGBOX_DEFAULT
-	waitfanfare
-	closemessage
-	delay 30
-	setflag FLAG_REGISTERED_STEVEN_POKENAV
 	msgbox GraniteCave_StevensRoom_Text_IveGotToHurryAlong, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_FACING, DIR_NORTH, GraniteCave_StevensRoom_EventScript_StevenExitNorth
@@ -84,18 +72,7 @@ GraniteCave_StevensRoom_Movement_StevenExitSouth:
 GraniteCave_StevensRoom_Text_ImStevenLetterForMe:
 	.string "My name is STEVEN.\p"
 	.string "I'm interested in rare stones,\n"
-	.string "so I travel here and there.\p"
-	.string "Oh?\n"
-	.string "A LETTER for me?$"
-
-GraniteCave_StevensRoom_Text_ThankYouTakeThis:
-	.string "STEVEN: Okay, thank you.\p"
-	.string "You went through all this trouble to\n"
-	.string "deliver that. I need to thank you.\p"
-	.string "Let me see…\n"
-	.string "I'll give you this TM.\p"
-	.string "It contains my favorite move,\n"
-	.string "SPIKES.$"
+	.string "so I travel here and there.$"
 
 GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "STEVEN: Your POKéMON appear quite\n"
@@ -103,14 +80,10 @@ GraniteCave_StevensRoom_Text_CouldBecomeChampionLetsRegister:
 	.string "If you keep training, you could even\n"
 	.string "become the CHAMPION of the POKéMON\l"
 	.string "LEAGUE one day. That's what I think.\p"
-	.string "I know, since we've gotten to know each\n"
-	.string "other, let's register one another in\l"
-	.string "our POKéNAVS.\p"
-	.string "… … … … … …$"
-
-GraniteCave_StevensRoom_Text_RegisteredSteven:
-	.string "Registered STEVEN\n"
-	.string "in the POKéNAV.$"
+	.string "Let me see…\n"
+	.string "I'll give you this TM.\p"
+	.string "It contains my favorite move,\n"
+	.string "SPIKES.$"
 
 GraniteCave_StevensRoom_Text_IveGotToHurryAlong:
 	.string "Now, I've got to hurry along.$"
