@@ -19,6 +19,150 @@ Route101_EventScript_HideMapNamePopup::
 	setvar VAR_ROUTE101_STATE, 1
 	end
 
+SETest35::
+	playse SE_DEX_SEARCH
+	end
+
+SETest36::
+	playse SE_DING_DONG
+	end
+
+SETest37::
+	playse SE_DOOR
+	end
+
+SETest38::
+	playse SE_DOWNPOUR
+	end
+
+SETest39::
+	playse SE_E
+	end
+
+SETest40::
+	playse SE_EFFECTIVE
+	end
+
+SETest41::
+	playse SE_EGG_HATCH
+	end
+
+SETest42::
+	playse SE_ELEVATOR
+	end
+
+SETest43::
+	playse SE_ESCALATOR
+	end
+
+SETest44::
+	playse SE_EXIT
+	end
+
+SETest45::
+	playse SE_EXP
+	end
+
+SETest46::
+	playse SE_EXP_MAX
+	end
+
+SETest47::
+	playse SE_FAILURE
+	end
+
+SETest48::
+	playse SE_FAINT
+	end
+
+SETest49::
+	playse SE_FALL
+	end
+
+SETest50::
+	playse SE_FIELD_POISON
+	end
+
+SETest51::
+	playse SE_FLEE
+	end
+
+SETest52::
+	playse SE_FU_ZAKU
+	end
+
+SETest53::
+	playse SE_GLASS_FLUTE
+	end
+
+SETest54::
+	playse SE_I
+	end
+
+SETest55::
+	playse SE_ICE_BREAK
+	end
+
+SETest56::
+	playse SE_ICE_CRACK
+	end
+
+SETest57::
+	playse SE_ICE_STAIRS
+	end
+
+SETest58::
+	playse SE_INTRO_BLAST
+	end
+
+SETest59::
+	playse SE_ITEMFINDER
+	end
+
+SETest60::
+	playse SE_LAVARIDGE_FALL_WARP
+	end
+
+SETest61::
+	playse SE_MUD_BALL
+	end
+
+SETest62::
+	playse SE_MUGSHOT
+	end
+
+SETest63::
+	playse SE_N
+	end
+
+SETest64::
+	playse SE_NOT_EFFECTIVE
+	end
+
+SETest65::
+	playse SE_O
+	end
+
+SETest66::
+	playse SE_ORB
+	end
+
+SETest67::
+	playse SE_PIKE_CURTAIN_CLOSE
+	end
+
+SETest68::
+	playse SE_PIKE_CURTAIN_OPEN
+	end
+
+SETest69::
+	playse SE_PIN
+	end
+
+SETest70::
+	playse SE_PUDDLE
+	end
+
 Route101_EventScript_StartBirchRescue::
 	lockall
 	playbgm MUS_HELP, TRUE

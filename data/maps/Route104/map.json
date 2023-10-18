@@ -109,32 +109,6 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MR_BRINEYS_BOAT",
-      "x": 12,
-      "y": 54,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "0x0",
-      "flag": "FLAG_HIDE_ROUTE_104_MR_BRINEY_BOAT"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
-      "x": 12,
-      "y": 51,
-      "elevation": 4,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "0x0",
-      "flag": "FLAG_HIDE_ROUTE_104_MR_BRINEY"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
       "x": 24,
       "y": 75,
@@ -467,25 +441,9 @@
     }
   ],
   "coord_events": [
-    {
-      "type": "trigger",
-      "x": 17,
-      "y": 51,
-      "elevation": 3,
-      "var": "VAR_ROUTE104_STATE",
-      "var_value": "1",
-      "script": "Route104_EventScript_RivalTrigger"
-    }
+
   ],
   "bg_events": [
-    {
-      "type": "sign",
-      "x": 20,
-      "y": 50,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Route104_EventScript_BrineysCottageSign"
-    },
     {
       "type": "sign",
       "x": 27,
@@ -541,6 +499,14 @@
       "elevation": 0,
       "item": "ITEM_GRASSY_SEED",
       "flag": "FLAG_HIDDEN_ITEM_R1041"
+    },
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 42,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route104_EventScript_RouteSignPetalburgW"
     }
   ]
 }

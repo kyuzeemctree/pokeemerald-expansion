@@ -308,7 +308,7 @@ static void HandleInputChooseAction(u32 battler)
             else
                 gBallToDisplay = nextBall;
             SwapBallToDisplay(sameBall);
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_HELD(B_LAST_USED_BALL_BUTTON) && (JOY_NEW(DPAD_UP) || JOY_NEW(DPAD_LEFT)))
         {
@@ -320,7 +320,7 @@ static void HandleInputChooseAction(u32 battler)
             else
                 gBallToDisplay = prevBall;
             SwapBallToDisplay(sameBall);
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_NEW(B_BUTTON) || (!JOY_HELD(B_LAST_USED_BALL_BUTTON) && sBallSwapped))
         {

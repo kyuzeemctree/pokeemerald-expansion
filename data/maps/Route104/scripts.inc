@@ -306,6 +306,10 @@ Route104_EventScript_RouteSignPetalburg::
 	msgbox Route104_Text_RouteSignPetalburg, MSGBOX_SIGN
 	end
 
+Route104_EventScript_RouteSignPetalburgW::
+	msgbox Route104_Text_RouteSignPetalburgW, MSGBOX_SIGN
+	end
+
 Route104_EventScript_RouteSignRustboro::
 	msgbox Route104_Text_RouteSignRustboro, MSGBOX_SIGN
 	end
@@ -1062,6 +1066,10 @@ Route104_Text_MrBrineysCottage:
 Route104_Text_RouteSignPetalburg:
 	.string "ROUTE 1O4\n"
 	.string "{RIGHT_ARROW} PETALBURG CITY$"
+
+Route104_Text_RouteSignPetalburgW:
+	.string "Caution:\n"
+	.string "PETALBURG WOODS$"
 
 Route104_Text_RouteSignRustboro:
 	.string "ROUTE 1O4\n"

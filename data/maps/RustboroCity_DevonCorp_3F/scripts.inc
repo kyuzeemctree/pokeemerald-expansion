@@ -1,162 +1,35 @@
 .set LOCALID_DEVON_EMPLOYEE, 2
 
 RustboroCity_DevonCorp_3F_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, RustboroCity_DevonCorp_3F_OnTransition
-	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, RustboroCity_DevonCorp_3F_OnWarp
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, RustboroCity_DevonCorp_3F_OnFrame
 	.byte 0
 
-RustboroCity_DevonCorp_3F_OnTransition:
-	call_if_eq VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos
-	end
-
-RustboroCity_DevonCorp_3F_EventScript_SetEmployeePos::
-	setobjectxyperm LOCALID_DEVON_EMPLOYEE, 3, 2
-	setobjectmovementtype LOCALID_DEVON_EMPLOYEE, MOVEMENT_TYPE_FACE_LEFT
-	return
-
-RustboroCity_DevonCorp_3F_OnWarp:
-	map_script_2 VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast
-	.2byte 0
-
-RustboroCity_DevonCorp_3F_EventScript_PlayerFaceEast::
-	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
-	end
-
-RustboroCity_DevonCorp_3F_OnFrame:
-	map_script_2 VAR_DEVON_CORP_3F_STATE, 0, RustboroCity_DevonCorp_3F_EventScript_MeetPresident
-	.2byte 0
-
 RustboroCity_DevonCorp_3F_EventScript_MeetPresident::
-	lockall
-	msgbox RustboroCity_DevonCorp_3F_Text_ThisIs3rdFloorWaitHere, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_DEVON_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen
-	waitmovement 0
-	delay 80
-	applymovement LOCALID_DEVON_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer
-	waitmovement 0
-	msgbox RustboroCity_DevonCorp_3F_Text_WordWithPresidentComeWithMe, MSGBOX_DEFAULT
-	closemessage
-	playbgm MUS_FOLLOW_ME, FALSE
-	applymovement LOCALID_DEVON_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident
-	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident
-	waitmovement 0
-	msgbox RustboroCity_DevonCorp_3F_Text_PleaseGoAhead, MSGBOX_DEFAULT
-	closemessage
-	fadedefaultbgm
-	applymovement LOCALID_DEVON_EMPLOYEE, RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk
-	applymovement OBJ_EVENT_ID_PLAYER, RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk
-	waitmovement 0
-	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor, MSGBOX_DEFAULT
-	giveitem ITEM_LETTER
-	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis, MSGBOX_DEFAULT
-	playfanfare MUS_OBTAIN_ITEM
-	message RustboroCity_DevonCorp_3F_Text_ReceivedPokenav
-	waitfanfare
-	setflag FLAG_SYS_POKENAV_GET
-	setflag FLAG_RECEIVED_POKENAV
-	setflag FLAG_HIDE_RUSTBORO_CITY_POKEMON_SCHOOL_SCOTT
-	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneExplainPokenavRestUp, MSGBOX_DEFAULT
-	closemessage
-	call Common_EventScript_OutOfCenterPartyHeal
-	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGoWithCautionAndCare, MSGBOX_DEFAULT
-	setflag FLAG_HIDE_ROUTE_116_WANDAS_BOYFRIEND
-	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDAS_BOYFRIEND
-	clearflag FLAG_HIDE_RUSTURF_TUNNEL_WANDA
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_MR_BRINEY
-	clearflag FLAG_HIDE_BRINEYS_HOUSE_PEEKO
-	setvar VAR_BRINEY_LOCATION, 1
-	clearflag FLAG_HIDE_RUSTBORO_CITY_RIVAL
+	lock
+	faceplayer
+	call_if_lt VAR_DEVON_CORP_3F_STATE, 1, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterGreet
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGreet MSGBOX_DEFAULT
 	setvar VAR_DEVON_CORP_3F_STATE, 1
 	setvar VAR_RUSTBORO_CITY_STATE, 6
 	releaseall
 	end
 
-RustboroCity_DevonCorp_3F_Movement_Unused:
-	walk_up
-	walk_up
-	walk_up
-	walk_in_place_faster_left
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_LeadPlayerToPresident:
-	walk_right
-	walk_right
-	walk_right
-	walk_down
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_in_place_faster_left
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_EmployeeFaceDesk:
-	delay_16
-	walk_in_place_faster_down
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_EmployeeWalkOffscreen:
-	walk_right
-	walk_right
-	walk_right
-	walk_down
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_EmployeeReturnToPlayer:
-	walk_left
-	walk_left
-	walk_left
-	walk_left
-	walk_up
-	walk_left
-	walk_left
-	walk_left
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_PlayerFollowToPresident:
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_down
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	walk_right
-	step_end
-
-RustboroCity_DevonCorp_3F_Movement_PlayerApproachDesk:
-	delay_16
-	delay_16
-	walk_down
-	walk_down
-	walk_in_place_faster_right
-	step_end
+RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterGreet::
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneAfterGreet MSGBOX_DEFAULT
+	releaseall
+	end
 
 RustboroCity_DevonCorp_3F_EventScript_MrStone::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_EXP_SHARE, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterFavor
 	goto_if_set FLAG_DELIVERED_STEVEN_LETTER, RustboroCity_DevonCorp_3F_EventScript_GiveExpShare
-	msgbox RustboroCity_DevonCorp_3F_Text_CountingOnYou, MSGBOX_DEFAULT
+	call_if_lt VAR_DEVON_CORP_3F_STATE, 1, RustboroCity_DevonCorp_3F_EventScript_MrStoneAfterGreet
+	msgbox RustboroCity_DevonCorp_3F_Text_MrStoneGreet MSGBOX_DEFAULT
 	closemessage
 	applymovement VAR_LAST_TALKED, Common_Movement_FaceOriginalDirection
 	waitmovement 0
+	setvar VAR_DEVON_CORP_3F_STATE, 1
+	setvar VAR_RUSTBORO_CITY_STATE, 6
 	release
 	end
 
@@ -197,20 +70,18 @@ RustboroCity_DevonCorp_3F_EventScript_RareRocksDisplay::
 	msgbox RustboroCity_DevonCorp_3F_Text_RareRocksDisplay, MSGBOX_SIGN
 	end
 
-RustboroCity_DevonCorp_3F_Text_MrStoneIHaveFavor:
+RustboroCity_DevonCorp_3F_Text_MrStoneGreet:
 	.string "I'm MR. STONE, the PRESIDENT of\n"
 	.string "the DEVON CORPORATION.\p"
-	.string "I'd just got word about you!\p"
-	.string "You saved our staff not just once,\n"
-	.string "but twice!\p"
-	.string "I have a favor to ask of an amazing\n"
-	.string "person like you.\p"
-	.string "I understand that you're delivering\n"
-	.string "a package to SLATEPORT's SHIPYARD.\p"
-	.string "Well, on the way, could you stop off in\n"
-	.string "DEWFORD TOWN?\p"
-	.string "I was hoping that you'd deliver a\n"
-	.string "LETTER to STEVEN in DEWFORD.$"
+	.string "I'm impressed by the amount of\n"
+	.string "guts it must take to just walk into\l"
+	.string "the top floor of a corporation!\p"
+	.string "Lucky for you, I like a person with\n"
+	.string "some guts.$"
+
+RustboroCity_DevonCorp_3F_Text_MrStoneAfterGreet:
+	.string "Lucky for you, I like a person with\n"
+	.string "some guts.$"
 
 RustboroCity_DevonCorp_3F_Text_MrStoneWantYouToHaveThis:
 	.string "MR. STONE: Now, you should know that\n"

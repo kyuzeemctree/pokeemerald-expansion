@@ -198,6 +198,286 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route101_EventScript_RouteSign"
+    },
+    {
+      "type": "sign",
+      "x": 5,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest35"
+    },
+    {
+      "type": "sign",
+      "x": 6,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest36"
+    },
+    {
+      "type": "sign",
+      "x": 7,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest37"
+    },
+    {
+      "type": "sign",
+      "x": 8,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest38"
+    },
+    {
+      "type": "sign",
+      "x": 9,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest39"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest40"
+    },
+    {
+      "type": "sign",
+      "x": 13,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest41"
+    },
+    {
+      "type": "sign",
+      "x": 14,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest42"
+    },
+    {
+      "type": "sign",
+      "x": 15,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest43"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest44"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest45"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 2,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest46"
+    },
+    {
+      "type": "sign",
+      "x": 6,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest47"
+    },
+    {
+      "type": "sign",
+      "x": 7,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest48"
+    },
+    {
+      "type": "sign",
+      "x": 8,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest49"
+    },
+    {
+      "type": "sign",
+      "x": 9,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest50"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest51"
+    },
+    {
+      "type": "sign",
+      "x": 11,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest52"
+    },
+    {
+      "type": "sign",
+      "x": 14,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest53"
+    },
+    {
+      "type": "sign",
+      "x": 15,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest54"
+    },
+    {
+      "type": "sign",
+      "x": 16,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest55"
+    },
+    {
+      "type": "sign",
+      "x": 17,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest56"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest57"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest58"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest59"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest60"
+    },
+    {
+      "type": "sign",
+      "x": 20,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest61"
+    },
+    {
+      "type": "sign",
+      "x": 21,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest63"
+    },
+    {
+      "type": "sign",
+      "x": 22,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest64"
+    },
+    {
+      "type": "sign",
+      "x": 23,
+      "y": 6,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest65"
+    },
+    {
+      "type": "sign",
+      "x": 11,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest66"
+    },
+    {
+      "type": "sign",
+      "x": 12,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest67"
+    },
+    {
+      "type": "sign",
+      "x": 13,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest68"
+    },
+    {
+      "type": "sign",
+      "x": 14,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest69"
+    },
+    {
+      "type": "sign",
+      "x": 15,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "SETest70"
     }
   ]
 }

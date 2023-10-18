@@ -8,7 +8,143 @@ Route103_MapScripts::
 Route103_OnLoad:
 	call_if_set FLAG_SYS_GAME_CLEAR, Route103_EventScript_OpenAlteringCave
 	end
-	
+
+SETest1::
+	playse SE_A
+	end
+
+SETest2::
+	playse SE_APPLAUSE
+	end
+
+SETest3::
+	playse SE_ARENA_TIMEUP1
+	end
+
+SETest4::
+	playse SE_ARENA_TIMEUP2
+	end
+
+SETest5::
+	playse SE_BALL
+	end
+
+SETest6::
+	playse SE_BALLOON_BLUE
+	end
+
+SETest7::
+	playse SE_BALLOON_RED
+	end
+
+SETest8::
+	playse SE_BALLOON_YELLOW
+	end
+
+SETest9::
+	playse SE_BALL_BOUNCE_1
+	end
+
+SETest10::
+	playse SE_BALL_BOUNCE_2
+	end
+
+SETest11::
+	playse SE_BALL_BOUNCE_3
+	end
+
+SETest12::
+	playse SE_BALL_BOUNCE_4
+	end
+
+SETest13::
+	playse SE_BALL_OPEN
+	end
+
+SETest14::
+	playse SE_BALL_THROW
+	end
+
+SETest15::
+	playse SE_BALL_TRADE
+	end
+
+SETest16::
+	playse SE_BALL_TRAY_BALL
+	end
+
+SETest17::
+	playse SE_BALL_TRAY_ENTER
+	end
+
+SETest18::
+	playse SE_BALL_TRAY_EXIT
+	end
+
+SETest19::
+	playse SE_BANG
+	end
+
+SETest20::
+	playse SE_BERRY_BLENDER
+	end
+
+SETest21::
+	playse SE_BIKE_HOP
+	end
+
+SETest22::
+	playse SE_BOO
+	end
+
+SETest23::
+	playse SE_BREAKABLE_DOOR
+	end
+
+SETest24::
+	playse SE_BRIDGE_WALK
+	end
+
+SETest25::
+	playse SE_CARD
+	end
+
+SETest26::
+	playse SE_CLICK
+	end
+
+SETest27::
+	playse SE_CONTEST_CONDITION_LOSE
+	end
+
+SETest28::
+	playse SE_CONTEST_CURTAIN_FALL
+	end
+
+SETest29::
+	playse SE_CONTEST_CURTAIN_RISE
+	end
+
+SETest30::
+	playse SE_CONTEST_HEART
+	end
+
+SETest31::
+	playse SE_CONTEST_ICON_CHANGE
+	end
+
+SETest32::
+	playse SE_CONTEST_ICON_CLEAR
+	end
+
+SETest33::
+	playse SE_CONTEST_MONS_TURN
+	end
+
+SETest34::
+	playse SE_CONTEST_PLACE
+	end
+
 Route103_OnTransition:
 	call ProfBirch_EventScript_UpdateLocation
 	end
