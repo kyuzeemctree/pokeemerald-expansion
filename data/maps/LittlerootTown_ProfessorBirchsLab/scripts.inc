@@ -1,75 +1,3 @@
-LittlerootTown_ProfessorBirchsLab_MapScripts2::
-	.byte 0
-
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter::
-	lockall
-	showmonpic SPECIES_SHINX, 10, 3
-	msgbox LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_0, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_Starter_2
-	hidemonpic
-	msgbox LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_3
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_1:
-	waitmessage
-	releaseall
-	end
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_2:
-	givemon SPECIES_SHINX, 5, ITEM_NONE
-	compare VAR_RESULT, MON_GIVEN_TO_PARTY
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_Starter_5
-	compare VAR_RESULT, MON_GIVEN_TO_PC
-	goto_if_eq LittlerootTown_ProfessorBirchsLab_EventScript_Starter_6
-	hidemonpic
-	msgbox LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_2
-	goto LittlerootTown_ProfessorBirchsLab_EventScript_Starter_1
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_5:
-	playfanfare MUS_OBTAIN_ITEM
-	msgbox LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_1
-	removeobject 4
-	setflag FLAG_CHOSE_STARTER
-	call NicknamePartyMon
-	goto LittlerootTown_ProfessorBirchsLab_EventScript_Starter_1
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_6:
-	playfanfare MUS_OBTAIN_ITEM
-	msgbox LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_1
-	removeobject 4
-	setflag FLAG_CHOSE_STARTER
-	call NicknameBoxMon
-	goto LittlerootTown_ProfessorBirchsLab_EventScript_Starter_1
-
-
-NicknamePartyMon::
-	hidemonpic
-	msgbox NicknamePartyMon_Text_0, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq NicknamePartyMon_1
-	return
-
-NicknamePartyMon_1:
-	call Common_EventScript_GetGiftMonPartySlot
-	call Common_EventScript_NameReceivedPartyMon
-	return
-
-
-NicknameBoxMon::
-	hidemonpic
-	msgbox NicknamePartyMon_Text_0, MSGBOX_YESNO
-	compare VAR_RESULT, YES
-	goto_if_eq NicknameBoxMon_2
-NicknameBoxMon_1:
-	call Common_EventScript_TransferredToPC
-	msgbox NicknameBoxMon_Text_0
-	return
-
-NicknameBoxMon_2:
-	call Common_EventScript_NameReceivedBoxMon
-	goto NicknameBoxMon_1
-
-
 .set LOCALID_AIDE, 1
 .set LOCALID_BIRCH, 2
 .set LOCALID_RIVAL, 3
@@ -777,9 +705,10 @@ LittlerootTown_ProfessorBirchsLab_Text_DontBeThatWay:
 	.string "You should go meet my kid.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_BirchRivalGoneHome:
-	.string "PROF. BIRCH: {RIVAL}?\p"
-	.string "They should be out doing\n"
-	.string "research out in Petalburg Woods.\p"
+	.string "PROF. BIRCH: {RIVAL}?\n"
+	.string "Gone home, I think.\p"
+	.string "Or maybe that kid's scrabbling around\n"
+	.string "in tall grass again somewhere…\p"
 	.string "If you or your POKéMON get tired,\n"
 	.string "you should get some rest at home.$"
 
@@ -1048,21 +977,3 @@ LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall:
 	.string "we meet. I'll be waiting!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_0:
-	.string "PROF. BIRCH: You'll take Shinx?$"
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_1:
-	.string "PROF. BIRCH: A fine choice!$"
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_2:
-	.string "No room in PC$"
-
-LittlerootTown_ProfessorBirchsLab_EventScript_Starter_Text_3:
-	.string "PROF. BIRCH: I see...$"
-
-NicknamePartyMon_Text_0:
-	.string "PROF. BIRCH: Why not give it a nickname?$"
-
-NicknameBoxMon_Text_0:
-	.string "Transferred to PC$"

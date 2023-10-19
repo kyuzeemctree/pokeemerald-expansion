@@ -799,7 +799,7 @@ const struct Item gItems[] =
     [ITEM_HP_UP] =
     {
         .name = _("HP Up"),
-        .price = 10000,
+        .price = 300,
         .description = sHPUpDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -810,7 +810,7 @@ const struct Item gItems[] =
     [ITEM_PROTEIN] =
     {
         .name = _("Protein"),
-        .price = 10000,
+        .price = 300,
         .description = sProteinDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -821,7 +821,7 @@ const struct Item gItems[] =
     [ITEM_IRON] =
     {
         .name = _("Iron"),
-        .price = 10000,
+        .price = 300,
         .description = sIronDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -832,7 +832,7 @@ const struct Item gItems[] =
     [ITEM_CALCIUM] =
     {
         .name = _("Calcium"),
-        .price = 10000,
+        .price = 300,
         .description = sCalciumDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -843,7 +843,7 @@ const struct Item gItems[] =
     [ITEM_ZINC] =
     {
         .name = _("Zinc"),
-        .price = 10000,
+        .price = 300,
         .description = sZincDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -854,7 +854,7 @@ const struct Item gItems[] =
     [ITEM_CARBOS] =
     {
         .name = _("Carbos"),
-        .price = 10000,
+        .price = 300,
         .description = sCarbosDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -865,7 +865,7 @@ const struct Item gItems[] =
     [ITEM_PP_UP] =
     {
         .name = _("PP Up"),
-        .price = 10000,
+        .price = 100,
         .description = sPPUpDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -876,7 +876,7 @@ const struct Item gItems[] =
     [ITEM_PP_MAX] =
     {
         .name = _("PP Max"),
-        .price = 10000,
+        .price = 300,
         .description = sPPMaxDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -889,7 +889,7 @@ const struct Item gItems[] =
     [ITEM_HEALTH_FEATHER] =
     {
         .name = _("HealthFeather"),
-        .price = 300,
+        .price = 75,
         .description = sHealthFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -900,7 +900,7 @@ const struct Item gItems[] =
     [ITEM_MUSCLE_FEATHER] =
     {
         .name = _("MuscleFeather"),
-        .price = 300,
+        .price = 75,
         .description = sMuscleFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -911,7 +911,7 @@ const struct Item gItems[] =
     [ITEM_RESIST_FEATHER] =
     {
         .name = _("ResistFeather"),
-        .price = 300,
+        .price = 75,
         .description = sResistFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -922,7 +922,7 @@ const struct Item gItems[] =
     [ITEM_GENIUS_FEATHER] =
     {
         .name = _("GeniusFeather"),
-        .price = 300,
+        .price = 75,
         .description = sGeniusFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -933,7 +933,7 @@ const struct Item gItems[] =
     [ITEM_CLEVER_FEATHER] =
     {
         .name = _("CleverFeather"),
-        .price = 300,
+        .price = 75,
         .description = sCleverFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -944,7 +944,7 @@ const struct Item gItems[] =
     [ITEM_SWIFT_FEATHER] =
     {
         .name = _("SwiftFeather"),
-        .price = 300,
+        .price = 75,
         .description = sSwiftFeatherDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -957,7 +957,7 @@ const struct Item gItems[] =
     [ITEM_ABILITY_CAPSULE] =
     {
         .name = _("AbilityCapsle"),
-        .price = 10000,
+        .price = 1000,
         .holdEffectParam = 0,
         .description = sAbilityCapsuleDesc,
         .pocket = POCKET_ITEMS,
@@ -968,7 +968,7 @@ const struct Item gItems[] =
     [ITEM_ABILITY_PATCH] =
     {
         .name = _("AbilityPatch"),
-        .price = 0,
+        .price = 10000,
         .holdEffectParam = 0,
         .description = sAbilityPatchDesc,
         .pocket = POCKET_ITEMS,
@@ -5038,7 +5038,7 @@ const struct Item gItems[] =
     [ITEM_CUT_TOOL] =
     {
         .name = _("Axe"),
-        .price = 0,
+        .price = 1000,
         .description = sCutToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5049,7 +5049,7 @@ const struct Item gItems[] =
     [ITEM_FLY_TOOL] =
     {
         .name = _("Taxi Pager"),
-        .price = 0,
+        .price = 500,
         .description = sFlyToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5060,7 +5060,7 @@ const struct Item gItems[] =
     [ITEM_SURF_TOOL] =
     {
         .name = _("Surfboard"),
-        .price = 0,
+        .price = 5000,
         .description = sSurfToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5071,7 +5071,7 @@ const struct Item gItems[] =
     [ITEM_STRENGTH_TOOL] =
     {
         .name = _("Power Glove"),
-        .price = 0,
+        .price = 10000,
         .description = sStrengthToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5093,7 +5093,7 @@ const struct Item gItems[] =
     [ITEM_ROCKSMASH_TOOL] =
     {
         .name = _("Pickaxe"),
-        .price = 0,
+        .price = 2500,
         .description = sRockSmashToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5104,7 +5104,7 @@ const struct Item gItems[] =
     [ITEM_WATERFALL_TOOL] =
     {
         .name = _("Ascend Charm"),
-        .price = 0,
+        .price = 15000,
         .description = sWaterfallToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5115,7 +5115,7 @@ const struct Item gItems[] =
     [ITEM_DIVE_TOOL] =
     {
         .name = _("Snorkle"),
-        .price = 0,
+        .price = 7500,
         .description = sDiveToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
