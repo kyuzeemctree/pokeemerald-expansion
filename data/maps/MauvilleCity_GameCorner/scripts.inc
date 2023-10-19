@@ -50,7 +50,7 @@ MauvilleCity_GameCorner_EventScript_Buy50Coins::
 	removemoney COINS_PRICE_50
 	updatemoneybox
 	updatecoinsbox 1, 6
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins, MSGBOX_DEFAULT
 	hidemoneybox
 	hidecoinsbox 0, 5
@@ -66,7 +66,7 @@ MauvilleCity_GameCorner_EventScript_Buy500Coins::
 	removemoney COINS_PRICE_500
 	updatemoneybox
 	updatecoinsbox 1, 6
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_ThankYouHereAreYourCoins, MSGBOX_DEFAULT
 	hidemoneybox
 	hidecoinsbox 0, 5
@@ -163,7 +163,7 @@ MauvilleCity_GameCorner_EventScript_BuyTreeckoDoll::
 	removecoins DOLL_COINS
 	adddecoration DECOR_TREECKO_DOLL
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
 	end
@@ -177,7 +177,7 @@ MauvilleCity_GameCorner_EventScript_BuyTorchicDoll::
 	removecoins DOLL_COINS
 	adddecoration DECOR_TORCHIC_DOLL
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
 	end
@@ -191,7 +191,7 @@ MauvilleCity_GameCorner_EventScript_BuyMudkipDoll::
 	removecoins DOLL_COINS
 	adddecoration DECOR_MUDKIP_DOLL
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_SendToYourHomePC, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseDollPrize
 	end
@@ -295,7 +295,7 @@ MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam::
 	removecoins TM_SPIKES_COINS
 	additem ITEM_TM_SPIKES
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
@@ -308,7 +308,7 @@ MauvilleCity_GameCorner_EventScript_BuyTMPsychic::
 	removecoins TM_BUG_BUZZ_COINS
 	additem ITEM_TM_BUG_BUZZ
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
@@ -321,7 +321,7 @@ MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower::
 	removecoins TM_AURA_SPHERE_COINS
 	additem ITEM_TM_AURA_SPHERE
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
@@ -334,7 +334,7 @@ MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt::
 	removecoins TM_EARTH_POWER_COINS
 	additem ITEM_TM_EARTH_POWER
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
@@ -347,7 +347,7 @@ MauvilleCity_GameCorner_EventScript_BuyTMIceBeam::
 	removecoins TM_POWER_GEM_COINS
 	additem ITEM_TM_POWER_GEM
 	updatecoinsbox 1, 1
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox MauvilleCity_GameCorner_Text_HereYouGo, MSGBOX_DEFAULT
 	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
@@ -450,7 +450,7 @@ MauvilleCity_GameCorner_EventScript_TryGive20Coins::
 	setflag FLAG_RECEIVED_20_COINS
 	addcoins 20
 	msgbox MauvilleCity_GameCorner_Text_LuckOnlyLastSoLongTakeCoins, MSGBOX_DEFAULT
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	goto MauvilleCity_GameCorner_EventScript_PokefanMNormal
 	end
 

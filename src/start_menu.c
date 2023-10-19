@@ -621,19 +621,19 @@ static bool8 HandleStartMenuInput(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         sStartMenuCursorPos = Menu_MoveCursor(-1);
     }
 
     if (JOY_NEW(DPAD_DOWN))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         sStartMenuCursorPos = Menu_MoveCursor(1);
     }
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void == StartMenuPokedexCallback)
         {
             if (GetNationalPokedexCount(FLAG_GET_SEEN) == 0)
@@ -804,7 +804,7 @@ static bool8 StartMenuSafariZoneRetireCallback(void)
 
 static void HideStartMenuDebug(void)
 {
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_POCKET);
     ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
     RemoveStartMenuWindow();
 }
@@ -998,7 +998,7 @@ static bool8 SaveSuccesTimer(void)
 
     if (JOY_HELD(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         return TRUE;
     }
     if (sSaveDialogTimer == 0)
@@ -1476,7 +1476,7 @@ static void HideStartMenuWindow(void)
 
 void HideStartMenu(void)
 {
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_POCKET);
     HideStartMenuWindow();
 }
 

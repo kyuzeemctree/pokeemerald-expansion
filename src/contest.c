@@ -1500,7 +1500,7 @@ static void Task_TryShowMoveSelectScreen(u8 taskId)
     // Wait for button press to show move select screen
     if ((JOY_NEW(A_BUTTON)) || (gMain.newKeys == B_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
         {
             SetBottomSliderHeartsInvisibility(TRUE);
@@ -1566,7 +1566,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         gTasks[taskId].func = Task_SelectedMove;
     }
     else
@@ -1575,7 +1575,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
         {
         case B_BUTTON:
             // Cancel move selection
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             SetBottomSliderHeartsInvisibility(FALSE);
             ConvertIntToDecimalStringN(gStringVar1, eContest.appealNumber + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
             if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
@@ -1601,7 +1601,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
             DrawMoveSelectArrow(eContest.playerMoveChoice);
             PrintContestMoveDescription(gContestMons[gContestPlayerMonIndex].moves[eContest.playerMoveChoice]);
             if (numMoves > 1)
-                PlaySE(SE_SELECT);
+                PlaySE(SE_RG_BAG_CURSOR);
             break;
         case DPAD_DOWN:
             EraseMoveSelectArrow(eContest.playerMoveChoice);
@@ -1612,7 +1612,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
             DrawMoveSelectArrow(eContest.playerMoveChoice);
             PrintContestMoveDescription(gContestMons[gContestPlayerMonIndex].moves[eContest.playerMoveChoice]);
             if (numMoves > 1)
-                PlaySE(SE_SELECT);
+                PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
     }

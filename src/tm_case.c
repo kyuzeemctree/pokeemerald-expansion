@@ -548,7 +548,7 @@ static void TMCase_MoveCursorFunc(s32 itemIndex, bool8 onInit, struct ListMenu *
 
     if (onInit != TRUE)
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         // InitSelectedTMSpriteData(sTMCaseDynamicResources->tmSpriteId, itemId);
     }
     TMCase_MoveCursor_UpdatePrintedDescription(itemIndex);
@@ -739,7 +739,7 @@ static void Task_TMCaseMain(u8 taskId)
             ListMenuGetScrollAndRow(data[0], &sTMCaseStaticResources.scrollOffset, &sTMCaseStaticResources.selectedRow);
             if (JOY_NEW(SELECT_BUTTON) && sTMCaseStaticResources.unk_05 == 1)
             {
-                PlaySE(SE_SELECT);
+                PlaySE(SE_RG_BAG_POCKET);
                 gSpecialVar_ItemId = ITEM_NONE;
                 Task_BeginFadeOutFromTMCase(taskId);
             }
@@ -750,12 +750,12 @@ static void Task_TMCaseMain(u8 taskId)
                 case -1:
                     break;
                 case -2:
-                    PlaySE(SE_SELECT);
+                    PlaySE(SE_RG_BAG_POCKET);
                     gSpecialVar_ItemId = 0;
                     Task_BeginFadeOutFromTMCase(taskId);
                     break;
                 default:
-                    PlaySE(SE_SELECT);
+                    PlaySE(SE_RG_BAG_POCKET);
                     FillBG2RowWithPalette_2timesNplus1(1);
                     RemoveTMCaseScrollIndicatorArrowPair();
                     PrintListMenuCursorByID_WithColorIdx(data[0], 2);
@@ -828,13 +828,13 @@ static void Task_TMContextMenu_HandleInput(u8 taskId)
         switch (input)
         {
         case MENU_B_PRESSED:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             sMenuActions_UseGiveExit[sTMCaseDynamicResources->menuActionIndices[sTMCaseDynamicResources->numMenuActions - 1]].func.void_u8(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             sMenuActions_UseGiveExit[sTMCaseDynamicResources->menuActionIndices[input]].func.void_u8(taskId);
             break;
         }
@@ -877,7 +877,7 @@ static void Task_WaitButtonAfterErrorPrint(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         Subtask_CloseContextMenuAndReturnToMain(taskId);
     }
 }

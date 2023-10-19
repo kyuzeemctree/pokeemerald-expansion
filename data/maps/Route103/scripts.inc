@@ -137,10 +137,6 @@ SETest32::
 	playse SE_CONTEST_ICON_CLEAR
 	end
 
-SETest33::
-	playse SE_CONTEST_MONS_TURN
-	end
-
 SETest34::
 	playse SE_CONTEST_PLACE
 	end

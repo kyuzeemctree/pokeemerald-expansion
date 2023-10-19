@@ -309,7 +309,7 @@ static void Task_LinkupTryConfirmation(u8 taskId)
         }
         else if (JOY_HELD(A_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             CheckShouldAdvanceLinkState();
             gTasks[taskId].func = Task_LinkupConfirm;
         }

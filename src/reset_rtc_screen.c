@@ -456,7 +456,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
         gTasks[taskId].func = Task_ResetRtc_Exit;
         tSetTime = FALSE;
         tSelection = SELECTION_NONE;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         return;
     }
 
@@ -465,7 +465,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
         if (selectionInfo->right)
         {
             tSelection = selectionInfo->right;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return;
         }
     }
@@ -475,7 +475,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
         if (selectionInfo->left)
         {
             tSelection = selectionInfo->left;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return;
         }
     }
@@ -488,7 +488,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
             gLocalTime.hours = tHours;
             gLocalTime.minutes = tMinutes;
             gLocalTime.seconds = tSeconds;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             gTasks[taskId].func = Task_ResetRtc_Exit;
             tSetTime = TRUE;
             tSelection = SELECTION_NONE;
@@ -496,7 +496,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
     }
     else if (MoveTimeUpDown(&data[selectionInfo->dataIndex], selectionInfo->minVal, selectionInfo->maxVal, JOY_REPEAT(DPAD_UP | DPAD_DOWN)))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintTime(tWindowId, 0, 1, tDays, tHours, tMinutes, tSeconds);
         CopyWindowToVram(tWindowId, COPYWIN_GFX);
     }
@@ -617,7 +617,7 @@ static void Task_ShowResetRtcPrompt(u8 taskId)
         else if (JOY_NEW(A_BUTTON))
         {
             // Confirm
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             DestroyTask(taskId);
         }
         break;

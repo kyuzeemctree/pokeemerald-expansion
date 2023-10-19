@@ -1314,7 +1314,7 @@ void ItemUseInBattle_BagMenu(u8 taskId)
     }
     else
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         RemoveUsedItem();
         ScheduleBgCopyTilemapToVram(2);
         if (!InBattlePyramid())

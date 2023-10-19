@@ -516,7 +516,7 @@ static void DestroyFlavorCircleSprites(void)
 
 static void PrepareToCloseBerryTagScreen(u8 taskId)
 {
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_POCKET);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_CloseBerryTagScreen;
 }
@@ -564,7 +564,7 @@ static void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
             tBgOp = BG_COORD_ADD;
 
         tBerryY = 0;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         HandleBagCursorPositionChange(toMove);
         gTasks[taskId].func = Task_DisplayAnotherBerry;
     }

@@ -192,7 +192,7 @@ Route117_PokemonDayCare_EventScript_RetrieveMon::
 	waitmovement 0
 	specialvar VAR_RESULT, TakePokemonFromDaycare
 	special SubtractMoneyFromVar0x8005
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	msgbox Route117_PokemonDayCare_Text_HeresYourMon, MSGBOX_DEFAULT
 	waitse
 	playmoncry VAR_RESULT, CRY_MODE_NORMAL

@@ -31,7 +31,9 @@ SecretBase_EventScript_PC::
 	waitstate
 	waitmessage
 	waitbuttonpress
-	playse SE_SELECT
+	playse SE_PIN
+	playse SE_CONTEST_MONS_TURN
+	end
 	goto SecretBase_EventScript_PCShowMainMenu
 	end
 
@@ -90,7 +92,7 @@ SecretBase_EventScript_RecordMixingPC::
 	waitstate
 	waitmessage
 	waitbuttonpress
-	playse SE_SELECT
+	playse SE_PIN
 	goto SecretBase_EventScript_PCRegisterMenu
 	end
 

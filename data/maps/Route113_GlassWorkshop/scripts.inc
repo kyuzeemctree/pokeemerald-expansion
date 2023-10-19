@@ -187,7 +187,7 @@ Route113_GlassWorkshop_EventScript_MakeGlassItem::
 	msgbox Route113_GlassWorkshop_Text_IllMakeItemForYou, MSGBOX_DEFAULT
 	closemessage
 	fadescreen FADE_TO_BLACK
-	playse SE_SELECT
+	playse SE_PIN
 	delay 30
 	fadescreen FADE_FROM_BLACK
 	msgbox Route113_GlassWorkshop_Text_IveFinishedGlassItem, MSGBOX_DEFAULT

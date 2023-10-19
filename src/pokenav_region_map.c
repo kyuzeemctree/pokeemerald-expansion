@@ -400,7 +400,7 @@ static u32 LoopedTask_RegionMapZoomOut(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         ChangeBgYForZoom(FALSE);
         SetRegionMapDataForZoom();
         return LT_INC_AND_PAUSE;
@@ -427,7 +427,7 @@ static u32 LoopedTask_RegionMapZoomIn(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         UpdateMapSecInfoWindow(state);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -459,7 +459,7 @@ static u32 LoopedTask_ExitRegionMap(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         return LT_INC_AND_PAUSE;
     case 1:

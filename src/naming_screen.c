@@ -1515,7 +1515,7 @@ static bool8 KeyboardKeyHandler_OK(u8 input)
     TryStartButtonFlash(BUTTON_OK, TRUE, FALSE);
     if (input == INPUT_A_BUTTON)
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         sNamingScreen->state = STATE_PRESSED_OK;
         return TRUE;
     }
@@ -1837,7 +1837,7 @@ static bool8 AddTextCharacter(void)
     BufferCharacter(GetCharAtKeyboardPos(x, y));
     DrawTextEntry();
     CopyBgTilemapBufferToVram(3);
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_CURSOR);
 
     if (GetPreviousTextCaretPosition() != sNamingScreen->template->maxChars - 1)
         return FALSE;

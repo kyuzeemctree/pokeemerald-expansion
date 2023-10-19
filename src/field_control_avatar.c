@@ -251,7 +251,7 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
      && script != SecretBase_EventScript_DollInteract
      && script != SecretBase_EventScript_CushionInteract
      && script != EventScript_PC)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
 
     ScriptContext_SetupScript(script);
     return TRUE;

@@ -163,6 +163,70 @@ SETest70::
 	playse SE_PUDDLE
 	end
 
+SETest71::
+	playse SE_RG_BALL_CLICK
+	end
+
+SETest72::
+	playse SE_RG_CARD_FLIP
+	end
+
+SETest73::
+	playse SE_RG_CARD_FLIPPING
+	end
+
+SETest74::
+	playse SE_RG_CARD_OPEN
+	end
+
+SETest75::
+	playse SE_RG_DEOXYS_MOVE
+	end
+
+SETest76::
+	playse SE_RG_HELP_CLOSE
+	end
+
+SETest77::
+	playse SE_RG_HELP_ERROR
+	end
+
+SETest78::
+	playse SE_RG_HELP_OPEN
+	end
+
+SETest79::
+	playse SE_RG_POKE_JUMP_FAILURE
+	end
+
+SETest80::
+	playse SE_RG_POKE_JUMP_SUCCESS
+	end
+
+SETest81::
+	playse SE_RG_SHOP
+	end
+
+SETest82::
+	playse SE_ROTATING_GATE
+	end
+
+SETest84::
+	playse SE_SUCCESS
+	end
+
+SETest85::
+	playse SE_UNLOCK
+	end
+
+SETest86::
+	playse SE_USE_ITEM
+	end
+
+SETest33::
+	playse SE_CONTEST_MONS_TURN
+	end
+	
 Route101_EventScript_StartBirchRescue::
 	lockall
 	playbgm MUS_HELP, TRUE

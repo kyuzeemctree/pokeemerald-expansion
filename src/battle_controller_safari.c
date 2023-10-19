@@ -125,7 +125,7 @@ static void HandleInputChooseAction(u32 battler)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
 
         switch (gActionSelectionCursor[battler])
         {
@@ -148,7 +148,7 @@ static void HandleInputChooseAction(u32 battler)
     {
         if (gActionSelectionCursor[battler] & 1)
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[battler]);
             gActionSelectionCursor[battler] ^= 1;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);
@@ -158,7 +158,7 @@ static void HandleInputChooseAction(u32 battler)
     {
         if (!(gActionSelectionCursor[battler] & 1))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[battler]);
             gActionSelectionCursor[battler] ^= 1;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);
@@ -168,7 +168,7 @@ static void HandleInputChooseAction(u32 battler)
     {
         if (gActionSelectionCursor[battler] & 2)
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[battler]);
             gActionSelectionCursor[battler] ^= 2;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);
@@ -178,7 +178,7 @@ static void HandleInputChooseAction(u32 battler)
     {
         if (!(gActionSelectionCursor[battler] & 2))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ActionSelectionDestroyCursorAt(gActionSelectionCursor[battler]);
             gActionSelectionCursor[battler] ^= 2;
             ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);

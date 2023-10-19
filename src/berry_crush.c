@@ -3197,7 +3197,7 @@ static u32 Cmd_ShowResults(struct BerryCrushGame *game, u8 *args)
         }
         if (!(JOY_NEW(A_BUTTON)))
             return 0;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         CloseResultsWindow(game);
         break;
     case 3:

@@ -422,7 +422,7 @@ static void PlayerPCProcessMenuInput(u8 taskId)
     case MENU_NOTHING_CHOSEN:
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         ClearStdWindowAndFrameToTransparent(tWindowId, FALSE);
         ClearWindowTilemap(tWindowId);
         RemoveWindow(tWindowId);
@@ -538,11 +538,11 @@ static void ItemStorageMenuProcessInput(u8 taskId)
             ItemStorageMenuPrint(sItemStorage_OptionDescriptions[newPos]);
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         ItemStorage_Exit(taskId);
         break;
     default:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         sItemStorage_MenuActions[inputOptionId].func.void_u8(taskId);
         break;
     }
@@ -712,13 +712,13 @@ static void Mailbox_ProcessInput(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             RemoveScrollIndicatorArrowPair(gPlayerPCItemPageInfo.scrollIndicatorTaskId);
             Mailbox_ReturnToPlayerPC(taskId);
             break;
         default:
             // Selected mail, ask what to do with it
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             MailboxMenu_RemoveWindow(MAILBOXWIN_TITLE);
             MailboxMenu_RemoveWindow(MAILBOXWIN_LIST);
             DestroyListMenuTask(tListTaskId, &gPlayerPCItemPageInfo.itemsAbove, &gPlayerPCItemPageInfo.cursorPos);
@@ -768,11 +768,11 @@ static void Mailbox_MailOptionsProcessInput(u8 taskId)
     case MENU_NOTHING_CHOSEN:
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         Mailbox_Cancel(taskId);
         break;
     default:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
         gMailboxMailOptions[inputOptionId].func.void_u8(taskId);
         break;
     }
@@ -839,7 +839,7 @@ static void Mailbox_HandleConfirmMoveToBag(u8 taskId)
         Mailbox_DoMailMoveToBag(taskId);
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
     case 1: // No
         Mailbox_CancelMoveToBag(taskId);
         break;
@@ -1009,7 +1009,7 @@ void CopyItemName_PlayerPC(u8 *string, u16 itemId)
 static void ItemStorage_MoveCursor(s32 id, bool8 onInit, struct ListMenu *list)
 {
     if (onInit != TRUE)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_POCKET);
     if (sItemStorageMenu->toSwapPos == NOT_SWAPPING)
     {
         ItemStorage_EraseItemIcon();
@@ -1213,7 +1213,7 @@ static void ItemStorage_ProcessInput(u8 taskId)
         ListMenuGetScrollAndRow(tListTaskId, &gPlayerPCItemPageInfo.itemsAbove, &gPlayerPCItemPageInfo.cursorPos);
         if (gPlayerPCItemPageInfo.itemsAbove + gPlayerPCItemPageInfo.cursorPos != gPlayerPCItemPageInfo.count - 1)
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             ItemStorage_StartItemSwap(taskId);
         }
     }
@@ -1226,11 +1226,11 @@ static void ItemStorage_ProcessInput(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             ItemStorage_ExitItemList(taskId);
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             ItemStorage_DoItemAction(taskId);
             break;
         }
@@ -1312,7 +1312,7 @@ static void ItemStorage_FinishItemSwap(u8 taskId, bool8 canceled)
 {
     s16 *data = gTasks[taskId].data;
     u16 newPos = gPlayerPCItemPageInfo.itemsAbove + gPlayerPCItemPageInfo.cursorPos;
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_POCKET);
     DestroyListMenuTask(tListTaskId, &gPlayerPCItemPageInfo.itemsAbove, &gPlayerPCItemPageInfo.cursorPos);
 
     if (!canceled && sItemStorageMenu->toSwapPos != newPos && sItemStorageMenu->toSwapPos != newPos - 1)
@@ -1396,7 +1396,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         if (JOY_NEW(A_BUTTON))
         {
             // Quantity confirmed, perform action
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             ItemStorage_RemoveWindow(ITEMPC_WIN_QUANTITY);
             if (!tInTossMenu)
                 ItemStorage_DoItemWithdraw(taskId);
@@ -1406,7 +1406,7 @@ static void ItemStorage_HandleQuantityRolling(u8 taskId)
         else if (JOY_NEW(B_BUTTON))
         {
             // Canceled action
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_POCKET);
             ItemStorage_RemoveWindow(ITEMPC_WIN_QUANTITY);
             ItemStorage_PrintMessage(ItemStorage_GetMessage(gSaveBlock1Ptr->pcItems[pos].itemId));
             ItemStorage_ReturnToListInput(taskId);

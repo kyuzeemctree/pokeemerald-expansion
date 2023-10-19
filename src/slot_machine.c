@@ -1357,7 +1357,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
             sSlotMachine->coins -= (MAX_BET - sSlotMachine->bet);
             sSlotMachine->bet = MAX_BET;
             sSlotMachine->state = SLOTTASK_START_SPIN;
-            PlaySE(SE_SHOP);
+            PlaySE(SE_RG_SHOP);
         }
         // Not enough coins
         else
@@ -1370,7 +1370,7 @@ static bool8 SlotTask_HandleBetInput(struct Task *task)
         // Increase bet
         if (JOY_NEW(DPAD_DOWN) && sSlotMachine->coins != 0)
         {
-            PlaySE(SE_SHOP);
+            PlaySE(SE_RG_SHOP);
             LightenBetTiles(sSlotMachine->bet);
             sSlotMachine->coins--;
             sSlotMachine->bet++;

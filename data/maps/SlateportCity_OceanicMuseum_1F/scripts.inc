@@ -35,7 +35,7 @@ SlateportCity_OceanicMuseum_1F_EventScript_PayEntranceFee::
 SlateportCity_OceanicMuseum_1F_EventScript_CheckMoneyForFee::
 	checkmoney 50
 	goto_if_eq VAR_RESULT, FALSE, SlateportCity_OceanicMuseum_1F_EventScript_NotEnoughMoney
-	playse SE_SHOP
+	playse SE_RG_SHOP
 	removemoney 50
 	updatemoneybox
 	msgbox SlateportCity_OceanicMuseum_1F_Text_PleaseEnjoyYourself, MSGBOX_DEFAULT
