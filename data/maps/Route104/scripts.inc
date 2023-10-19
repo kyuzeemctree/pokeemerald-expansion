@@ -42,6 +42,27 @@ Route104_EventScript_TrySetRivalPos::
 Route104_EventScript_DontSetRivalPos::
 	return
 
+EventScript_BattleWingull::
+	lock
+	faceplayer
+	playmoncry SPECIES_WINGULL, CRY_MODE_ENCOUNTER
+	delay 16
+	waitmoncry
+	setwildbattle SPECIES_WINGULL, 10
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	dowildbattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_WON, EventScript_RemoveWingull
+	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, EventScript_RemoveWingull
+	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, EventScript_RemoveWingull
+	release
+	end
+
+EventScript_RemoveWingull::
+	goto Common_EventScript_RemoveStaticPokemon
+	end
+
 Route104_EventScript_Rival::
 	lockall
 	setvar VAR_0x8008, 1
