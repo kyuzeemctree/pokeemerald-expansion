@@ -42,7 +42,7 @@ FortreeCity_House2_EventScript_WrongGuess::
 	end
 
 FortreeCity_House2_Text_HiddenPowersArousedByNature:
-	.string "People… POKéMON…\p"
+	.string "People… Pokémon…\p"
 	.string "Their powers are awakened by\n"
 	.string "living in natural environments…$"
 
@@ -69,7 +69,7 @@ FortreeCity_House2_Text_YourHiddenPowerHasAwoken:
 	.string "Oh! Splendid!\n"
 	.string "You must be a psychic!\p"
 	.string "Here, take this and awaken the psychic\n"
-	.string "power of your POKéMON.$"
+	.string "power of your pokémon.$"
 
 FortreeCity_House2_Text_ExplainHiddenPower:
 	.string "Psychics have been through a\n"

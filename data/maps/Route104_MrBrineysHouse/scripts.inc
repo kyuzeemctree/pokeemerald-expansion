@@ -1,5 +1,5 @@
-.set LOCALID_HEXM, 1
-.set LOCALID_POKO, 2
+.set LOCALID_BRINEY, 1
+.set LOCALID_PEEKO, 2
 
-Route104_MrBrineysHouse_MapScripts::
+Route104_MrBrineysHouse_MapScripts:: @ 8229D2E
 	.byte 0

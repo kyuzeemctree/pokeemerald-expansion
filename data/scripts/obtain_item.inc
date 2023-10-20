@@ -22,6 +22,9 @@ EventScript_BufferPocketNameAndTryFanfare::
 	case POCKET_POKE_BALLS, EventScript_BufferPokeballsPocket
 	case POCKET_TM_HM,      EventScript_BufferTMHMsPocket
 	case POCKET_BERRIES,    EventScript_BufferBerriesPocket
+	case POCKET_MEDICINE,   EventScript_BufferMedicinePocket
+	case POCKET_BATTLE_ITEMS, EventScript_BufferCombatPocket
+	case POCKET_TREASURES,  EventScript_BufferTreasuresPocket
 	end
 
 EventScript_BufferItemsPocket::
@@ -190,3 +193,18 @@ EventScript_NoRoomForHiddenItem::
 	setvar VAR_RESULT, 0
 	releaseall
 	end
+
+EventScript_BufferMedicinePocket::
+	bufferstdstring STR_VAR_3, STDSTRING_MEDICINE
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferCombatPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_BATTLEITEMS
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return
+
+EventScript_BufferTreasuresPocket::
+	bufferstdstring STR_VAR_3, STDSTRING_TREASURES
+	call_if_eq VAR_0x8007, TRUE, EventScript_PlayFanfareObtainedItem
+	return

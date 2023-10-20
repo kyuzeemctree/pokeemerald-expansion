@@ -10,12 +10,12 @@ gText_Birch_Pokemon::
 
 gText_Birch_MainSpeech::
 	.string "Despite our closeness, we don't\n"
-	.string "know everything about POKéMON.\p"
+	.string "know everything about pokémon.\p"
 	.string "In fact, there are many, many\n"
-	.string "secrets surrounding POKéMON.\p"
-	.string "To unravel POKéMON mysteries,\n"
+	.string "secrets surrounding pokémon.\p"
+	.string "To unravel pokémon mysteries,\n"
 	.string "I've been undertaking research.\l"
-	.string "That's what I do.\p"
+	.string "That's my thing.\p"
 	.string "$"
 
 gText_Birch_AndYouAre::
@@ -35,7 +35,7 @@ gText_Birch_SoItsPlayer::
 gText_Birch_YourePlayer::
 	.string "Ah, okay!\p"
 	.string "You're {PLAYER}{KUN} who's moving to my\n"
-	.string "hometown of LITTLEROOT.\l"
+	.string "hometown of Littleroot.\l"
 	.string "I get it now!\p"
 	.string "$"
 

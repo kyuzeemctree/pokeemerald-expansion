@@ -452,8 +452,8 @@ PetalburgCity_Movement_PlayerWatchScottExit3:
 	step_end
 
 PetalburgCity_Text_WhereIsWally:
-	.string "Where has our WALLY gone?\p"
-	.string "We have to leave for VERDANTURF TOWN\n"
+	.string "Where has our Wally gone?\p"
+	.string "We have to leave for Verdanturf Town\n"
 	.string "very soon…$"
 
 PetalburgCity_Text_AreYouRookieTrainer:
@@ -466,31 +466,31 @@ PetalburgCity_Text_WaterReflection:
 	.string "struggling with fear…\p"
 	.string "What do you see reflected in your face?$"
 
-PetalburgCity_Text_FullPartyExplanation:
-	.string "Let's say you have six POKéMON.\n"
+PetalburgCity_Text_FullPartyExplanation: @ 81DCA30
+	.string "Let's say you have six pokémon.\n"
 	.string "If you catch another one…\p"
-	.string "It is automatically sent to a STORAGE\n"
-	.string "BOX over a PC connection.$"
+	.string "It is automatically sent to a Storage\n"
+	.string "Box over a PC connection.$"
 
 PetalburgCity_Text_GymSign:
-	.string "PETALBURG CITY POKéMON GYM\n"
-	.string "LEADER: NORMAN\l"
+	.string "Petalburg City Pokémon Gym\n"
+	.string "Leader: Norman\l"
 	.string "“A man in pursuit of power!”$"
 
 PetalburgCity_Text_CitySign:
-	.string "PETALBURG CITY\n"
+	.string "Petalburg City\n"
 	.string "“Where people mingle with nature.”$"
 
-PetalburgCity_Text_WallyHouseSign:
-	.string "WALLY'S HOUSE$"
+PetalburgCity_Text_WallyHouseSign: @ 81DCB23
+	.string "Wally's House$"
 
 PetalburgCity_Text_AreYouATrainer:
 	.string "Hewwo!\n"
     .string "UwU\p"
-	.string "Are you a POKéMON TRAINER?\n"
+	.string "Are you a Pokémon Trainer?\n"
 	.string "So am I!\p"
-	.string "You're NORMAN'S kid, right?\n"
-	.string "He helped me catch a POKéMON!$"
+	.string "You're Norman's kid, right?\n"
+	.string "He helped me catch a Pokémon!$"
 
 PetalburgCity_Text_WellMaybeNot:
 	.string "He's so strong…\p"
@@ -498,6 +498,6 @@ PetalburgCity_Text_WellMaybeNot:
 
 PetalburgCity_Text_ImLookingForTalentedTrainers:
 	.string "Um… anyways.\n"
-	.string "I'm moving to VERDANTURF TOWN.\p"
+	.string "I'm moving to Verdanturf Town.\p"
 	.string "If you ever visit, let's have a battle!\n"
 	.string "UwU$"

@@ -276,7 +276,7 @@ SlateportCity_BattleTentLobby_EventScript_ExitRules::
 
 SlateportCity_BattleTentLobby_Text_CouldntFindMonForMe:
 	.string "So, like, I couldn't find myself any\n"
-	.string "POKéMON that were, like, for me.\p"
+	.string "pokémon that were, like, for me.\p"
 	.string "So, I figured, like, hey, I should file\n"
 	.string "a complaint to the guy there?\p"
 	.string "And he wouldn't hear me out, like, hey!\n"
@@ -286,14 +286,14 @@ SlateportCity_BattleTentLobby_Text_CouldntFindMonForMe:
 
 SlateportCity_BattleTentLobby_Text_ExplainTorment:
 	.string "That's, like, TM07, you know?\n"
-	.string "Hey, it's TOXIC, you hearing me?\p"
+	.string "Hey, it's Toxic, you hearing me?\p"
 	.string "Like, it'll bring the other guy\n"
 	.string "down real slowly, see?\p"
 	.string "Hey, now, you listen here, like,\n"
 	.string "I'm not being toxic to you!$"
 
-SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons:
-	.string "I don't really like BUG POKéMON,\n"
+SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons: @ 8208D27
+	.string "I don't really like bug pokémon,\n"
 	.string "but maybe I'll try using some for\l"
 	.string "a change of pace.\p"
 	.string "Who knows, I might even get to like\n"
@@ -301,7 +301,7 @@ SlateportCity_BattleTentLobby_Text_IllTryUsingBugMons:
 
 SlateportCity_BattleTentLobby_Text_BattleEvenWithoutToughMons:
 	.string "You can battle all you want here even\n"
-	.string "if you don't have any tough POKéMON.$"
+	.string "if you don't have any tough pokémon.$"
 
 SlateportCity_BattleTentLobby_Text_NiceIfMoreSelection:
 	.string "Wouldn't it be nice if they had more of\n"

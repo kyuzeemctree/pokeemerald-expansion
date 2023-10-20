@@ -38,23 +38,23 @@ MossdeepCity_Mart_EventScript_Sailor::
 	msgbox MossdeepCity_Mart_Text_NetAndDiveBallsRare, MSGBOX_NPC
 	end
 
-MossdeepCity_Mart_Text_ReviveIsFantastic:
-	.string "REVIVE is fantastic!\p"
-	.string "Give it to a fainted POKéMON,\n"
-	.string "and the POKéMON will arise.\p"
-	.string "But be careful, REVIVE doesn't restore\n"
+MossdeepCity_Mart_Text_ReviveIsFantastic: @ 8222411
+	.string "Revive is fantastic!\p"
+	.string "Give it to a fainted pokémon,\n"
+	.string "and the pokémon will arise.\p"
+	.string "But be careful, Revive doesn't restore\n"
 	.string "the used-up PP of moves.$"
 
-MossdeepCity_Mart_Text_MaxRepelLastsLongest:
-	.string "MAX REPEL keeps all weak POKéMON away.\p"
-	.string "Out of all the REPEL sprays, it lasts\n"
+MossdeepCity_Mart_Text_MaxRepelLastsLongest: @ 82224A0
+	.string "Max Repel keeps all weak pokémon away.\p"
+	.string "Out of all the Repel sprays, it lasts\n"
 	.string "the longest.$"
 
-MossdeepCity_Mart_Text_NetAndDiveBallsRare:
-	.string "The NET and DIVE BALLS are rare POKé\n"
-	.string "BALLS that are only made in MOSSDEEP.\p"
-	.string "A NET BALL is effective against\n"
-	.string "BUG-type and WATER-type POKéMON.\p"
-	.string "A DIVE BALL works best on POKéMON\n"
+MossdeepCity_Mart_Text_NetAndDiveBallsRare: @ 82224FA
+	.string "The Net and Dive Balls are rare Poké\n"
+	.string "Balls that are only made in Mossdeep.\p"
+	.string "A Net Ball is effective against\n"
+	.string "Bug type and water type pokémon.\p"
+	.string "A Dive Ball works best on pokémon\n"
 	.string "at the bottom of the sea.$"
 

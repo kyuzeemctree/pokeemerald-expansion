@@ -490,7 +490,7 @@ static const u8 sBideDescription[] = _(
 
 static const u8 sMetronomeDescription[] = _(
     "Waggles a finger to use any\n"
-    "Pokémon move at random.");
+    "pokémon move at random.");
 
 static const u8 sMirrorMoveDescription[] = _(
     "Counters the foe's attack\n"
@@ -714,7 +714,7 @@ static const u8 sSnoreDescription[] = _(
 
 static const u8 sCurseDescription[] = _(
     "A move that functions\n"
-    "differently for GHOSTS.");
+    "differently for Ghosts.");
 
 static const u8 sFlailDescription[] = _(
     "Inflicts more damage when\n"
@@ -797,7 +797,7 @@ static const u8 sDestinyBondDescription[] = _(
     "is also made to faint.");
 
 static const u8 sPerishSongDescription[] = _(
-    "Any Pokémon hearing this\n"
+    "Any pokémon hearing this\n"
     "song faints in 3 turns.");
 
 static const u8 sIcyWindDescription[] = _(
@@ -1142,7 +1142,7 @@ static const u8 sRevengeDescription[] = _(
 
 static const u8 sBrickBreakDescription[] = _(
     "Destroys barriers such as\n"
-    "REFLECT and causes damage.");
+    "Reflect and causes damage.");
 
 static const u8 sYawnDescription[] = _(
     "Lulls the foe into yawning,\n"
@@ -1193,7 +1193,7 @@ static const u8 sArmThrustDescription[] = _(
     "strike the foe 2 to 5 times.");
 
 static const u8 sCamouflageDescription[] = _(
-    "Alters the Pokémon's type\n"
+    "Alters the pokémon's type\n"
     "depending on the location.");
 
 static const u8 sTailGlowDescription[] = _(
@@ -1207,13 +1207,13 @@ static const u8 sLusterPurgeDescription[] = _(
 static const u8 sMistBallDescription[] = _(
     "Attacks with a flurry of\n"
     "mist. Lowers foe's SpAtk.");
-
+    
 static const u8 sFeatherDanceDescription[] = _(
     "Envelops the foe with down\n"
     "to sharply reduce Attack.");
 
 static const u8 sTeeterDanceDescription[] = _(
-    "Confuses all Pokémon on\n"
+    "Confuses all pokémon on\n"
     "the scene.");
 
 static const u8 sBlazeKickDescription[] = _(
@@ -1741,7 +1741,7 @@ static const u8 sDefogDescription[] = _(
     "lowers evasion.");
 
 static const u8 sTrickRoomDescription[] = _(
-    "Slower Pokémon get to move\n"
+    "Slower pokémon get to move\n"
     "first for 5 turns.");
 
 static const u8 sDracoMeteorDescription[] = _(
@@ -2206,7 +2206,7 @@ static const u8 sBelchDescription[] = _(
 
 static const u8 sRototillerDescription[] = _(
     "Ups the Attack and Sp. Atk\n"
-    "of Grass-type Pokémon.");
+    "of grass type pokémon.");
 
 static const u8 sStickyWebDescription[] = _(
     "Weaves a sticky net that\n"
@@ -2229,7 +2229,7 @@ static const u8 sIonDelugeDescription[] = _(
     "moves with charged atoms.");
 
 static const u8 sParabolicChargeDescription[] = _(
-    "Damages adjacent Pokémon and\n"
+    "Damages adjacent pokémon and\n"
     "heals up by half of it.");
 
 static const u8 sForestsCurseDescription[] = _(
@@ -2266,7 +2266,7 @@ static const u8 sCraftyShieldDescription[] = _(
 
 static const u8 sFlowerShieldDescription[] = _(
     "Raises the Defense of\n"
-    "Grass-type Pokémon.");
+    "grass type pokémon.");
 
 static const u8 sGrassyTerrainDescription[] = _(
     "The ground turns to grass\n"
@@ -2338,7 +2338,7 @@ static const u8 sSpikyShieldDescription[] = _(
 
 static const u8 sAromaticMistDescription[] = _(
     "Raises the Sp. Def of a\n"
-    "partner Pokémon.");
+    "partner pokémon.");
 
 static const u8 sEerieImpulseDescription[] = _(
     "Exposes the foe to a pulse\n"
@@ -2478,7 +2478,7 @@ static const u8 sLeafageDescription[] = _(
 
 static const u8 sSpotlightDescription[] = _(
     "Makes the foe attack the\n"
-    "spotlighted Pokémon.");
+    "spotlighted pokémon.");
 
 static const u8 sToxicThreadDescription[] = _(
     "Attacks with a thread that\n"
@@ -2738,7 +2738,7 @@ static const u8 sDragonDartsDescription[] = _(
     "targets are hit once each.");
 
 static const u8 sTeatimeDescription[] = _(
-    "All Pokémon have teatime\n"
+    "All pokémon have teatime\n"
     "and eat their Berries.");
 
 static const u8 sOctolockDescription[] = _(
@@ -2899,7 +2899,7 @@ static const u8 sPoltergeistDescription[] = _(
 
 static const u8 sCorrosiveGasDescription[] = _(
     "Highly acidic gas melts items\n"
-    "held by surrounding Pokémon.");
+    "held by surrounding pokémon.");
 
 static const u8 sCoachingDescription[] = _(
     "Properly coaches allies to\n"
@@ -2907,7 +2907,7 @@ static const u8 sCoachingDescription[] = _(
 
 static const u8 sFlipTurnDescription[] = _(
     "Attacks and rushes back to\n"
-    "switch with a party Pokémon.");
+    "switch with a party pokémon.");
 
 static const u8 sTripleAxelDescription[] = _(
     "A 3-kick attack that gets\n"

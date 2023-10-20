@@ -34,7 +34,7 @@ CableClub_EventScript_DistributeEonTicket::
 	checkitem ITEM_EON_TICKET
 	goto_if_eq VAR_RESULT, TRUE, CableClub_EventScript_TryWonderCardScript
 	goto_if_set FLAG_ENABLE_SHIP_SOUTHERN_ISLAND, CableClub_EventScript_TryWonderCardScript
-	msgbox MysteryGift_Text_TheresATicketForYou, MSGBOX_DEFAULT
+	msgbox Mevent_Text_TheresATicketForYou, MSGBOX_DEFAULT
 	giveitem ITEM_EON_TICKET
 	setflag FLAG_ENABLE_SHIP_SOUTHERN_ISLAND
 	setvar VAR_DISTRIBUTE_EON_TICKET, 0
