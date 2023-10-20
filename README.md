@@ -124,9 +124,18 @@ The pokeemerald Expansion is a feature branch meant to be integrated into existi
     - Gen6+'s EV cap.
     - All bugfixes from pret included.
     - Fixed overworld snow effect.
+**key-item-wheel** branch:
+- ORAS-style Key Item wheel.
+- Allows registering up to **4** Key Items.
+- Vanilla-compatible, repurposes some unused rematch slots in the saveblock.
+- Only takes up 1 sprite palette slot, and reuses 2 BG palette slots.
+- Works in dark caves and with many sprites loaded.
 
 There are some mechanics, moves and abilities that are missing and being developed. Check [the project's milestones](https://github.com/rh-hideout/pokeemerald-expansion/milestones) to see which ones.
 
+## FAQ
+### Q: How do I mark certain colors in a palette as light-blended?
+A: Create a `.pla` file in the same folder as the `.pal` with the same name.
 
 ### [Documentation on features can be found here](https://github.com/rh-hideout/pokeemerald-expansion/wiki)
 
@@ -161,3 +170,4 @@ The project has now gotten larger and DizzyEgg is now maintaining the project as
 A Discord-based ROM hacking community that has many members who hack using the disassembly and decompilation projects for Pokémon. Quite a few contributors to the original feature branches by DizzyEgg were members of ROM Hacking Hideout. You can call it RHH for short!
 
 [Click here to join the RHH Discord Server!](https://discord.gg/6CzjAG6GZk)
+You can find PRET on [Discord](https://discord.gg/d5dubZ3) and [IRC](https://web.libera.chat/?#pret).
