@@ -3264,6 +3264,10 @@ static const u8 sHaywireDescription[] = _(
     "A tackle that hurts the user,\n"
     "but always goes first. ");
 
+static const u8 sPlagueDescription[] = _(
+    "Brings down a nasty cloud.\n"
+    "May badly poison the foe. ");
+
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4103,5 +4107,7 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_MAGICAL_TORQUE - 1] = sMagicalTorqueDescription,
     [MOVE_PSYBLADE - 1] = sPsybladeDescription,
     [MOVE_HYDRO_STEAM - 1] = sHydroSteamDescription,
-    [MOVE_HAYWIRE - 1] = sHaywireDescription
+    [MOVE_HAYWIRE - 1] = sHaywireDescription,
+    [MOVE_TRIPVINE - 1] = sSuckerPunchDescription,
+    [MOVE_PLAGUE - 1] = sPlagueDescription,
 };

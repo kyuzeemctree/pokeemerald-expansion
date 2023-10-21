@@ -1666,6 +1666,8 @@ const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1] =
     [MOVE_PSYBLADE] = _("Psyblade"),
     [MOVE_HYDRO_STEAM] = _("Hydro Steam"),
     [MOVE_HAYWIRE] = _("Haywire"),
+    [MOVE_TRIPVINE] = _("Tripvine"),
+    [MOVE_PLAGUE] = _("Plague"),
 };
 #endif
 

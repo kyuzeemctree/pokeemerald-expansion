@@ -857,6 +857,8 @@ gBattleAnims_Moves::
 	.4byte Move_PSYBLADE
 	.4byte Move_HYDRO_STEAM
 	.4byte Move_HAYWIRE
+	.4byte Move_TRIPVINE
+	.4byte Move_PLAGUE
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16500,6 +16502,57 @@ Move_HAYWIRE::
 	createsprite gElectricPuffSpriteTemplate, ANIM_ATTACKER, 2, 0, -16, -16
 	waitforvisualfinish
 	end
+
+Move_TRIPVINE::
+	loadspritegfx ANIM_TAG_WHIP_HIT
+	loadspritegfx ANIM_TAG_IMPACT
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	setalpha 12, 8
+	playsewithpan SE_M_DOUBLE_TEAM, SOUND_PAN_TARGET
+	createsprite gVineWhipSpriteTemplate, ANIM_ATTACKER, 2, -16, 0, 0, 0, 10, 1, 3, 0
+	waitforvisualfinish
+	playsewithpan SE_M_COMET_PUNCH, SOUND_PAN_TARGET
+	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 3, 0, 0, ANIM_TARGET, 2
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 4, 0, 6, 1
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+Move_PLAGUE::
+	loadspritegfx ANIM_TAG_PINK_CLOUD
+	createvisualtask AnimTask_BlendParticle, 0x5, ANIM_TAG_PINK_CLOUD, 0x0, 0xE, 0xE, 0x19EF @;Garbage green
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	loopsewithpan SE_M_CHARGE, SOUND_PAN_ATTACKER, 0x4, 0xA
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 42, 1
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	call PlagueCloud
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+PlagueCloud:
+	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0, 0
+	delay 0x1
+	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0xa, 0x5
+	delay 0x1
+	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0xfff6, 0xfffb
+	delay 0x1
+	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0x14, 0xa
+	delay 0x1
+	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0xffec, 0xfff6
+	delay 0x2
+	return
 
 Move_TERA_BLAST::
 Move_AXE_KICK::
