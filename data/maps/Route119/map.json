@@ -733,20 +733,6 @@
     },
     {
       "type": "secret_base",
-      "x": 19,
-      "y": 76,
-      "elevation": 0,
-      "secret_base_id": "SECRET_BASE_TREE2_3"
-    },
-    {
-      "type": "secret_base",
-      "x": 18,
-      "y": 76,
-      "elevation": 0,
-      "secret_base_id": "SECRET_BASE_TREE4_3"
-    },
-    {
-      "type": "secret_base",
       "x": 4,
       "y": 15,
       "elevation": 0,

@@ -360,20 +360,6 @@
       "y": 5,
       "elevation": 0,
       "secret_base_id": "SECRET_BASE_YELLOW_CAVE1_2"
-    },
-    {
-      "type": "secret_base",
-      "x": 47,
-      "y": 5,
-      "elevation": 0,
-      "secret_base_id": "SECRET_BASE_TREE1_3"
-    },
-    {
-      "type": "secret_base",
-      "x": 46,
-      "y": 5,
-      "elevation": 0,
-      "secret_base_id": "SECRET_BASE_TREE2_1"
     }
   ]
 }
