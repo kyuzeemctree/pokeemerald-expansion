@@ -859,6 +859,7 @@ gBattleAnims_Moves::
 	.4byte Move_HAYWIRE
 	.4byte Move_TRIPVINE
 	.4byte Move_PLAGUE
+	.4byte Move_EXTINCTION
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16553,6 +16554,23 @@ PlagueCloud:
 	createsprite gStrangeSteamPinkCloudTemplate, ANIM_TARGET, 2, 0xf, 0xf, 0x14, 0xffec, 0xfff6
 	delay 0x2
 	return
+
+Move_EXTINCTION:
+	fadetobg BG_GHOST
+	waitbgfadein
+	playsewithpan SE_M_NIGHTMARE, SOUND_PAN_TARGET
+	delay 16
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_PLAYER_RIGHT, 10, 50
+	createvisualtask AnimTask_HorizontalShake, 5, ANIM_PLAYER_LEFT, 10, 50
+	playsewithpan SE_M_EARTHQUAKE, 0
+	delay 10
+	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, F_PAL_BG, 3, 1, RGB_BLACK, 14, RGB_WHITE, 14
+	delay 16
+	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, F_PAL_BG, 3, 1, RGB_BLACK, 14, RGB_WHITE, 14
+	waitforvisualfinish
+	restorebg
+	waitbgfadein
+	end
 
 Move_TERA_BLAST::
 Move_AXE_KICK::

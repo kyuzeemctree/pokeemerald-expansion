@@ -3268,6 +3268,10 @@ static const u8 sPlagueDescription[] = _(
     "Brings down a nasty cloud.\n"
     "May badly poison the foe. ");
 
+static const u8 sExtinctionDescription[] = _(
+    "A powerful force corrupts\n"
+    "all others on the field. ");
+
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4110,4 +4114,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_HAYWIRE - 1] = sHaywireDescription,
     [MOVE_TRIPVINE - 1] = sSuckerPunchDescription,
     [MOVE_PLAGUE - 1] = sPlagueDescription,
+    [MOVE_EXTINCTION - 1] = sExtinctionDescription,
 };

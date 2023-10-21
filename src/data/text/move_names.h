@@ -1668,6 +1668,7 @@ const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1] =
     [MOVE_HAYWIRE] = _("Haywire"),
     [MOVE_TRIPVINE] = _("Tripvine"),
     [MOVE_PLAGUE] = _("Plague"),
+    [MOVE_EXTINCTION] = _("Extinction"),
 };
 #endif
 
