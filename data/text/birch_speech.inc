@@ -1,0 +1,48 @@
+gText_Birch_Welcome::
+	.string "Hi! Sorry to keep you waiting!\p"
+	.string "My name is BIRCH.\p"
+	.string "$"
+
+gText_Birch_Pokemon::
+	.string "Look at this little dude.\p"
+	.string "\n"
+	.string "$"
+
+gText_Birch_MainSpeech::
+	.string "Despite our closeness, we don't\n"
+	.string "know everything about pokémon.\p"
+	.string "In fact, there are many, many\n"
+	.string "secrets surrounding pokémon.\p"
+	.string "To unravel pokémon mysteries,\n"
+	.string "I've been undertaking research.\l"
+	.string "That's my thing.\p"
+	.string "$"
+
+gText_Birch_AndYouAre::
+	.string "So what's your flavor?$"
+
+gText_Birch_BoyOrGirl::
+	.string "Do you lean masc?\n"
+	.string "Or fem?$"
+
+gText_Birch_WhatsYourName::
+	.string "All right.\n"
+	.string "What's your name?$"
+
+gText_Birch_SoItsPlayer::
+	.string "So it's {PLAYER}{KUN}?$"
+
+gText_Birch_YourePlayer::
+	.string "Ah, okay!\p"
+	.string "You're {PLAYER}{KUN} who's moving to my\n"
+	.string "hometown of Littleroot.\l"
+	.string "I get it now!\p"
+	.string "$"
+
+gText_Birch_AreYouReady::
+	.string "I'd love to chat some more.\p"
+	.string "But I'm currently throwing hands\n"
+	.string "with a Zigzagoon.\p"
+	.string "Please get through the exposition\n"
+	.string "and come help me out.\p"
+	.string "$"

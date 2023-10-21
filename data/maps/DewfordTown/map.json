@@ -1,0 +1,177 @@
+{
+  "id": "MAP_DEWFORD_TOWN",
+  "name": "DewfordTown",
+  "layout": "LAYOUT_DEWFORD_TOWN",
+  "music": "MUS_DEWFORD",
+  "region_map_section": "MAPSEC_DEWFORD_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_SUNNY",
+  "map_type": "MAP_TYPE_TOWN",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_ROUTE106",
+      "offset": -60,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_ROUTE107",
+      "offset": 0,
+      "direction": "right"
+    }
+  ],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "x": 7,
+      "y": 12,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
+      "movement_range_x": 1,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DewfordTown_EventScript_Woman",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BOY_1",
+      "x": 1,
+      "y": 6,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "DewfordTown_EventScript_TrendyPhraseBoy",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 19,
+      "y": 27,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_PUNCHING_GLOVE",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_DEWFORD1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WINGULL",
+      "x": 26,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_BattleWingull",
+      "flag": "FLAG_TEMP_1"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 3,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_TOWN_HALL",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 17,
+      "y": 21,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_TOWN_POKEMON_CENTER_1F",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 24,
+      "y": 22,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_TOWN_GYM",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 1,
+      "y": 20,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_TOWN_HOUSE1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 1,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_TOWN_HOUSE2",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 5,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_GROTTO",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_DEWFORD_GROTTO",
+      "dest_warp_id": "1"
+    }
+  ],
+  "coord_events": [
+
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 11,
+      "y": 18,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DewfordTown_EventScript_TownSign"
+    },
+    {
+      "type": "sign",
+      "x": 27,
+      "y": 21,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DewfordTown_EventScript_GymSign"
+    },
+    {
+      "type": "sign",
+      "x": 19,
+      "y": 21,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "Common_EventScript_ShowPokemonCenterSign"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 21,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "Common_EventScript_ShowPokemonCenterSign"
+    },
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "DewfordTown_EventScript_HallSign"
+    }
+  ]
+}
