@@ -939,7 +939,7 @@ static void Task_EvolutionScene(u8 taskId)
             if (JOY_NEW(A_BUTTON))
             {
                 HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
 
                 if (sEvoCursorPos != 0)
                 {
@@ -958,7 +958,7 @@ static void Task_EvolutionScene(u8 taskId)
             {
                 // Equivalent to selecting NO
                 HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 gTasks[taskId].tLearnMoveState = gTasks[taskId].tLearnMoveNoState;
             }
             break;

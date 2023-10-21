@@ -1515,7 +1515,7 @@ static bool8 KeyboardKeyHandler_OK(u8 input)
     TryStartButtonFlash(BUTTON_OK, TRUE, FALSE);
     if (input == INPUT_A_BUTTON)
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         sNamingScreen->state = STATE_PRESSED_OK;
         return TRUE;
     }

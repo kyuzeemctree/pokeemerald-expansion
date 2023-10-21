@@ -263,7 +263,7 @@ void Task_HandleExpansionIntro(u8 taskId)
             CpuFill16(0, gPlttBufferFaded, sizeof(gPlttBufferFaded));
             if (IsCryPlaying())
                 StopCry();
-            m4aSongNumStop(SE_BIKE_HOP);
+            m4aSongNumStop(SE_RG_BAG_CURSOR);
             m4aSongNumStop(SE_M_DOUBLE_SLAP);
             tState++;
         }
@@ -362,7 +362,7 @@ static void SpriteCallback_DizzyWalking(struct Sprite* sprite)
     }
 
     if (sprite->sTimer % 16 == 0 && sprite->sTimer / 16 > 2)
-        PlaySE(SE_BIKE_HOP);
+        PlaySE(SE_RG_BAG_CURSOR);
 
     sprite->sTimer++;
 }

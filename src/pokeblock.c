@@ -1012,7 +1012,7 @@ static void Task_HandlePokeblockMenuInput(u8 taskId)
             if (sSavedPokeblockData.scrollOffset + sSavedPokeblockData.selectedRow != sPokeblockMenu->itemsNo - 1)
             {
                 // Chose menu item to swap
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 DrawPokeblockMenuHighlight(sSavedPokeblockData.selectedRow, TILE_HIGHLIGHT_RED);
                 tToSwapId = sSavedPokeblockData.scrollOffset + sSavedPokeblockData.selectedRow;
                 sPokeblockMenu->isSwapping = TRUE;
@@ -1037,14 +1037,14 @@ static void Task_HandlePokeblockMenuInput(u8 taskId)
             case LIST_NOTHING_CHOSEN:
                 break;
             case LIST_CANCEL:
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 gSpecialVar_Result = 0xFFFF;
                 gSpecialVar_ItemId = 0;
                 FadePaletteAndSetTaskToClosePokeblockCase(taskId);
                 break;
             default:
                 // Selected Pokéblock
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 gSpecialVar_ItemId = input;
                 ShowPokeblockActionsWindow(taskId);
                 break;
@@ -1063,7 +1063,7 @@ static void Task_HandlePokeblocksSwapInput(u8 taskId)
     if (JOY_NEW(SELECT_BUTTON))
     {
         // Swap items
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         ListMenuGetScrollAndRow(tListTaskId, &sSavedPokeblockData.scrollOffset, &sSavedPokeblockData.selectedRow);
         UpdatePokeblockSwapMenu(taskId, FALSE);
     }
@@ -1094,7 +1094,7 @@ static void Task_HandlePokeblocksSwapInput(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (JOY_NEW(A_BUTTON)) // Pointless check, B Button has been pressed here
                 UpdatePokeblockSwapMenu(taskId, FALSE);
             else
@@ -1102,7 +1102,7 @@ static void Task_HandlePokeblocksSwapInput(u8 taskId)
             break;
         default:
             // Swap items
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             UpdatePokeblockSwapMenu(taskId, FALSE);
             break;
         }
@@ -1171,12 +1171,12 @@ static void Task_HandlePokeblockActionsInput(u8 taskId)
     }
     else if (itemId == MENU_B_PRESSED)
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokeblockAction_Cancel(taskId);
     }
     else
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         sPokeblockMenuActions[sPokeblockMenu->pokeblockActionIds[itemId]].func.void_u8(taskId);
     }
 }
@@ -1226,7 +1226,7 @@ static void TossPokeblock(u8 taskId)
         u16 *scrollOffset, *selectedRow;
 
         TryClearPokeblock(gSpecialVar_ItemId);
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         scrollOffset = &sSavedPokeblockData.scrollOffset;
         selectedRow = &sSavedPokeblockData.selectedRow;

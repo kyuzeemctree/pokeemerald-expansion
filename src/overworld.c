@@ -2856,7 +2856,7 @@ static void InitLinkRoomStartMenuScript(void)
 
 static void RunInteractLocalPlayerScript(const u8 *script)
 {
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }
@@ -2870,7 +2870,7 @@ static void RunConfirmLeaveCableClubScript(void)
 
 static void InitMenuBasedScript(const u8 *script)
 {
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     ScriptContext_SetupScript(script);
     LockPlayerFieldControls();
 }

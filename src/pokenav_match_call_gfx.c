@@ -478,10 +478,10 @@ static u32 MatchCallListPageDown(s32 state)
         case 0:
             break;
         case 1:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             // fall through
         default:
             return LT_INC_AND_PAUSE;
@@ -515,10 +515,10 @@ static u32 MatchCallListPageUp(s32 state)
         case 0:
             break;
         case 1:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             // fall through
         default:
             return LT_INC_AND_PAUSE;
@@ -547,7 +547,7 @@ static u32 SelectMatchCallEntry(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintMatchCallSelectionOptions(gfx);
         PrintHelpBarText(HELPBAR_MC_CALL_MENU);
         return LT_INC_AND_PAUSE;
@@ -578,7 +578,7 @@ static u32 CancelMatchCallSelection(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         UpdateWindowsReturnToTrainerList(gfx);
         PrintHelpBarText(HELPBAR_MC_TRAINER_LIST);
         return LT_INC_AND_PAUSE;
@@ -629,7 +629,7 @@ static u32 DoTrainerCloseByMessage(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         DrawMsgBoxForCloseByMsg(gfx);
         PokenavList_ToggleVerticalArrows(TRUE);
         gfx->skipHangUpSE = TRUE;
@@ -660,7 +660,7 @@ static u32 CloseMatchCallMessage(s32 state)
         if (!gfx->skipHangUpSE)
             PlaySE(SE_POKENAV_HANG_UP);
 
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         break;
     case 1:
         EraseCallMessageBox(gfx);
@@ -721,7 +721,7 @@ static u32 ShowCheckPage(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokenavList_EraseListForCheckPage();
         UpdateWindowsToShowCheckPage(gfx);
         return LT_INC_AND_PAUSE;
@@ -756,7 +756,7 @@ static u32 ShowCheckPageDown(s32 state)
         delta = GetIndexDeltaOfNextCheckPageDown(topId);
         if (delta)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gfx->pageDelta = delta;
             TrainerPicSlideOffscreen(gfx);
             return LT_INC_AND_PAUSE;
@@ -789,7 +789,7 @@ static u32 ExitCheckPage(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         TrainerPicSlideOffscreen(gfx);
         PokenavList_ReshowListFromCheckPage();
         return LT_INC_AND_PAUSE;
@@ -821,7 +821,7 @@ static u32 ShowCheckPageUp(s32 state)
         delta = GetIndexDeltaOfNextCheckPageUp(topId);
         if (delta)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gfx->pageDelta = delta;
             TrainerPicSlideOffscreen(gfx);
             return LT_INC_AND_PAUSE;
@@ -853,7 +853,7 @@ static u32 ExitMatchCall(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         SetPokeballIconsFlashing(FALSE);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         SlideMenuHeaderDown();

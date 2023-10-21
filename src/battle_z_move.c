@@ -398,7 +398,7 @@ bool32 MoveSelectionDisplayZMove(u16 zmove, u32 battler)
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleResources->bufferA[battler][4]);
     u16 move = moveInfo->moves[gMoveSelectionCursor[battler]];
 
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     gBattleStruct->zmove.viewing = TRUE;
     if (zmove != MOVE_NONE)
     {

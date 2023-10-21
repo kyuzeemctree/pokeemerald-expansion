@@ -627,12 +627,12 @@ static void UsePokeblockMenu(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sInfo->mainState = STATE_CLOSE;
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
 
             // If last item, selected Cancel. Otherwise selected mon
             if (sMenu->info.curSelection == sMenu->info.numSelections - 1)
@@ -889,7 +889,7 @@ static s8 HandleAskUsePokeblockInput(void)
         break;
     case MENU_B_PRESSED:
     case 1: // NO
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         rbox_fill_rectangle(2);
         ClearWindowTilemap(2);
         break;

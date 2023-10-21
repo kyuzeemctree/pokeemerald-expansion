@@ -669,7 +669,7 @@ static void Task_ChooseAnswer(u8 taskId)
         if (tNoBButton)
             return;
 
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         gSpecialVar_Result = MULTI_B_PRESSED;
         break;
     default:

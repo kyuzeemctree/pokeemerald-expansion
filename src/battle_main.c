@@ -2518,7 +2518,7 @@ static void AskRecordBattle(void)
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (gBattleCommunication[CURSOR_POSITION] == 0)
             {
                 // Selected Yes
@@ -2534,7 +2534,7 @@ static void AskRecordBattle(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gBattleCommunication[MULTIUSE_STATE]++;
         }
         break;

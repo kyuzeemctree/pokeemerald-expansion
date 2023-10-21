@@ -165,12 +165,12 @@ static void Task_CallYesOrNoCallback(u8 taskId)
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         sYesNo.yesFunc(taskId);
         break;
     case 1:
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         sYesNo.noFunc(taskId);
         break;
     }

@@ -516,7 +516,7 @@ static void DestroyFlavorCircleSprites(void)
 
 static void PrepareToCloseBerryTagScreen(u8 taskId)
 {
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
     gTasks[taskId].func = Task_CloseBerryTagScreen;
 }

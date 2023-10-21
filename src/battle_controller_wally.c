@@ -148,7 +148,7 @@ static void WallyHandleActions(u32 battler)
     case 1:
         if (--gBattleStruct->wallyWaitFrames == 0)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BtlController_EmitTwoReturnValues(battler, BUFFER_B, B_ACTION_USE_MOVE, 0);
             WallyBufferExecCompleted(battler);
             gBattleStruct->wallyBattleState++;
@@ -159,7 +159,7 @@ static void WallyHandleActions(u32 battler)
     case 2:
         if (--gBattleStruct->wallyWaitFrames == 0)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BtlController_EmitTwoReturnValues(battler, BUFFER_B, B_ACTION_USE_MOVE, 0);
             WallyBufferExecCompleted(battler);
             gBattleStruct->wallyBattleState++;
@@ -180,7 +180,7 @@ static void WallyHandleActions(u32 battler)
     case 4:
         if (--gBattleStruct->wallyWaitFrames == 0)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ActionSelectionDestroyCursorAt(0);
             ActionSelectionCreateCursorAt(1, 0);
             gBattleStruct->wallyWaitFrames = B_WAIT_TIME_LONG;
@@ -190,7 +190,7 @@ static void WallyHandleActions(u32 battler)
     case 5:
         if (--gBattleStruct->wallyWaitFrames == 0)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BtlController_EmitTwoReturnValues(battler, BUFFER_B, B_ACTION_USE_ITEM, 0);
             WallyBufferExecCompleted(battler);
         }
@@ -381,7 +381,7 @@ static void WallyHandleChooseMove(u32 battler)
     case 2:
         if (--gBattleStruct->wallyMoveFrames == 0)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BtlController_EmitTwoReturnValues(battler, BUFFER_B, 10, 0x100);
             WallyBufferExecCompleted(battler);
         }

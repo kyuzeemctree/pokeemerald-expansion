@@ -125,7 +125,7 @@ static void HandleInputChooseAction(u32 battler)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         switch (gActionSelectionCursor[battler])
         {

@@ -1687,11 +1687,11 @@ static void Task_HandlePokedexInput(u8 taskId)
             sPokedexView->menuIsOpen = TRUE;
             sPokedexView->menuCursorPos = 0;
             gTasks[taskId].func = Task_HandlePokedexStartMenuInput;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_NEW(SELECT_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
             gTasks[taskId].tLoadScreenTaskId = LoadSearchMenu();
             sPokedexView->screenSwitchState = 0;
@@ -1771,7 +1771,7 @@ static void Task_HandlePokedexStartMenuInput(u8 taskId)
         {
             sPokedexView->menuIsOpen = FALSE;
             gTasks[taskId].func = Task_HandlePokedexInput;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_REPEAT(DPAD_UP) && sPokedexView->menuCursorPos != 0)
         {
@@ -1893,7 +1893,7 @@ static void Task_HandleSearchResultsInput(u8 taskId)
             sPokedexView->menuIsOpen = TRUE;
             sPokedexView->menuCursorPos = 0;
             gTasks[taskId].func = Task_HandleSearchResultsStartMenuInput;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_NEW(SELECT_BUTTON))
         {
@@ -1976,7 +1976,7 @@ static void Task_HandleSearchResultsStartMenuInput(u8 taskId)
         {
             sPokedexView->menuIsOpen = FALSE;
             gTasks[taskId].func = Task_HandleSearchResultsInput;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
         else if (JOY_REPEAT(DPAD_UP) && sPokedexView->menuCursorPos)
         {

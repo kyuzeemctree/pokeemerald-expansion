@@ -1633,12 +1633,12 @@ static void Task_HandleInput(u8 taskId)
                 if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
                 {
                     StopPokemonAnimations();
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     BeginCloseSummaryScreen(taskId);
                 }
                 else // Contest or Battle Moves
                 {
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     SwitchToMoveSelection(taskId);
                 }
             }
@@ -1646,7 +1646,7 @@ static void Task_HandleInput(u8 taskId)
         else if (JOY_NEW(B_BUTTON))
         {
             StopPokemonAnimations();
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BeginCloseSummaryScreen(taskId);
         }
     #if DEBUG_POKEMON_MENU == TRUE
@@ -1654,7 +1654,7 @@ static void Task_HandleInput(u8 taskId)
         {
             sMonSummaryScreen->callback = CB2_Debug_Pokemon;
             StopPokemonAnimations();
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             CloseSummaryScreen(taskId);
         }
     #endif
@@ -1696,7 +1696,7 @@ static void ChangeSummaryPokemon(u8 taskId, s8 delta)
 
         if (monId != -1)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (sMonSummaryScreen->summary.ailment != AILMENT_NONE)
             {
                 SetSpriteInvisibility(SPRITE_ARR_ID_STATUS, TRUE);
@@ -1856,7 +1856,7 @@ static void ChangePage(u8 taskId, s8 delta)
     else if (delta == 1 && sMonSummaryScreen->currPageIndex == sMonSummaryScreen->maxPageIndex)
         return;
 
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     ClearPageWindowTilemaps(sMonSummaryScreen->currPageIndex);
     sMonSummaryScreen->currPageIndex += delta;
     data[0] = 0;
@@ -2015,12 +2015,12 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
             if (sMonSummaryScreen->lockMovesFlag == TRUE
              || (sMonSummaryScreen->newMove == MOVE_NONE && sMonSummaryScreen->firstMoveIndex == MAX_MON_MOVES))
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 CloseMoveSelectMode(taskId);
             }
             else if (HasMoreThanOneMove() == TRUE)
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 SwitchToMovePositionSwitchMode(taskId);
             }
             else
@@ -2030,7 +2030,7 @@ static void Task_HandleInput_MoveSelect(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             CloseMoveSelectMode(taskId);
         }
     }
@@ -2052,7 +2052,7 @@ static void ChangeSelectedMove(s16 *taskData, s8 direction, u8 *moveIndexPtr)
     s8 i, newMoveIndex;
     u16 move;
 
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     newMoveIndex = *moveIndexPtr;
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
@@ -2170,7 +2170,7 @@ static void ExitMovePositionSwitchMode(u8 taskId, bool8 swapMoves)
 {
     u16 move;
 
-    PlaySE(SE_RG_BAG_POCKET);
+    PlaySE(SE_RG_BAG_CURSOR);
     SetMainMoveSelectorColor(0);
     DestroyMoveSelectorSprites(SPRITE_ARR_ID_MOVE_SELECTOR2);
 
@@ -2308,7 +2308,7 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
                 if (CanReplaceMove() == TRUE)
                 {
                     StopPokemonAnimations();
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     sMoveSlotToReplace = sMonSummaryScreen->firstMoveIndex;
                     gSpecialVar_0x8005 = sMoveSlotToReplace;
                     BeginCloseSummaryScreen(taskId);
@@ -2322,7 +2322,7 @@ static void Task_HandleReplaceMoveInput(u8 taskId)
             else if (JOY_NEW(B_BUTTON))
             {
                 StopPokemonAnimations();
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 sMoveSlotToReplace = MAX_MON_MOVES;
                 gSpecialVar_0x8005 = MAX_MON_MOVES;
                 BeginCloseSummaryScreen(taskId);

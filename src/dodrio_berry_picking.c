@@ -4816,7 +4816,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             SetBerryIconsInvisibility(TRUE);
             sGfx->state++;
         }
@@ -4848,7 +4848,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (GetHighestScore() < PRIZE_SCORE)
             {
                 sGfx->state = 127; // Skip to end, past giving prize
@@ -4908,7 +4908,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sGfx->state++;
         }
         break;
@@ -4978,7 +4978,7 @@ static void Msg_WantToPlayAgain(void)
         // Increment state only if A or B button have been pressed.
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (sGfx->cursorSelection == PLAY_AGAIN_NONE)
                 sGfx->cursorSelection = PLAY_AGAIN_YES;
             sGfx->state++;
@@ -5001,7 +5001,7 @@ static void Msg_WantToPlayAgain(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sGfx->cursorSelection = PLAY_AGAIN_NO;
             sGfx->state++;
         }

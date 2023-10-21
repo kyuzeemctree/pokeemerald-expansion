@@ -2607,12 +2607,12 @@ static void ScrollableMultichoice_ProcessInput(u8 taskId)
         break;
     case LIST_CANCEL:
         gSpecialVar_Result = MULTI_B_PRESSED;
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         CloseScrollableMultichoice(taskId);
         break;
     default:
         gSpecialVar_Result = input;
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         if (!task->tKeepOpenAfterSelect)
         {
             CloseScrollableMultichoice(taskId);

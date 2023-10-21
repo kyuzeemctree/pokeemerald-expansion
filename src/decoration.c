@@ -606,7 +606,7 @@ static void HandleDecorationActionsMenuInput(u8 taskId)
         switch (Menu_ProcessInput())
         {
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sDecorationMainMenuActions[sDecorationActionsCursorPos].func.void_u8(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
@@ -615,7 +615,7 @@ static void HandleDecorationActionsMenuInput(u8 taskId)
                 PrintCurMainMenuDescription();
             break;
         case MENU_B_PRESSED:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             DecorationMenuAction_Cancel(taskId);
             break;
         }
@@ -784,13 +784,13 @@ static void HandleDecorationCategoriesMenuInput(u8 taskId)
         {
         case MENU_B_PRESSED:
         case DECORCAT_COUNT: // CANCEL
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ExitDecorationCategoriesMenu(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
             break;
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sCurDecorationCategory = input;
             SelectDecorationCategory(taskId);
             break;
@@ -1000,11 +1000,11 @@ static void HandleDecorationItemsMenuInput(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sSecretBasePC_SelectedDecorationActions[tDecorationMenuCommand][1](taskId);
             break;
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gCurDecorationIndex = input;
             RemoveDecorationItemsScrollIndicators();
             DestroyListMenuTask(tMenuTaskId, &sDecorationsScrollOffset, &sDecorationsCursorPos);

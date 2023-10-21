@@ -1540,7 +1540,7 @@ static void Select_Task_HandleYesNo(u8 taskId)
     case STATE_YESNO_HANDLE_INPUT:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (sFactorySelectScreen->yesNoCursorPos == 0)
             {
                 // Selected Yes, confirmed selected pokemon
@@ -1561,7 +1561,7 @@ static void Select_Task_HandleYesNo(u8 taskId)
         else if (JOY_NEW(B_BUTTON))
         {
             // Pressed B, Continue choosing pokemon
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             Select_ErasePopupMenu(SELECT_WIN_YES_NO);
             Select_DeclineChosenMons();
             sFactorySelectScreen->fadeSpeciesNameActive = TRUE;
@@ -1604,7 +1604,7 @@ static void Select_Task_HandleMenu(u8 taskId)
         if (JOY_NEW(A_BUTTON))
         {
             u8 retVal;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             retVal = Select_RunMenuOptionFunc();
             if (retVal == SELECT_CONTINUE_CHOOSING)
             {
@@ -1630,7 +1630,7 @@ static void Select_Task_HandleMenu(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
             Select_ErasePopupMenu(SELECT_WIN_OPTIONS);
             sFactorySelectScreen->fadeSpeciesNameActive = TRUE;
@@ -1685,7 +1685,7 @@ static void Select_Task_HandleChooseMons(u8 taskId)
     case STATE_CHOOSE_MONS_HANDLE_INPUT:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sFactorySelectScreen->fadeSpeciesNameActive = FALSE;
             gTasks[taskId].tState = STATE_MENU_INIT;
             gTasks[taskId].func = Select_Task_HandleMenu;
@@ -1708,7 +1708,7 @@ static void Select_Task_HandleChooseMons(u8 taskId)
     case STATE_CHOOSE_MONS_INVALID:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             CloseMonPic(sFactorySelectScreen->monPics[1], &sFactorySelectScreen->monPicAnimating, FALSE);
             Select_PrintSelectMonString();
             sFactorySelectScreen->fadeSpeciesNameActive = TRUE;
@@ -2478,7 +2478,7 @@ static void Swap_Task_HandleYesNo(u8 taskId)
     case STATE_YESNO_HANDLE_INPUT:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (sFactorySwapScreen->yesNoCursorPos == 0)
             {
                 // Selected Yes
@@ -2499,7 +2499,7 @@ static void Swap_Task_HandleYesNo(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gTasks[taskId].tSaidYes = FALSE;
             Swap_ErasePopupMenu(SWAP_WIN_YES_NO);
             hiPtr = gTasks[taskId].tFollowUpTaskPtrHi;
@@ -2603,12 +2603,12 @@ static void Swap_Task_HandleMenu(u8 taskId)
         {
             if (JOY_NEW(A_BUTTON))
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 Swap_RunMenuOptionFunc(taskId);
             }
             else if (JOY_NEW(B_BUTTON))
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 CloseMonPic(sFactorySwapScreen->monPic, &sFactorySwapScreen->monPicAnimating, TRUE);
                 Swap_ErasePopupMenu(SWAP_WIN_OPTIONS);
                 gTasks[taskId].tState = 0;
@@ -2646,7 +2646,7 @@ static void Swap_Task_HandleChooseMons(u8 taskId)
         if (JOY_NEW(A_BUTTON))
         {
             // Run whatever action is currently selected (a pokeball, the Cancel button, etc.)
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sFactorySwapScreen->fadeSpeciesNameActive = FALSE;
             Swap_PrintMonSpeciesAtFade();
             Swap_EraseSpeciesWindow();
@@ -2655,7 +2655,7 @@ static void Swap_Task_HandleChooseMons(u8 taskId)
         else if (JOY_NEW(B_BUTTON))
         {
             // Ask if player wants to quit swapping
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sFactorySwapScreen->fadeSpeciesNameActive = FALSE;
             Swap_PrintMonSpeciesAtFade();
             Swap_EraseSpeciesWindow();
@@ -4132,7 +4132,7 @@ static void Swap_TaskCantHaveSameMons(u8 taskId)
     case 1:
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             CloseMonPic(sFactorySwapScreen->monPic, &sFactorySwapScreen->monPicAnimating, TRUE);
             gTasks[taskId].tState++;
         }

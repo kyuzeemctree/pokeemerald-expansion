@@ -1001,7 +1001,7 @@ static void HandleRegistryMenuInput(u8 taskId)
     case LIST_NOTHING_CHOSEN:
         break;
     case LIST_CANCEL:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         DestroyListMenuTask(tListTaskId, NULL, NULL);
         RemoveScrollIndicatorArrowPair(tArrowTaskId);
         ClearStdWindowAndFrame(tMainWindowId, FALSE);
@@ -1012,7 +1012,7 @@ static void HandleRegistryMenuInput(u8 taskId)
         GoToSecretBasePCRegisterMenu(taskId);
         break;
     default:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         tSelectedBaseId = input;
         ShowRegistryMenuActions(taskId);
         break;
@@ -1040,13 +1040,13 @@ static void HandleRegistryMenuActionsInput(u8 taskId)
     switch (input)
     {
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         ReturnToMainRegistryMenu(taskId);
         break;
     case MENU_NOTHING_CHOSEN:
         break;
     default:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         sRegistryMenuActions[input].func.void_u8(taskId);
         break;
     }

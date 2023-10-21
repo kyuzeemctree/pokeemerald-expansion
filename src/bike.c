@@ -656,7 +656,7 @@ static void AcroBikeTransition_SideJump(u8 direction)
         }
     }
     playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     playerObjEvent->facingDirectionLocked = 1;
     PlayerSetAnimId(GetJumpMovementAction(direction), COPY_MOVE_WALK);
 }

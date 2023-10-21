@@ -580,7 +580,7 @@ static u32 LoopedTask_OpenConditionMenu(s32 state)
         ResetBldCnt();
         StartOptionAnimations_Exit();
         HideMainOrSubMenuLeftHeader(POKENAV_GFX_MAIN_MENU, FALSE);
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 1:
         if (AreMenuOptionSpritesMoving())
@@ -656,7 +656,7 @@ static u32 LoopedTask_OpenConditionSearchMenu(s32 state)
     case 0:
         ResetBldCnt();
         StartOptionAnimations_Exit();
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 1:
         if (AreMenuOptionSpritesMoving())
@@ -735,7 +735,7 @@ static u32 LoopedTask_ReShowDescription(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintCurrentOptionDescription();
         return LT_INC_AND_PAUSE;
     case 1:
@@ -772,7 +772,7 @@ static u32 LoopedTask_OpenPokenavFeature(s32 state)
             HideMainOrSubMenuLeftHeader(POKENAV_GFX_MAIN_MENU, FALSE);
             break;
         }
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 2:
         if (AreMenuOptionSpritesMoving())

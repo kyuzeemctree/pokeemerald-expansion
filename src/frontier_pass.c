@@ -1022,7 +1022,7 @@ static void Task_HandleFrontierPassInput(u8 taskId)
         {
             if (sPassData->cursorArea <= CURSOR_AREA_RECORD) // Map, Card, Record
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 if (TryCallPassAreaFunction(taskId, sPassData->cursorArea))
                     return;
             }

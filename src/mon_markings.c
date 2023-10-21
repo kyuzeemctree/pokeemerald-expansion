@@ -412,7 +412,7 @@ bool8 HandleMonMarkingsMenuInput(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         switch (sMenu->cursorPos)
         {
@@ -431,7 +431,7 @@ bool8 HandleMonMarkingsMenuInput(void)
 
     if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return FALSE;
     }
 

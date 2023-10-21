@@ -887,14 +887,14 @@ static bool8 HandleMainMenuInput(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         IsWirelessAdapterConnected();   // why bother calling this here? debug? Task_HandleMainMenuAPressed will check too
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         gTasks[taskId].func = Task_HandleMainMenuAPressed;
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITEALPHA);
         SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(0, DISPLAY_WIDTH));
         SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(0, DISPLAY_HEIGHT));
@@ -1151,7 +1151,7 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
         case 3:
             if (JOY_NEW(A_BUTTON | B_BUTTON))
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
                 gTasks[taskId].func = Task_HandleMainMenuBPressed;
             }
@@ -1628,7 +1628,7 @@ static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8 taskId)
     switch (Menu_ProcessInputNoWrapClearOnChoose())
     {
         case 0:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gSprites[gTasks[taskId].tPlayerSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
             NewGameBirchSpeech_StartFadeOutTarget1InTarget2(taskId, 2);
             NewGameBirchSpeech_StartFadePlatformIn(taskId, 1);
@@ -1636,7 +1636,7 @@ static void Task_NewGameBirchSpeech_ProcessNameYesNoMenu(u8 taskId)
             break;
         case MENU_B_PRESSED:
         case 1:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gTasks[taskId].func = Task_NewGameBirchSpeech_BoyOrGirl;
     }
 }

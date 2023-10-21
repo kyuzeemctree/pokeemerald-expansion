@@ -456,7 +456,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
         gTasks[taskId].func = Task_ResetRtc_Exit;
         tSetTime = FALSE;
         tSelection = SELECTION_NONE;
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return;
     }
 
@@ -488,7 +488,7 @@ static void Task_ResetRtc_HandleInput(u8 taskId)
             gLocalTime.hours = tHours;
             gLocalTime.minutes = tMinutes;
             gLocalTime.seconds = tSeconds;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gTasks[taskId].func = Task_ResetRtc_Exit;
             tSetTime = TRUE;
             tSelection = SELECTION_NONE;
@@ -617,7 +617,7 @@ static void Task_ShowResetRtcPrompt(u8 taskId)
         else if (JOY_NEW(A_BUTTON))
         {
             // Confirm
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             DestroyTask(taskId);
         }
         break;

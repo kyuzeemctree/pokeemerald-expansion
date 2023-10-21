@@ -397,7 +397,7 @@ static void Task_ShopMenu(u8 taskId)
     case MENU_NOTHING_CHOSEN:
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         Task_HandleShopMenuQuit(taskId);
         break;
     default:
@@ -591,7 +591,7 @@ static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, s
 {
     const u8 *description;
     if (onInit != TRUE)
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
     if (item != LIST_CANCEL)
         BuyMenuAddItemIcon(item, sShopData->iconSlot);
@@ -977,11 +977,11 @@ static void Task_BuyMenu(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ExitBuyMenu(taskId);
             break;
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             tItemId = itemId;
             ClearWindowTilemap(WIN_ITEM_DESCRIPTION);
             BuyMenuRemoveScrollIndicatorArrows();
@@ -1078,7 +1078,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
     {
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_PRICE, FALSE);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_IN_BAG, FALSE);
             ClearWindowTilemap(WIN_QUANTITY_PRICE);
@@ -1091,7 +1091,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_PRICE, FALSE);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_IN_BAG, FALSE);
             ClearWindowTilemap(WIN_QUANTITY_PRICE);
@@ -1159,7 +1159,7 @@ static void Task_ReturnToItemListAfterItemPurchase(u8 taskId)
 
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         // Purchasing 10+ Poke Balls gets the player a Premier Ball
         if (tItemId == ITEM_POKE_BALL && tItemCount >= 10 && AddBagItem(ITEM_PREMIER_BALL, 1) == TRUE)
@@ -1173,7 +1173,7 @@ static void Task_ReturnToItemListAfterDecorationPurchase(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BuyMenuReturnToItemList(taskId);
     }
 }

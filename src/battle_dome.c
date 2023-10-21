@@ -4278,7 +4278,7 @@ static u8 Task_GetInfoCardInput(u8 taskId)
 
     if (input != INFOCARD_INPUT_NONE && input != INFOCARD_INPUT_AB)
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         gTasks[taskId2].data[1] = position;
         gTasks[taskId].tUsingAlternateSlot ^= 1;
     }
@@ -5108,19 +5108,19 @@ static u8 UpdateTourneyTreeCursor(u8 taskId)
 
     if (gMain.newKeys == B_BUTTON || (JOY_NEW(A_BUTTON) && tourneyTreeCursorSpriteId == TOURNEY_TREE_CLOSE_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         selection = TOURNEY_TREE_SELECTED_CLOSE;
     }
     else if (JOY_NEW(A_BUTTON))
     {
         if (tourneyTreeCursorSpriteId < DOME_TOURNAMENT_TRAINERS_COUNT)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             selection = TOURNEY_TREE_SELECTED_TRAINER;
         }
         else
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             selection = TOURNEY_TREE_SELECTED_MATCH;
         }
     }

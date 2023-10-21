@@ -750,7 +750,7 @@ static void DoMoveRelearnerMain(void)
     case MENU_STATE_WAIT_FOR_A_BUTTON:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sMoveRelearnerStruct->state = MENU_STATE_FADE_AND_RETURN;
         }
         break;
@@ -795,7 +795,7 @@ static void HandleInput(bool8 showContest)
         if (!(JOY_NEW(DPAD_LEFT | DPAD_RIGHT)) && !GetLRKeysPressed())
             break;
 
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         if (showContest == FALSE)
         {
@@ -814,14 +814,14 @@ static void HandleInput(bool8 showContest)
         MoveRelearnerShowHideHearts(GetCurrentSelectedMove());
         break;
     case LIST_CANCEL:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveScrollArrows();
         sMoveRelearnerStruct->state = MENU_STATE_PRINT_GIVE_UP_PROMPT;
         StringExpandPlaceholders(gStringVar4, gText_MoveRelearnerGiveUp);
         MoveRelearnerPrintMessage(gStringVar4);
         break;
     default:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveScrollArrows();
         sMoveRelearnerStruct->state = MENU_STATE_PRINT_TEACH_MOVE_PROMPT;
         StringCopy(gStringVar2, gMoveNames[itemId]);

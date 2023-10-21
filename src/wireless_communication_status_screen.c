@@ -323,7 +323,7 @@ static void Task_WirelessCommunicationScreen(u8 taskId)
         }
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gTasks[sStatusScreen->rfuTaskId].data[15] = 0xFF;
             gTasks[taskId].tState++;
         }

@@ -739,7 +739,7 @@ static void Task_TMCaseMain(u8 taskId)
             ListMenuGetScrollAndRow(data[0], &sTMCaseStaticResources.scrollOffset, &sTMCaseStaticResources.selectedRow);
             if (JOY_NEW(SELECT_BUTTON) && sTMCaseStaticResources.unk_05 == 1)
             {
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 gSpecialVar_ItemId = ITEM_NONE;
                 Task_BeginFadeOutFromTMCase(taskId);
             }
@@ -750,12 +750,12 @@ static void Task_TMCaseMain(u8 taskId)
                 case -1:
                     break;
                 case -2:
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     gSpecialVar_ItemId = 0;
                     Task_BeginFadeOutFromTMCase(taskId);
                     break;
                 default:
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     FillBG2RowWithPalette_2timesNplus1(1);
                     RemoveTMCaseScrollIndicatorArrowPair();
                     PrintListMenuCursorByID_WithColorIdx(data[0], 2);
@@ -828,13 +828,13 @@ static void Task_TMContextMenu_HandleInput(u8 taskId)
         switch (input)
         {
         case MENU_B_PRESSED:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sMenuActions_UseGiveExit[sTMCaseDynamicResources->menuActionIndices[sTMCaseDynamicResources->numMenuActions - 1]].func.void_u8(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
             break;
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sMenuActions_UseGiveExit[sTMCaseDynamicResources->menuActionIndices[input]].func.void_u8(taskId);
             break;
         }
@@ -877,7 +877,7 @@ static void Task_WaitButtonAfterErrorPrint(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         Subtask_CloseContextMenuAndReturnToMain(taskId);
     }
 }

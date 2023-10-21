@@ -257,7 +257,7 @@ static void Task_HandleMultichoiceInput(u8 taskId)
                 {
                     if (tIgnoreBPress)
                         return;
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     gSpecialVar_Result = MULTI_B_PRESSED;
                 }
                 else
@@ -312,7 +312,7 @@ static void Task_HandleYesNoInput(u8 taskId)
         return;
     case MENU_B_PRESSED:
     case 1:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         gSpecialVar_Result = 0;
         break;
     case 0:
@@ -373,7 +373,7 @@ static void Task_HandleMultichoiceGridInput(u8 taskId)
     case MENU_B_PRESSED:
         if (tIgnoreBPress)
             return;
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         gSpecialVar_Result = MULTI_B_PRESSED;
         break;
     default:

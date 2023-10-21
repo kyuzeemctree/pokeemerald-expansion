@@ -1967,13 +1967,13 @@ static void CB_HandleFlyMapInput(void)
         case MAP_INPUT_A_BUTTON:
             if (sFlyMap->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY || sFlyMap->regionMap.mapSecType == MAPSECTYPE_BATTLE_FRONTIER)
             {
-                m4aSongNumStart(SE_RG_BAG_POCKET);
+                m4aSongNumStart(SE_RG_BAG_CURSOR);
                 sFlyMap->choseFlyLocation = TRUE;
                 SetFlyMapCallback(CB_ExitFlyMap);
             }
             break;
         case MAP_INPUT_B_BUTTON:
-            m4aSongNumStart(SE_RG_BAG_POCKET);
+            m4aSongNumStart(SE_RG_BAG_CURSOR);
             sFlyMap->choseFlyLocation = FALSE;
             SetFlyMapCallback(CB_ExitFlyMap);
             break;

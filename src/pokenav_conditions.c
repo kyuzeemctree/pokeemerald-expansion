@@ -91,7 +91,7 @@ static u32 HandleConditionMenuInput(struct Pokenav_ConditionMenu *menu)
     {
         if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             menu->callback = GetConditionReturnCallback;
             ret = CONDITION_FUNC_RETURN;
         }
@@ -103,7 +103,7 @@ static u32 HandleConditionMenuInput(struct Pokenav_ConditionMenu *menu)
                 if (monListPtr->currIndex == monListPtr->listCount - 1)
                 {
                     // Cancel
-                    PlaySE(SE_RG_BAG_POCKET);
+                    PlaySE(SE_RG_BAG_CURSOR);
                     menu->callback = GetConditionReturnCallback;
                     ret = CONDITION_FUNC_RETURN;
                 }
@@ -111,7 +111,7 @@ static u32 HandleConditionMenuInput(struct Pokenav_ConditionMenu *menu)
             else
             {
                 // In Search mode pressing A brings up the markings menu
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 ret = CONDITION_FUNC_ADD_MARKINGS;
                 menu->callback = OpenMarkingsMenu;
             }

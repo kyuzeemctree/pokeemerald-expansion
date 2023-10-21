@@ -549,7 +549,7 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
         break;
     case 1:  // NO
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         spriteId = gTasks[taskId].tPkmnSpriteId;
         FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
         FreeAndDestroyMonPicSprite(spriteId);

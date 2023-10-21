@@ -995,7 +995,7 @@ s8 Menu_ProcessInput(void)
     if (JOY_NEW(A_BUTTON))
     {
         if (!sMenu.APressMuted)
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1025,7 +1025,7 @@ s8 Menu_ProcessInputNoWrap(void)
     if (JOY_NEW(A_BUTTON))
     {
         if (!sMenu.APressMuted)
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1035,7 +1035,7 @@ s8 Menu_ProcessInputNoWrap(void)
     else if (JOY_NEW(DPAD_UP))
     {
         if (oldPos != Menu_MoveCursorNoWrapAround(-1))
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         return MENU_NOTHING_CHOSEN;
     }
     else if (JOY_NEW(DPAD_DOWN))
@@ -1053,7 +1053,7 @@ s8 ProcessMenuInput_other(void)
     if (JOY_NEW(A_BUTTON))
     {
         if (!sMenu.APressMuted)
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1083,7 +1083,7 @@ s8 Menu_ProcessInputNoWrapAround_other(void)
     if (JOY_NEW(A_BUTTON))
     {
         if (!sMenu.APressMuted)
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1413,7 +1413,7 @@ static s8 Menu_ProcessGridInput_NoSoundLimit(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1454,7 +1454,7 @@ s8 Menu_ProcessGridInput(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1494,7 +1494,7 @@ static s8 Menu_ProcessGridInputRepeat_NoSoundLimit(void)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))
@@ -1536,7 +1536,7 @@ static s8 Menu_ProcessGridInputRepeat(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         return sMenu.cursorPos;
     }
     else if (JOY_NEW(B_BUTTON))

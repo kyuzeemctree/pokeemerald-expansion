@@ -1079,28 +1079,28 @@ void PlayerEndWheelie(u8 direction)
 // wheelie hopping standing
 void PlayerStandingHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieHopFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // wheelie hopping moving
 void PlayerMovingHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieHopDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 // wheelie hopping ledge
 void PlayerLedgeHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieJumpDirectionMovementAction(direction), COPY_MOVE_JUMP2);
 }
 
 // acro turn jump
 void PlayerAcroTurnJump(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetJumpInPlaceTurnAroundMovementAction(direction), COPY_MOVE_FACE);
 }
 

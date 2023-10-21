@@ -96,7 +96,7 @@ static void Task_ClearSaveDataScreenYesNoChoice(u8 taskId)
         break;
     case 1:
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         DestroyTask(taskId);
         SetMainCallback2(CB2_FadeAndDoReset);
     }

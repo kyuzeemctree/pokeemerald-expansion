@@ -7119,7 +7119,7 @@ static void Cmd_yesnoboxlearnmove(void)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (gBattleCommunication[1] == 0)
             {
                 HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
@@ -7133,7 +7133,7 @@ static void Cmd_yesnoboxlearnmove(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gBattleScripting.learnMoveState = 5;
         }
         break;
@@ -7235,7 +7235,7 @@ static void Cmd_yesnoboxstoplearningmove(void)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
 
             if (gBattleCommunication[1] != 0)
                 gBattlescriptCurrInstr = cmd->noInstr;
@@ -7246,7 +7246,7 @@ static void Cmd_yesnoboxstoplearningmove(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gBattlescriptCurrInstr = cmd->noInstr;
             HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
         }
@@ -7546,13 +7546,13 @@ static void Cmd_yesnobox(void)
         if (JOY_NEW(B_BUTTON))
         {
             gBattleCommunication[CURSOR_POSITION] = 1;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
             gBattlescriptCurrInstr = cmd->nextInstr;
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
             gBattlescriptCurrInstr = cmd->nextInstr;
         }
@@ -7752,7 +7752,7 @@ static void Cmd_drawlvlupbox(void)
         if (gMain.newKeys != 0)
         {
             // Draw page 2 of level up box
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             DrawLevelUpWindow2();
             CopyWindowToVram(B_WIN_LEVEL_UP_BOX, COPYWIN_GFX);
             gBattleScripting.drawlvlupboxState++;
@@ -7762,7 +7762,7 @@ static void Cmd_drawlvlupbox(void)
         if (gMain.newKeys != 0)
         {
             // Close level up box
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             HandleBattleWindow(18, 7, 29, 19, WINDOW_BG1 | WINDOW_CLEAR);
             gBattleScripting.drawlvlupboxState++;
         }
@@ -15400,7 +15400,7 @@ static void Cmd_trygivecaughtmonnick(void)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (gBattleCommunication[CURSOR_POSITION] == 0)
             {
                 gBattleCommunication[MULTIUSE_STATE]++;
@@ -15413,7 +15413,7 @@ static void Cmd_trygivecaughtmonnick(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gBattleCommunication[MULTIUSE_STATE] = 4;
         }
         break;

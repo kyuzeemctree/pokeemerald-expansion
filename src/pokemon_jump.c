@@ -3091,7 +3091,7 @@ static void SpriteCB_MonIntroBounce(struct Sprite *sprite)
     switch (sprite->sState)
     {
     case 0:
-        PlaySE(SE_BIKE_HOP);
+        PlaySE(SE_RG_BAG_CURSOR);
         sprite->sHopPos = 0;
         sprite->sState++;
         // fall through

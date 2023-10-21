@@ -1444,7 +1444,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                     ListMenuGetScrollAndRow(tListTaskId, scrollPos, cursorPos);
                     if ((*scrollPos + *cursorPos) != gBagMenu->numItemStacks[gBagPosition.pocket] - 1)
                     {
-                        PlaySE(SE_RG_BAG_POCKET);
+                        PlaySE(SE_RG_BAG_CURSOR);
                         StartItemSwap(taskId);
                     }
                 }
@@ -1467,7 +1467,7 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 else
                     gSpecialVar_ItemId = BagGetItemIdByPocketPosition(gBagPosition.pocket + 1, data[1]);
                 
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 BagDestroyPocketScrollArrowPair();
                 BagMenu_PrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
                 ListMenuGetScrollAndRow(data[0], scrollPos, cursorPos);
@@ -1489,12 +1489,12 @@ static void Task_BagMenu_HandleInput(u8 taskId)
                 PlaySE(SE_FAILURE);
                 break;
             }
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             gSpecialVar_ItemId = ITEM_NONE;
             gTasks[taskId].func = Task_FadeAndCloseBagMenu;
             break;
         default: // A_BUTTON
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BagDestroyPocketScrollArrowPair();
             BagMenu_PrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
             tListPosition = listPosition;
@@ -1688,7 +1688,7 @@ static void Task_HandleSwappingItemsInput(u8 taskId)
     {
         if (JOY_NEW(SELECT_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             ListMenuGetScrollAndRow(tListTaskId, &gBagPosition.scrollPosition[gBagPosition.pocket], &gBagPosition.cursorPosition[gBagPosition.pocket]);
             DoItemSwap(taskId);
         }
@@ -1703,14 +1703,14 @@ static void Task_HandleSwappingItemsInput(u8 taskId)
             case LIST_NOTHING_CHOSEN:
                 break;
             case LIST_CANCEL:
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 if (JOY_NEW(A_BUTTON))
                     DoItemSwap(taskId);
                 else
                     CancelItemSwap(taskId);
                 break;
             default:
-                PlaySE(SE_RG_BAG_POCKET);
+                PlaySE(SE_RG_BAG_CURSOR);
                 DoItemSwap(taskId);
                 break;
             }
@@ -1946,11 +1946,11 @@ static void Task_ItemContext_SingleRow(u8 taskId)
         case MENU_NOTHING_CHOSEN:
             break;
         case MENU_B_PRESSED:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sItemMenuActions[ACTION_CANCEL].func.void_u8(taskId);
             break;
         default:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sItemMenuActions[gBagMenu->contextMenuItemsPtr[selection]].func.void_u8(taskId);
             break;
         }
@@ -1996,12 +1996,12 @@ static void Task_ItemContext_MultipleRows(u8 taskId)
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sItemMenuActions[gBagMenu->contextMenuItemsPtr[cursorPos]].func.void_u8(taskId);
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             sItemMenuActions[ACTION_CANCEL].func.void_u8(taskId);
         }
     }
@@ -2103,13 +2103,13 @@ static void Task_ChooseHowManyToToss(u8 taskId)
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
         AskTossItems(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
         CancelToss(taskId);
     }
@@ -2138,14 +2138,14 @@ static void Task_RegisterUsingDpad(u8 taskId) {
     u16 *cursorPos = &gBagPosition.cursorPosition[gBagPosition.pocket];
     u32 i = 0;
     if (JOY_NEW(B_BUTTON)) {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         ItemMenu_Cancel(taskId);
         return;
     }
     i = DpadInputToRegisteredItemIndex(FALSE);
     if (i == 0)
         return;
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_CURSOR);
     // register and refresh menu
     gSaveBlock1Ptr->registeredItems[i - 1] = gSpecialVar_ItemId;
     gSaveBlock1Ptr->registeredItemCompat = gSpecialVar_ItemId;
@@ -2178,7 +2178,7 @@ static void Task_RemoveItemFromBag(u8 taskId)
 
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveBagItem(gSpecialVar_ItemId, tItemCount);
         DestroyListMenuTask(tListTaskId, scrollPos, cursorPos);
         UpdatePocketItemList(gBagPosition.pocket);
@@ -2296,7 +2296,7 @@ static void HandleErrorMessage(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         CloseItemMessage(taskId);
     }
 }
@@ -2494,7 +2494,7 @@ static void Task_KeyItemWheel(u8 taskId) {
     case 1: // process input
     {
         if (JOY_NEW(B_BUTTON)) {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             tState = 3; // destroy and unfreeze
             break;
         }
@@ -2503,7 +2503,7 @@ static void Task_KeyItemWheel(u8 taskId) {
             break;
         // use item as if it was registered
         gSpecialVar_ItemId = gSaveBlock1Ptr->registeredItemCompat = gSaveBlock1Ptr->registeredItems[i - 1];
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         StartSpriteAffineAnim(&gSprites[data[i]], i + 4 - 1);
         data[15] = data[i];
         tState = 2; // wait for anim
@@ -2611,13 +2611,13 @@ static void Task_ChooseHowManyToSell(u8 taskId)
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY_WIDE);
         DisplaySellItemPriceAndConfirm(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         RemoveMoneyWindow();
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY_WIDE);
@@ -2659,7 +2659,7 @@ static void WaitAfterItemSell(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveMoneyWindow();
         CloseItemMessage(taskId);
     }
@@ -2695,13 +2695,13 @@ static void Task_ChooseHowManyToDeposit(u8 taskId)
     }
     else if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
         TryDepositItem(taskId);
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintItemDescription(tListPosition);
         BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
@@ -2743,7 +2743,7 @@ static void WaitDepositErrorMessage(u8 taskId)
 
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintItemDescription(tListPosition);
         BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
         ReturnToItemList(taskId);
@@ -2810,19 +2810,19 @@ static void Task_WallyTutorialBagMenu(u8 taskId)
         switch (tTimer)
         {
         case WALLY_BAG_DELAY * 1:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             SwitchBagPocket(taskId, MENU_CURSOR_DELTA_RIGHT, FALSE);
             tTimer++;
             break;
         case WALLY_BAG_DELAY * 2:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             BagMenu_PrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
             gSpecialVar_ItemId = ITEM_POKE_BALL;
             OpenContextMenu(taskId);
             tTimer++;
             break;
         case WALLY_BAG_DELAY * 3:
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             RemoveContextWindow();
             DestroyListMenuTask(tListTaskId, 0, 0);
             RestoreBagAfterWallyTutorial();

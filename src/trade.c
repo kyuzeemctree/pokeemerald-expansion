@@ -1456,7 +1456,7 @@ static void CB_ProcessMenuInput(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         if (sTradeMenu->cursorPosition < PARTY_SIZE)
         {
@@ -1498,7 +1498,7 @@ static void CB_ProcessSelectedMonInput(void)
     switch (Menu_ProcessInputNoWrap())
     {
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RedrawChooseAPokemonWindow();
         break;
     case MENU_NOTHING_CHOSEN:
@@ -1537,7 +1537,7 @@ static void CB_ChooseMonAfterButtonPress(void)
 {
     if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RedrawChooseAPokemonWindow();
     }
 }
@@ -1670,7 +1670,7 @@ static void CB_ProcessCancelTradeInput(void)
         break;
     case 1: // NO, Continue
     case MENU_B_PRESSED:
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         RedrawChooseAPokemonWindow();
         break;
     }
@@ -1714,7 +1714,7 @@ static void CB_HandleTradeCanceled(void)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_RG_BAG_POCKET);
+        PlaySE(SE_RG_BAG_CURSOR);
         rbox_fill_rectangle(0);
         rbox_fill_rectangle(1);
 

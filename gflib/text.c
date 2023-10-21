@@ -876,7 +876,7 @@ bool16 TextPrinterWaitWithDownArrow(struct TextPrinter *textPrinter)
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
             result = TRUE;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
     }
     return result;
@@ -894,7 +894,7 @@ bool16 TextPrinterWait(struct TextPrinter *textPrinter)
         if (JOY_NEW(A_BUTTON | B_BUTTON))
         {
             result = TRUE;
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
         }
     }
     return result;

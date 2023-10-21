@@ -1371,7 +1371,7 @@ static void Task_EasyChatScreen(u8 taskId)
         }
         else if (funcId != ECFUNC_NONE)
         {
-            PlaySE(SE_RG_BAG_POCKET);
+            PlaySE(SE_RG_BAG_CURSOR);
             StartEasyChatFunction(funcId);
             tState++; // MAINSTATE_RUN_FUNC
         }
