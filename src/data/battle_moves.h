@@ -13880,6 +13880,22 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .ignoresKingsRock = TRUE,
     },
 
+    [MOVE_SABER_TOOTH] =
+    {
+        .effect = EFFECT_FLINCH_HIT,
+        .power = 85,
+        .type = TYPE_ROCK,
+        .accuracy = 90,
+        .pp = 15,
+        .secondaryEffectChance = 30,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+        .makesContact = TRUE,
+        .bitingMove = TRUE,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {

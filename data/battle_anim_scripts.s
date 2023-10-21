@@ -860,6 +860,7 @@ gBattleAnims_Moves::
 	.4byte Move_TRIPVINE
 	.4byte Move_PLAGUE
 	.4byte Move_EXTINCTION
+	.4byte Move_SABER_TOOTH
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16570,6 +16571,27 @@ Move_EXTINCTION:
 	waitforvisualfinish
 	restorebg
 	waitbgfadein
+	end
+
+Move_SABER_TOOTH::
+	loadspritegfx ANIM_TAG_SHARP_TEETH
+	loadspritegfx ANIM_TAG_IMPACT
+	loadspritegfx ANIM_TAG_ROCKS
+	monbg ANIM_TARGET
+	waitforvisualfinish
+	playsewithpan SE_M_BITE, SOUND_PAN_TARGET
+	createsprite gJawLockTeethTemplate, ANIM_ATTACKER, 2, 0xffe0, 0xffe0, 0x1, 0x333, 0x333, 0xa, 15
+	createsprite gJawLockTeethTemplate, ANIM_ATTACKER, 2, 0x20, 0x20, 0x5, 0xfccd, 0xfccd, 0xa, 15
+	delay 0xa
+	createsprite gBasicHitSplatSpriteTemplate, ANIM_ATTACKER, 2, 0xfff8, 0x0, 0x1, 0x1
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 7, 10, 2
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -12, 32, 3, 4
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 8, 31, 2, 2
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, -4, 28, 2, 3
+	createsprite gRockScatterSpriteTemplate, ANIM_TARGET, 2, 12, 30, 4, 3
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	delay 0x1
 	end
 
 Move_TERA_BLAST::

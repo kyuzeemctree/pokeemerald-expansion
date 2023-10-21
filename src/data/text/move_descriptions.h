@@ -3272,6 +3272,10 @@ static const u8 sExtinctionDescription[] = _(
     "A powerful force corrupts\n"
     "all others on the field. ");
 
+static const u8 sSaberToothDescription[] = _(
+    "Savagely bites into the\n"
+    "foe. May cause flinching.");
+
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4115,4 +4119,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_TRIPVINE - 1] = sSuckerPunchDescription,
     [MOVE_PLAGUE - 1] = sPlagueDescription,
     [MOVE_EXTINCTION - 1] = sExtinctionDescription,
+    [MOVE_SABER_TOOTH - 1] = sSaberToothDescription,
 };
