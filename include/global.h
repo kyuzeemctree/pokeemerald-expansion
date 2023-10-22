@@ -1071,6 +1071,8 @@ struct SaveBlock1
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
     // sizeof: 0x3???
     /*      */ struct Pokevial pokevial; //Pokevial Branch
+               u8 dexNavSearchLevels[NUM_SPECIES];
+               u8 dexNavChain;
     // sizeof: 0x3D88
 };
 

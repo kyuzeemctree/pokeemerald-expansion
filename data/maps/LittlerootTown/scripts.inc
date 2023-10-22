@@ -929,6 +929,7 @@ LittlerootTown_EventScript_SetReceivedRunningShoes::
 	setflag FLAG_RECEIVED_OLD_ROD
     setflag FLAG_RECEIVED_GOOD_ROD
 	setflag FLAG_RECEIVED_POKENAV
+	setflag FLAG_SYS_DEXNAV_GET
 	setflag FLAG_SYS_POKENAV_GET
 	setflag FLAG_ADDED_MATCH_CALL_TO_POKENAV
 	release

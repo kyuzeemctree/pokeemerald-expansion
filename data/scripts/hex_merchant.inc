@@ -70,8 +70,8 @@ Text_HexMerchant_Intro:
 	.string "will no doubt expand your options\l"
 	.string "as well as your mind…\p"
 	.string "You may find me out across\n"
-	.string "the region. Talk to me again"\l"
-	.string "if you're interested.$"
+	.string "the region. Talk to me\l"
+	.string "again if you're interested…$"
 
 Text_HexMerchant_Sell:
 	.string "Well, well, well…\n"
@@ -82,3 +82,4 @@ Text_HexMerchant_Bye:
 
 Route104_MrBrineysHouse_Text_Poko:
 	.string "POKO: Brrrrhu!$"
+	

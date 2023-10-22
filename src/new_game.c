@@ -44,6 +44,7 @@
 #include "berry_powder.h"
 #include "mystery_gift.h"
 #include "union_room_chat.h"
+#include "constants/map_groups.h"
 #include "constants/items.h"
 #include "time_events.h"
 #include "field_weather.h"
@@ -208,6 +209,8 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    memset(gSaveBlock1Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock1Ptr->dexNavSearchLevels));
+    gSaveBlock1Ptr->dexNavChain = 0;
 }
 
 static void ResetMiniGamesRecords(void)
