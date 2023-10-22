@@ -6373,6 +6373,11 @@ BattleScript_LinkHandleFaintedMonLoop::
 BattleScript_LinkHandleFaintedMonMultipleEnd::
 	end2
 
+BattleScript_RunPrompt::
+	printselectionstring STRINGID_RUNPROMPT
+	forfeityesnobox BS_ATTACKER
+	endselectionscript
+
 BattleScript_LocalTrainerBattleWon::
 	jumpifbattletype BATTLE_TYPE_TWO_OPPONENTS, BattleScript_LocalTwoTrainersDefeated
 	printstring STRINGID_PLAYERDEFEATEDTRAINER1
