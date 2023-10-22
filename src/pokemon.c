@@ -48,6 +48,7 @@
 #include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/moves.h"
+#include "constants/party_menu.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
 #include "constants/union_room.h"
@@ -3321,7 +3322,7 @@ static const u8 sStatsToRaise[] =
 // 0-99, 100-199, 200+
 static const s8 sFriendshipEventModifiers[][3] =
 {
-    [FRIENDSHIP_EVENT_GROW_LEVEL]      = { 5,  3,  2},
+    [FRIENDSHIP_EVENT_GROW_LEVEL]      = { 10, 6,  4},
     [FRIENDSHIP_EVENT_VITAMIN]         = { 5,  3,  2},
     [FRIENDSHIP_EVENT_BATTLE_ITEM]     = { 1,  1,  0},
     [FRIENDSHIP_EVENT_LEAGUE_BATTLE]   = { 3,  2,  1},
@@ -3336,21 +3337,12 @@ static const s8 sFriendshipEventModifiers[][3] =
 
 static const u16 sHMMoves[] =
 {
-    MOVE_CUT, MOVE_FLY, MOVE_SURF, MOVE_STRENGTH, MOVE_FLASH,
-    MOVE_ROCK_SMASH, MOVE_WATERFALL, MOVE_DIVE, HM_MOVES_END
+    HM_MOVES_END
 };
 
 static const struct SpeciesItem sAlteringCaveWildMonHeldItems[] =
 {
     {SPECIES_NONE,      ITEM_NONE},
-    {SPECIES_MAREEP,    ITEM_GANLON_BERRY},
-    {SPECIES_PINECO,    ITEM_APICOT_BERRY},
-    {SPECIES_HOUNDOUR,  ITEM_BIG_MUSHROOM},
-    {SPECIES_TEDDIURSA, ITEM_PETAYA_BERRY},
-    {SPECIES_AIPOM,     ITEM_BERRY_JUICE},
-    {SPECIES_SHUCKLE,   ITEM_BERRY_JUICE},
-    {SPECIES_STANTLER,  ITEM_PETAYA_BERRY},
-    {SPECIES_SMEARGLE,  ITEM_SALAC_BERRY},
 };
 
 static const struct OamData sOamData_64x64 =
@@ -8710,4 +8702,43 @@ void UpdateMonPersonality(struct BoxPokemon *boxMon, u32 personality)
     *new3 = *old3;
     boxMon->checksum = CalculateBoxMonChecksum(boxMon);
     EncryptBoxMon(boxMon);
+}
+
+u8 GetPartyMonCurvedLevel(void)
+{
+    u8 adjustedLevel, currentLevel, monCount, partyMon, badgeModifier, firstMon;
+    u16 i, totalLevel;
+
+    for (i = FLAG_BADGE01_GET; i < FLAG_BADGE01_GET + NUM_BADGES; i++)
+    {
+        if (FlagGet(i))
+            badgeModifier += 5;
+    }
+    adjustedLevel = badgeModifier;
+
+    for (partyMon = 0; partyMon < PARTY_SIZE; partyMon++)
+    {
+        if ((GetMonData(&gPlayerParty[partyMon], MON_DATA_SPECIES, NULL) != SPECIES_NONE) && 
+            !(GetAilmentFromStatus(GetMonData(&gPlayerParty[partyMon], MON_DATA_STATUS, NULL)) == AILMENT_FNT) &&
+            !(GetMonData(&gPlayerParty[partyMon], MON_DATA_IS_EGG, NULL) || GetMonData(&gPlayerParty[partyMon], MON_DATA_SANITY_IS_BAD_EGG, NULL)))
+        {
+            currentLevel = GetMonData(&gPlayerParty[partyMon], MON_DATA_LEVEL, NULL);
+            totalLevel += currentLevel;
+            monCount++;
+
+            if (monCount == 1)
+                firstMon = currentLevel;
+
+            if (adjustedLevel < currentLevel)
+                adjustedLevel = (adjustedLevel + currentLevel) / 2;
+        }
+    }
+
+    if (adjustedLevel < (totalLevel / PARTY_SIZE))
+        adjustedLevel = (totalLevel + badgeModifier) / PARTY_SIZE;
+
+    if (adjustedLevel > firstMon)
+        adjustedLevel = firstMon;
+
+    return adjustedLevel;
 }
