@@ -101,5 +101,6 @@ void ItemUseCB_UsePokevial(u8 taskId, TaskFunc task); //Pokevial Branch
 void InitPartyMenuForPokevialFromField(u8 taskId); //Pokevial Branch
 void ItemUseCB_Mints(u8 taskId, TaskFunc task);
 void CB2_ReturnToPartyMenuFromSummaryScreen(void); //Remember Moves in Party
+void ItemUseCB_PokeBall(u8 taskId, TaskFunc task); //Swap pokeballs
 
 #endif // GUARD_PARTY_MENU_H

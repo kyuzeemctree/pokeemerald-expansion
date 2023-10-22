@@ -83,6 +83,7 @@ void ItemUseOutOfBattle_TeleportTool(u8);
 void ItemUseOutOfBattle_SweetScentTool(u8);
 static void ItemUseOnFieldCB_SweetScentTool(u8);
 
-// End qol_field_moves
+// Swap pokeballs
+void ItemUseOutOfBattle_PokeBall(u8);
 
 #endif // GUARD_ITEM_USE_H
