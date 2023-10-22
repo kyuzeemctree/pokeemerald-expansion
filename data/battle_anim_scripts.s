@@ -862,6 +862,7 @@ gBattleAnims_Moves::
 	.4byte Move_EXTINCTION
 	.4byte Move_SABER_TOOTH
 	.4byte Move_ROCKET_FIST
+	.4byte Move_CHAOS_BOLT
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16613,6 +16614,49 @@ Move_ROCKET_FIST:
 	clearmonbg ANIM_DEF_PARTNER
 	blendoff
 	end
+
+Move_CHAOS_BOLT:
+	loadspritegfx ANIM_TAG_GLOWY_RED_ORB
+	loadspritegfx ANIM_TAG_GLOWY_GREEN_ORB
+	loadspritegfx ANIM_TAG_DUCK
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET @black color
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 25, 1
+	delay 6
+	playsewithpan SE_M_HAZE, SOUND_PAN_ATTACKER
+	createvisualtask AnimTask_StartSinAnimTimer, 5, 100
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 3, 0, 25, 1
+	createsprite gComplexPaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, F_PAL_TARGET, 8, 5, RGB_BLACK, 10, RGB_BLACK, 0
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	call ChaosBoltOrbs
+	waitforvisualfinish
+	end
+
+ChaosBoltOrbs:
+	createsprite gChaosBoltBlackOrbsTemplate, ANIM_TARGET, 3, 10, 10, 0, 16
+	createsprite gSignalBeamGreenOrbSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, -16
+	delay 1
+	return
 
 Move_TERA_BLAST::
 Move_AXE_KICK::

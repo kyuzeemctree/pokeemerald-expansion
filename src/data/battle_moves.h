@@ -13916,6 +13916,20 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .punchingMove = TRUE,
     },
 
+    [MOVE_CHAOS_BOLT] =
+    {
+        .power = 80,
+        .effect = EFFECT_DIRE_CLAW,
+        .type = TYPE_DARK,
+        .accuracy = 100,
+        .pp = 15,
+        .secondaryEffectChance = 30,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .split = SPLIT_SPECIAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {

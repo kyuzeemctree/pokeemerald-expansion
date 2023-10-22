@@ -234,6 +234,18 @@ const struct SpriteTemplate gSignalBeamGreenOrbSpriteTemplate =
     .callback = AnimToTargetInSinWave,
 };
 
+//Black Orbs
+const struct SpriteTemplate gChaosBoltBlackOrbsTemplate =
+{
+    .tileTag = ANIM_TAG_GLOWY_RED_ORB,
+    .paletteTag = ANIM_TAG_HANDS_AND_FEET,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimToTargetInSinWave,
+};
+
 static const union AnimCmd sAnim_FlamethrowerFlame[] =
 {
     ANIMCMD_FRAME(16, 2),

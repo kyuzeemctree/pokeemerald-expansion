@@ -3280,6 +3280,10 @@ static const u8 sRocketFistDescription[] = _(
     "Hits Flying foes twice and\n"
     "knocks them to the ground.");
 
+static const u8 sChaosBoltDescription[] = _(
+    "Channels a wicked bolt. May\n"
+    "paralyze, poison or drowse.");
+
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4125,4 +4129,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_EXTINCTION - 1] = sExtinctionDescription,
     [MOVE_SABER_TOOTH - 1] = sSaberToothDescription,
     [MOVE_ROCKET_FIST - 1] = sRocketFistDescription,
+    [MOVE_CHAOS_BOLT - 1] = sChaosBoltDescription,
 };
