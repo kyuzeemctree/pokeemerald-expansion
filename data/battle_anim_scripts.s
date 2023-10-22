@@ -861,6 +861,7 @@ gBattleAnims_Moves::
 	.4byte Move_PLAGUE
 	.4byte Move_EXTINCTION
 	.4byte Move_SABER_TOOTH
+	.4byte Move_ROCKET_FIST
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16592,6 +16593,25 @@ Move_SABER_TOOTH::
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	delay 0x1
+	end
+
+Move_ROCKET_FIST:
+	loadspritegfx ANIM_TAG_HANDS_AND_FEET
+	loadspritegfx ANIM_TAG_EXPLOSION_2
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_WindUpLunge, 5, ANIM_ATTACKER, -20, 8, 48, 8, 56, 6
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 5, 5, 1
+	playsewithpan SE_M_FIRE_PUNCH, SOUND_PAN_TARGET
+	createsprite gFistFootSpriteTemplate, ANIM_TARGET, 3, 0, 0, 8, 1, 0
+	createsprite gSpriteTemplate_SpiritBreakExplode, ANIM_TARGET, 3, 0x0, 0x0, 0x1, 0x1
+	waitforvisualfinish
+	delay 0x5
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, ANIM_ATTACKER, 0x0, 0x5
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
 	end
 
 Move_TERA_BLAST::

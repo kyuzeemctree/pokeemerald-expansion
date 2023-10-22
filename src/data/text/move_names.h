@@ -1670,6 +1670,7 @@ const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1] =
     [MOVE_PLAGUE] = _("Plague"),
     [MOVE_EXTINCTION] = _("Extinction"),
     [MOVE_SABER_TOOTH] = _("Saber Tooth"),
+    [MOVE_ROCKET_FIST] = _("Rocket Fist"),
 };
 #endif
 

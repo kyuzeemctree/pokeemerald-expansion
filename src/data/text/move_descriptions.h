@@ -3276,6 +3276,10 @@ static const u8 sSaberToothDescription[] = _(
     "Savagely bites into the\n"
     "foe. May cause flinching.");
 
+static const u8 sRocketFistDescription[] = _(
+    "Hits Flying foes twice and\n"
+    "knocks them to the ground.");
+
 const u8 gNotDoneYetDescription[] = _(
     "This move can't be used. Its\n"
     "effect is in development.");
@@ -4120,4 +4124,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_PLAGUE - 1] = sPlagueDescription,
     [MOVE_EXTINCTION - 1] = sExtinctionDescription,
     [MOVE_SABER_TOOTH - 1] = sSaberToothDescription,
+    [MOVE_ROCKET_FIST - 1] = sRocketFistDescription,
 };

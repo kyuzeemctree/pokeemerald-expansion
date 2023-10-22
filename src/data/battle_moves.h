@@ -13896,6 +13896,26 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .bitingMove = TRUE,
     },
 
+    [MOVE_ROCKET_FIST] =
+    {
+        .effect = EFFECT_SMACK_DOWN,
+        .power = 45,
+        .type = TYPE_GROUND,
+        .accuracy = 100,
+        .pp = 10,
+        .secondaryEffectChance = 100,
+        .target = MOVE_TARGET_SELECTED,
+        .priority = 0,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+        .damagesAirborne = TRUE,
+        .ignoreTypeIfFlyingAndUngrounded = TRUE,
+        .metronomeBanned = TRUE,
+        .strikeCount = 2,
+        .makesContact = TRUE,
+        .punchingMove = TRUE,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {
