@@ -863,6 +863,7 @@ gBattleAnims_Moves::
 	.4byte Move_SABER_TOOTH
 	.4byte Move_ROCKET_FIST
 	.4byte Move_CHAOS_BOLT
+	.4byte Move_ARCANE_EDGE
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16656,6 +16657,56 @@ ChaosBoltOrbs:
 	createsprite gChaosBoltBlackOrbsTemplate, ANIM_TARGET, 3, 10, 10, 0, 16
 	createsprite gSignalBeamGreenOrbSpriteTemplate, ANIM_TARGET, 3, 10, 10, 0, -16
 	delay 1
+	return
+
+Move_ARCANE_EDGE:
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loadspritegfx ANIM_TAG_SLASH
+	loadspritegfx ANIM_TAG_GRAY_SMOKE
+	loadspritegfx ANIM_TAG_WATER_ORB
+	loadspritegfx ANIM_TAG_ICE_CHUNK
+	playsewithpan SE_M_SACRED_FIRE2, SOUND_PAN_TARGET
+	call BlueFireSpinEffect
+	call BlueFireSpinEffect
+	call BlueFireSpinEffect
+	createvisualtask AnimTask_BlendBattleAnimPal, 0xa, F_PAL_ATTACKER, 0x1, 0x0, 0xB, 0x7FAF @;Light blue
+	createvisualtask AnimTask_WindUpLunge, 5, ANIM_ATTACKER, -24, 8, 23, 10, 56, 10
+	waitforvisualfinish
+	delay 11
+	createsprite gSlashSliceSpriteTemplate, ANIM_TARGET, 2, 1, -8, 0
+	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
+	delay 4
+	createsprite gSlashSliceSpriteTemplate, ANIM_TARGET, 2, 1, 8, 0
+	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
+	delay 0x2
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 5, 1
+	createsprite gTechnoBlastBlueSmokeTemplate, ANIM_TARGET, 2, 0x8, 0x8, 0x1, 0x0
+	delay 0x2
+	createsprite gTechnoBlastBlueSmokeTemplate, ANIM_TARGET, 2, 0xfff8, 0xfff8, 0x1, 0x0
+	delay 0x2
+	createsprite gTechnoBlastBlueSmokeTemplate, ANIM_TARGET, 2, 0x8, 0xfff8, 0x1, 0x0
+	delay 0x2
+	createsprite gTechnoBlastBlueSmokeTemplate, ANIM_TARGET, 2, 0xfff8, 0x8, 0x1, 0x0
+	delay 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 0xa, F_PAL_ATTACKER, 0x1, 0xB, 0x0, 0x7FAF @;Light blue
+	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0x0, 0x0, 0x5
+	waitforvisualfinish
+	delay 0x3
+	end
+
+BlueFireSpinEffect:
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 28, 528, 30, 13, 50, ANIM_ATTACKER
+	delay 2
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 32, 480, 20, 16, -46, ANIM_ATTACKER
+	delay 2
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 33, 576, 20, 8, 42, ANIM_ATTACKER
+	delay 2
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 31, 400, 25, 11, -42, ANIM_ATTACKER
+	delay 2
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 28, 512, 25, 16, 46, ANIM_ATTACKER
+	delay 2
+	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 33, 464, 30, 15, -50, ANIM_ATTACKER
+	delay 2
 	return
 
 Move_TERA_BLAST::
