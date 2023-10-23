@@ -864,6 +864,7 @@ gBattleAnims_Moves::
 	.4byte Move_ROCKET_FIST
 	.4byte Move_CHAOS_BOLT
 	.4byte Move_ARCANE_EDGE
+	.4byte Move_WALLOP
 @@@@ Z MOVES
 	.4byte Move_BREAKNECK_BLITZ
 	.4byte Move_ALL_OUT_PUMMELING
@@ -16707,6 +16708,57 @@ BlueFireSpinEffect:
 	delay 2
 	createsprite gBlueFireSpinSpriteTemplate, ANIM_TARGET, 2, 0, 33, 464, 30, 15, -50, ANIM_ATTACKER
 	delay 2
+	return
+
+Move_WALLOP:
+	loadspritegfx ANIM_TAG_SLAM_HIT
+	loadspritegfx ANIM_TAG_PINK_HEART
+	loadspritegfx ANIM_TAG_DUCK
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	playsewithpan SE_M_CHARM, SOUND_PAN_ATTACKER
+	waitplaysewithpan SE_M_ENCORE, SOUND_PAN_TARGET, 10
+	waitplaysewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 20
+	waitplaysewithpan SE_M_SPIT_UP, SOUND_PAN_TARGET, 30
+	waitplaysewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 40
+	waitplaysewithpan SE_M_FLATTER, SOUND_PAN_TARGET, 50
+	waitplaysewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 60
+	waitplaysewithpan SE_ARENA_TIMEUP1, SOUND_PAN_TARGET, 70
+	waitplaysewithpan SE_M_CHARM, SOUND_PAN_ATTACKER, 80
+	waitplaysewithpan SE_M_STRENGTH, SOUND_PAN_TARGET, 90
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 0, -18, 6, 6, 4
+	createvisualtask AnimTask_TranslateMonElliptical, 2, 1, 18, 6, 6, 4
+	call WallopHit
+	call WallopHit
+	call WallopHit
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+WallopHit:
+	createsprite gSlamHitSpriteTemplate, ANIM_ATTACKER, 3, 0, -12, ANIM_TARGET, 1
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xa0, 0xffe0
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xff00, 0xffd8
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0x80, 0xfff0
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0x1a0, 0xffda
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xff80, 0xffea
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xfe80, 0xffe1
+	delay 8
+	createsprite gSlamHitSpriteTemplate, ANIM_ATTACKER, 3, -12, 8, ANIM_TARGET, 1
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 0xff00, 0xffd6
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 0x80, 0xfff2
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 0x1a0, 0xffda
+	createsprite gPinkHeartSpriteTemplate, ANIM_TARGET, 3, 0xff80, 0xffea
+	delay 8
+	createsprite gSlamHitSpriteTemplate, ANIM_ATTACKER, 3, 12, 0, ANIM_TARGET, 1
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xa0, 0xffe0
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xff00, 0xffd8
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0x80, 0xfff0
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0x1a0, 0xffda
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xff80, 0xffea
+	createsprite gDizzyPunchDuckSpriteTemplate, ANIM_TARGET, 3, 0x10, 0x8, 0xfe80, 0xffe1
+	delay 8
 	return
 
 Move_TERA_BLAST::

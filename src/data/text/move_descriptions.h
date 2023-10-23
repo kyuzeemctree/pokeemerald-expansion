@@ -4135,4 +4135,5 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_ROCKET_FIST - 1] = sRocketFistDescription,
     [MOVE_CHAOS_BOLT - 1] = sChaosBoltDescription,
     [MOVE_ARCANE_EDGE - 1] = sArcaneEdgeDescription,
+    [MOVE_WALLOP - 1] = sThrashDescription,
 };

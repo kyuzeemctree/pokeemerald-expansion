@@ -13947,6 +13947,22 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .slicingMove = TRUE,
     },
 
+    [MOVE_WALLOP] =
+    {
+        .power = 120,
+        .pp = 10,
+        .effect = EFFECT_RAMPAGE,
+        .type = TYPE_FAIRY,
+        .accuracy = 100,
+        .secondaryEffectChance = 100,
+        .target = MOVE_TARGET_RANDOM,
+        .priority = 0,
+        .split = SPLIT_PHYSICAL,
+        .zMoveEffect = Z_EFFECT_NONE,
+        .makesContact = TRUE,
+        .instructBanned = TRUE,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {
