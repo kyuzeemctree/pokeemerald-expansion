@@ -20,15 +20,18 @@ EventScript_HexMerchant_Shop::
 
 	.align 2
 Pokemart_HexMerchant:
-	.2byte ITEM_EXP_CANDY_S
-	.2byte ITEM_EXP_CANDY_M
-	.2byte ITEM_EXP_CANDY_L
+	.2byte ITEM_RARE_CANDY
 	.2byte ITEM_ABILITY_PATCH
+	.2byte ITEM_ESCAPE_ROPE
+	.2byte ITEM_GOOD_ROD
 	.2byte ITEM_FLY_TOOL
 	.2byte ITEM_CUT_TOOL
 	.2byte ITEM_ROCKSMASH_TOOL
+	.2byte ITEM_DOWSING_MACHINE
+	.2byte ITEM_SUPER_ROD
 	.2byte ITEM_SURF_TOOL
 	.2byte ITEM_DIVE_TOOL
+	.2byte ITEM_MEGA_RING
 	.2byte ITEM_STRENGTH_TOOL
 	.2byte ITEM_WATERFALL_TOOL
 	.2byte ITEM_NONE
@@ -64,8 +67,8 @@ Text_HexMerchant_Intro:
 	.string "your identity?\p"
 	.string "Perhaps it's best I don't\n"
 	.string "tell you…\p"
-	.string "More importantly!\p"
-	.string "I am the Hex Merchant…\n"
+	.string "More importantly!\n"
+	.string "I am the Hex Merchant…\p"
 	.string "I sell various mysterious wares that\n"
 	.string "will no doubt expand your options\l"
 	.string "as well as your mind…\p"

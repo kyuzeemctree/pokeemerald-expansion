@@ -1262,7 +1262,7 @@ const struct Item gItems[] =
     [ITEM_RARE_CANDY] =
     {
         .name = _("Rare Candy"),
-        .price = 10000,
+        .price = 3000,
         .description = sRareCandyDesc,
         .pocket = POCKET_MEDICINE,
         .type = ITEM_USE_PARTY_MENU,
@@ -1273,7 +1273,7 @@ const struct Item gItems[] =
     [ITEM_EXP_CANDY_XS] =
     {
         .name = _("Exp.Candy XS"),
-        .price = 20,
+        .price = 100,
         .holdEffectParam = EXP_100,
         .description = sExpCandyXSDesc,
         .pocket = POCKET_MEDICINE,
@@ -1285,7 +1285,7 @@ const struct Item gItems[] =
     [ITEM_EXP_CANDY_S] =
     {
         .name = _("Exp.Candy S"),
-        .price = 240,
+        .price = 800,
         .holdEffectParam = EXP_800,
         .description = sExpCandySDesc,
         .pocket = POCKET_MEDICINE,
@@ -1297,7 +1297,7 @@ const struct Item gItems[] =
     [ITEM_EXP_CANDY_M] =
     {
         .name = _("Exp.Candy M"),
-        .price = 1000,
+        .price = 3000,
         .holdEffectParam = EXP_3000,
         .description = sExpCandyMDesc,
         .pocket = POCKET_MEDICINE,
@@ -1309,7 +1309,7 @@ const struct Item gItems[] =
     [ITEM_EXP_CANDY_L] =
     {
         .name = _("Exp.Candy L"),
-        .price = 3000,
+        .price = 10000,
         .holdEffectParam = EXP_10000,
         .description = sExpCandyLDesc,
         .pocket = POCKET_MEDICINE,
@@ -1321,7 +1321,7 @@ const struct Item gItems[] =
     [ITEM_EXP_CANDY_XL] =
     {
         .name = _("Exp.Candy XL"),
-        .price = 10000,
+        .price = 30000,
         .holdEffectParam = EXP_30000,
         .description = sExpCandyXLDesc,
         .pocket = POCKET_MEDICINE,
@@ -1487,7 +1487,7 @@ const struct Item gItems[] =
         .name = _("Escape Rope"),
         .description = sEscapeRopeDesc,
         #if I_KEY_ESCAPE_ROPE >= GEN_8
-            .price = 0,
+            .price = 500,
             .importance = 1,
             .pocket = POCKET_KEY_ITEMS,
         #else
@@ -5065,7 +5065,7 @@ const struct Item gItems[] =
     [ITEM_CUT_TOOL] =
     {
         .name = _("Axe"),
-        .price = 2500,
+        .price = 3000,
         .description = sCutToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5076,7 +5076,7 @@ const struct Item gItems[] =
     [ITEM_FLY_TOOL] =
     {
         .name = _("Taxi Pager"),
-        .price = 500,
+        .price = 2000,
         .description = sFlyToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -5098,7 +5098,7 @@ const struct Item gItems[] =
     [ITEM_STRENGTH_TOOL] =
     {
         .name = _("Power Glove"),
-        .price = 20000,
+        .price = 25000,
         .description = sStrengthToolDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -8759,7 +8759,7 @@ const struct Item gItems[] =
     [ITEM_MEGA_RING] =
     {
         .name = _("Mega Ring"),
-        .price = 25000,
+        .price = 20000,
         .importance = 1,
         .description = sMegaRingDesc,
         .pocket = POCKET_KEY_ITEMS,
@@ -8840,7 +8840,7 @@ const struct Item gItems[] =
     [ITEM_GOOD_ROD] =
     {
         .name = _("Fishing Rod"),
-        .price = 0,
+        .price = 1500,
         .description = sGoodRodDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,
@@ -8864,7 +8864,7 @@ const struct Item gItems[] =
     [ITEM_DOWSING_MACHINE] =
     {
         .name = _("Dowsing MCHN"),
-        .price = 7500,
+        .price = 6000,
         .description = sDowsingMachineDesc,
         .importance = 1,
         .pocket = POCKET_KEY_ITEMS,

@@ -893,14 +893,10 @@ LittlerootTown_EventScript_Mom::
 
 LittlerootTown_EventScript_SetReceivedRunningShoes::
 	removeobject LOCALID_MOM
-	additem ITEM_GOOD_ROD, 1
 	additem ITEM_TM_CASE, 1
 	additem ITEM_MACH_BIKE, 1
-	additem ITEM_ESCAPE_ROPE, 1
 	additem ITEM_EXP_SHARE, 1
 	additem ITEM_POKEVIAL, 1
-	additem ITEM_FLY_TOOL, 1
-	additem ITEM_SURF_TOOL, 1
 	additem ITEM_AMULET_COIN, 1
 	additem ITEM_POKE_BALL, 10
 	additem ITEM_GREAT_BALL, 10
@@ -926,8 +922,6 @@ LittlerootTown_EventScript_SetReceivedRunningShoes::
 	additem ITEM_PP_MAX, 50
 	additem ITEM_MAX_REPEL, 50
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
-	setflag FLAG_RECEIVED_OLD_ROD
-    setflag FLAG_RECEIVED_GOOD_ROD
 	setflag FLAG_RECEIVED_POKENAV
 	setflag FLAG_SYS_DEXNAV_GET
 	setflag FLAG_SYS_POKENAV_GET
