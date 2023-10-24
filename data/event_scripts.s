@@ -1065,3 +1065,5 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/maps/DewfordGrotto/scripts.inc"
     .include "data/scripts/dexnav.inc"
     
+
+	.include "data/maps/LittlerootTown_House_3/scripts.inc"

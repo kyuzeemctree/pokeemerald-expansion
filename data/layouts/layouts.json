@@ -4420,6 +4420,16 @@
       "secondary_tileset": "gTileset_Fortree",
       "border_filepath": "data/layouts/DewfordGrotto/border.bin",
       "blockdata_filepath": "data/layouts/DewfordGrotto/map.bin"
+    },
+    {
+      "id": "LAYOUT_LITTLEROOT_TOWN_HOUSE_3",
+      "name": "LittlerootTown_House_3_Layout",
+      "width": 18,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/LittlerootTown_House_3/border.bin",
+      "blockdata_filepath": "data/layouts/LittlerootTown_House_3/map.bin"
     }
   ]
 }
