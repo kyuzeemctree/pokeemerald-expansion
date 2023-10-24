@@ -29,7 +29,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VIGOROTH_CARRYING_BOX",
-      "x": 1,
+      "x": 3,
       "y": 3,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_RIGHT_AND_LEFT",
@@ -42,7 +42,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_VIGOROTH_FACING_AWAY",
-      "x": 4,
+      "x": 5,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_UP",
