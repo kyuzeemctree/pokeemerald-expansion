@@ -53,6 +53,9 @@ extern const u8 gText_Key_Items[];
 extern const u8 gText_Poke_Balls[];
 extern const u8 gText_TMs_Hms[];
 extern const u8 gText_Berries2[];
+extern const u8 gText_Medicine[];
+extern const u8 gText_BattleItems[];
+extern const u8 gText_Treasures[];
 
 extern const u8 gText_Single2[];
 extern const u8 gText_Double2[];
@@ -256,6 +259,7 @@ extern const u8 gText_MenuOption[];
 extern const u8 gText_MenuExit[];
 extern const u8 gText_MenuRetire[];
 extern const u8 gText_MenuRest[];
+extern const u8 gText_MenuDexNav[];
 extern const u8 gText_Floor1[];
 extern const u8 gText_Floor2[];
 extern const u8 gText_Floor3[];
@@ -429,6 +433,7 @@ extern const u8 gText_Var1IsSelected[];
 extern const u8 gText_TossHowManyVar1s[];
 extern const u8 gText_ConfirmTossItems[];
 extern const u8 gText_ThrewAwayVar2Var1s[];
+extern const u8 gText_PressAnyDpadKey[];
 extern const u8 gText_CantWriteMail[];
 extern const u8 gText_NoPokemon[];
 extern const u8 gText_Var1CantBeHeld[];
@@ -464,6 +469,7 @@ extern const u8 gText_MailMessageWillBeLost[];
 extern const u8 gText_MailTakenFromPkmn[];
 extern const u8 gText_NoMoreThanVar1Pkmn[];
 extern const u8 gText_PkmnCantBeTradedNow[];
+extern const u8 gText_PkmnCantBeTraded[];
 extern const u8 gText_EggCantBeTradedNow[];
 extern const u8 gText_OnlyPkmnForBattle[];
 extern const u8 gJPText_AreYouSureYouWantToSpinTradeMon[];
@@ -474,9 +480,11 @@ extern const u8 gText_EscapeFromHere[];
 extern const u8 gText_PkmnCuredOfPoison[];
 extern const u8 gText_PkmnWokeUp2[];
 extern const u8 gText_PkmnBurnHealed[];
+extern const u8 gText_PkmnFrostbiteHealed[];
 extern const u8 gText_PkmnThawedOut[];
 extern const u8 gText_PkmnCuredOfParalysis[];
 extern const u8 gText_PkmnGotOverInfatuation[];
+extern const u8 gText_PkmnTransformed[];
 extern const u8 gText_PkmnBecameHealthy[];
 extern const u8 gText_HP3[];
 extern const u8 gText_SpAtk3[];
@@ -498,6 +506,8 @@ extern const u8 gText_12PoofForgotMove[];
 extern const u8 gText_StopLearningMove2[];
 extern const u8 gText_MoveNotLearned[];
 extern const u8 gText_PkmnElevatedToLvVar2[];
+extern const u8 gText_PkmnGainedExp[];
+extern const u8 gText_PkmnGainedExpAndElevatedToLvVar3[];
 extern const u8 gText_RemoveMailBeforeItem[];
 extern const u8 gText_PkmnHoldingItemCantHoldMail[];
 extern const u8 gText_MailTransferredFromMailbox[];
@@ -518,6 +528,7 @@ extern const u8 gText_SpDef[];
 extern const u8 gText_Speed[];
 extern const u8 gText_Dash[];
 extern const u8 gText_Plus[];
+extern const u8 gText_Nickname[];
 
 //pokedex text
 extern const u8 gText_CryOf[];
@@ -934,6 +945,7 @@ extern const u8 gText_BootedUpTM[];
 extern const u8 gText_TMHMContainedVar1[];
 extern const u8 gText_PlayerUsedVar2[];
 extern const u8 gText_RepelEffectsLingered[];
+extern const u8 gText_LureEffectsLingered[];
 extern const u8 gText_UsedVar2WildLured[];
 extern const u8 gText_UsedVar2WildRepelled[];
 extern const u8 gText_BoxFull[];
@@ -1020,6 +1032,8 @@ extern const u8 gText_ThrowInPremierBall[];
 extern const u8 gText_ShopBuy[];
 extern const u8 gText_ShopSell[];
 extern const u8 gText_ShopQuit[];
+extern const u8 gText_ThatItemIsSoldOut[];
+extern const u8 gText_SoldOut[];
 
 extern const u8 gText_OhABite[];
 extern const u8 gText_PokemonOnHook[];
@@ -3025,5 +3039,27 @@ extern const u8 gText_YourName[];
 extern const u8 gText_BoxName[];
 extern const u8 gText_PkmnsNickname[];
 extern const u8 gText_TellHimTheWords[];
+
+// Exp. Share
+extern const u8 gText_ExpShareOn[];
+extern const u8 gText_ExpShareOff[];
+// frlg_tm_case_port
+extern const u8 gText_TMCase[];
+extern const u8 gText_Close[];
+extern const u8 gText_TMCaseWillBePutAway[];
+extern const u8 gText_FontSmall[];
+extern const u8 gText_FontShort[];
+extern const u8 gText_TMCase_Blue[];
+//Pokevial Branch
+extern const u8 gText_PokevialHasDoses[];
+extern const u8 gText_PokevialIsEmpty[];
+extern const u8 gText_YourPkmnWereRestored[];
+//Move Item
+extern const u8 gMenuText_Move[];
+extern const u8 gText_MoveItemWhere[];
+extern const u8 gText_XsYAnd[];
+extern const u8 gText_XsYWereSwapped[];
+//Remember Moves in Party
+extern const u8 gText_Moves_Menu[];
 
 #endif // GUARD_STRINGS_H

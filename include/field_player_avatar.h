@@ -3,8 +3,8 @@
 
 void PlayerStep(u8 direction, u16 newKeys, u16 heldKeys);
 void ClearPlayerAvatarInfo(void);
-void SetPlayerAvatarExtraStateTransition(u8, u8);
-u8 GetPlayerAvatarGenderByGraphicsId(u8);
+void SetPlayerAvatarExtraStateTransition(u16, u8);
+u8 GetPlayerAvatarGenderByGraphicsId(u16);
 bool8 TestPlayerAvatarFlags(u8);
 u8 GetPlayerAvatarSpriteId(void);
 void PlayerGetDestCoords(s16 *, s16 *);
@@ -30,6 +30,7 @@ void PlayerSetAnimId(u8 movementActionId, u8 copyableMovement);
 bool8 IsPlayerCollidingWithFarawayIslandMew(u8 direction);
 void PlayerOnBikeCollideWithFarawayIslandMew(u8 direction);
 u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior);
+bool8 TryPushBoulder(s16, s16, u8); //qol_field_moves
 u8 PlayerGetElevation(void);
 void SetPlayerAvatarTransitionFlags(u16 transitionFlags);
 void CancelPlayerForcedMovement(void);
@@ -38,11 +39,11 @@ void PlayerFreeze(void);
 void StopPlayerAvatar(void);
 void SetSpinStartFacingDir(u8);
 void GetXYCoordsOneStepInFrontOfPlayer(s16 *xPtr, s16 *yPtr);
-u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
+u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
 void SetPlayerAvatarFieldMove(void);
-u8 GetPlayerAvatarGraphicsIdByCurrentState(void);
+u16 GetPlayerAvatarGraphicsIdByCurrentState(void);
 void SetPlayerAvatarStateMask(u8 flags);
-u8 GetPlayerAvatarGraphicsIdByStateId(u8 state);
+u16 GetPlayerAvatarGraphicsIdByStateId(u8 state);
 u8 GetJumpSpecialMovementAction(u32);
 bool8 PartyHasMonWithSurf(void);
 bool8 IsPlayerFacingSurfableFishableWater(void);
@@ -50,8 +51,8 @@ bool8 IsPlayerSurfingNorth(void);
 void SetPlayerAvatarWatering(u8 direction);
 u8 GetPlayerAvatarFlags(void);
 void UpdatePlayerAvatarTransitionState(void);
-u8 GetFRLGAvatarGraphicsIdByGender(u8);
-u8 GetRSAvatarGraphicsIdByGender(u8);
+u16 GetFRLGAvatarGraphicsIdByGender(u8);
+u16 GetRSAvatarGraphicsIdByGender(u8);
 void PlayerWheelieInPlace(u8 direction);
 void PlayerWheelieMove(u8 direction);
 void PlayerPopWheelieWhileMoving(u8 direction);
@@ -64,5 +65,6 @@ bool32 IsPlayerSpinExitActive(void);
 void SetPlayerInvisibility(bool8 invisible);
 u8 player_get_pos_including_state_based_drift(s16 *x, s16 *y);
 void StartFishing(u8 rod);
+void PlayerAvatarTransition_Surfing(struct ObjectEvent *); // qol_field_moves
 
 #endif // GUARD_FIELD_PLAYER_AVATAR_H

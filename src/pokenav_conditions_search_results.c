@@ -432,7 +432,7 @@ static u32 LoopedTask_OpenConditionSearchResults(s32 state)
         SetBgTilemapBuffer(1, gfx->buff);
         CopyToBgTilemapBuffer(1, sConditionSearchResultTilemap, 0, 0);
         CopyBgTilemapBufferToVram(1);
-        CopyPaletteIntoBufferUnfaded(sConditionSearchResultFramePal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(sConditionSearchResultFramePal, BG_PLTT_ID(1), sizeof(sConditionSearchResultFramePal));
         CopyBgTilemapBufferToVram(1);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -444,7 +444,7 @@ static u32 LoopedTask_OpenConditionSearchResults(s32 state)
     case 2:
         if (FreeTempTileDataBuffersIfPossible())
             return LT_PAUSE;
-        CopyPaletteIntoBufferUnfaded(sListBg_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(sListBg_Pal, BG_PLTT_ID(2), sizeof(sListBg_Pal));
         CreateSearchResultsList();
         return LT_INC_AND_PAUSE;
     case 3:
@@ -491,10 +491,10 @@ static u32 LoopedTask_MoveSearchListCursorUp(s32 state)
         case 0:
             return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
         return LT_INC_AND_PAUSE;
@@ -524,10 +524,10 @@ static u32 LoopedTask_MoveSearchListCursorDown(s32 state)
         case 0:
             return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
         return LT_INC_AND_PAUSE;
@@ -557,10 +557,10 @@ static u32 LoopedTask_MoveSearchListPageUp(s32 state)
         case 0:
             return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
         return LT_INC_AND_PAUSE;
@@ -590,10 +590,10 @@ static u32 LoopedTask_MoveSearchListPageDown(s32 state)
         case 0:
             return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
         return LT_INC_AND_PAUSE;
@@ -617,7 +617,7 @@ static u32 LoopedTask_ExitConditionSearchMenu(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         SlideMenuHeaderDown();
         return LT_INC_AND_PAUSE;
@@ -637,7 +637,7 @@ static u32 LoopedTask_SelectSearchResult(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -688,12 +688,12 @@ static void CreateSearchResultsList(void)
     CreatePokenavList(&sConditionSearchResultBgTemplates[1], &template, 0);
 }
 
-static void BufferSearchMonListItem(struct PokenavMonListItem * item, u8 * dest)
+static void BufferSearchMonListItem(struct PokenavMonListItem * item, u8 *dest)
 {
     u8 gender;
     u8 level;
-    u8 * s;
-    const u8 * genderStr;
+    u8 *s;
+    const u8 *genderStr;
 
     // Mon is in party
     if (item->boxId == TOTAL_BOXES_COUNT)

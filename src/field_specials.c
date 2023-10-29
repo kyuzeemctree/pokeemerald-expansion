@@ -57,7 +57,6 @@
 #include "constants/heal_locations.h"
 #include "constants/map_types.h"
 #include "constants/mystery_gift.h"
-#include "constants/script_menu.h"
 #include "constants/slot_machine.h"
 #include "constants/songs.h"
 #include "constants/moves.h"
@@ -66,6 +65,7 @@
 #include "constants/weather.h"
 #include "constants/metatile_labels.h"
 #include "palette.h"
+#include "battle_util.h"
 
 #define TAG_ITEM_ICON 5500
 
@@ -100,7 +100,7 @@ void SetPlayerGotFirstFans(void);
 u16 GetNumFansOfPlayerInTrainerFanClub(void);
 
 static void RecordCyclingRoadResults(u32, u8);
-static void LoadLinkPartnerObjectEventSpritePalette(u8, u8, u8);
+static void LoadLinkPartnerObjectEventSpritePalette(u16, u8, u8);
 static void Task_PetalburgGymSlideOpenRoomDoors(u8);
 static void PetalburgGymSetDoorMetatiles(u8, u16);
 static void Task_PCTurnOnEffect(u8);
@@ -512,7 +512,7 @@ void SpawnLinkPartnerObjectEvent(void)
     };
     u8 myLinkPlayerNumber;
     u8 playerFacingDirection;
-    u8 linkSpriteId;
+    u16 linkSpriteId;
     u8 i;
 
     myLinkPlayerNumber = GetMultiplayerId();
@@ -573,7 +573,7 @@ void SpawnLinkPartnerObjectEvent(void)
     }
 }
 
-static void LoadLinkPartnerObjectEventSpritePalette(u8 graphicsId, u8 localEventId, u8 paletteNum)
+static void LoadLinkPartnerObjectEventSpritePalette(u16 graphicsId, u8 localEventId, u8 paletteNum)
 {
     u8 adjustedPaletteNum;
     // Note: This temp var is necessary; paletteNum += 6 doesn't match.
@@ -949,21 +949,7 @@ u16 GetWeekCount(void)
 
 u8 GetLeadMonFriendshipScore(void)
 {
-    struct Pokemon *pokemon = &gPlayerParty[GetLeadMonIndex()];
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) == MAX_FRIENDSHIP)
-        return FRIENDSHIP_MAX;
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) >= 200)
-        return FRIENDSHIP_200_TO_254;
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) >= 150)
-        return FRIENDSHIP_150_TO_199;
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) >= 100)
-        return FRIENDSHIP_100_TO_149;
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) >= 50)
-        return FRIENDSHIP_50_TO_99;
-    if (GetMonData(pokemon, MON_DATA_FRIENDSHIP) >= 1)
-        return FRIENDSHIP_1_TO_49;
-
-    return FRIENDSHIP_NONE;
+    return GetMonFriendshipScore(&gPlayerParty[GetLeadMonIndex()]);
 }
 
 static void CB2_FieldShowRegionMap(void)
@@ -976,6 +962,22 @@ void FieldShowRegionMap(void)
     SetMainCallback2(CB2_FieldShowRegionMap);
 }
 
+static bool8 IsPlayerInFrontOfPC(void)
+{
+    u16 x, y;
+    u16 tileInFront;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    tileInFront = MapGridGetMetatileIdAt(x, y);
+
+    return (tileInFront == METATILE_BrendansMaysHouse_BrendanPC_On
+         || tileInFront == METATILE_BrendansMaysHouse_BrendanPC_Off
+         || tileInFront == METATILE_BrendansMaysHouse_MayPC_On
+         || tileInFront == METATILE_BrendansMaysHouse_MayPC_Off
+         || tileInFront == METATILE_Building_PC_On
+         || tileInFront == METATILE_Building_PC_Off);
+}
+
 // Task data for Task_PCTurnOnEffect and Task_LotteryCornerComputerEffect
 #define tPaused       data[0] // Never set
 #define tTaskId       data[1]
@@ -986,7 +988,7 @@ void FieldShowRegionMap(void)
 // For this special, gSpecialVar_0x8004 is expected to be some PC_LOCATION_* value.
 void DoPCTurnOnEffect(void)
 {
-    if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE)
+    if (FuncIsActiveTask(Task_PCTurnOnEffect) != TRUE && IsPlayerInFrontOfPC() == TRUE)
     {
         u8 taskId = CreateTask(Task_PCTurnOnEffect, 8);
         gTasks[taskId].tPaused = FALSE;
@@ -1012,7 +1014,7 @@ static void PCTurnOnEffect(struct Task *task)
     if (task->tTimer == 6)
     {
         task->tTimer = 0;
-        
+
         // Get where the PC should be, depending on where the player is looking.
         playerDirection = GetPlayerFacingDirection();
         switch (playerDirection)
@@ -1034,7 +1036,7 @@ static void PCTurnOnEffect(struct Task *task)
         // Update map
         PCTurnOnEffect_SetMetatile(task->tIsScreenOn, dx, dy);
         DrawWholeMapView();
-        
+
         // Screen flickers 5 times. Odd number and starting with the
         // screen off means the animation ends with the screen on.
         task->tIsScreenOn ^= 1;
@@ -1084,6 +1086,9 @@ static void PCTurnOffEffect(void)
 
     // Get where the PC should be, depending on where the player is looking.
     u8 playerDirection = GetPlayerFacingDirection();
+
+    if (IsPlayerInFrontOfPC() == FALSE)
+        return;
     switch (playerDirection)
     {
     case DIR_NORTH:
@@ -1175,7 +1180,7 @@ void EndLotteryCornerComputerEffect(void)
 void SetTrickHouseNuggetFlag(void)
 {
     u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_TRICK_HOUSE_NUGGET;
+    u16 flag = FLAG_HIDDEN_ITEM_TRICKHOUSEEND;
     *specVar = flag;
     FlagSet(flag);
 }
@@ -1183,7 +1188,7 @@ void SetTrickHouseNuggetFlag(void)
 void ResetTrickHouseNuggetFlag(void)
 {
     u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_TRICK_HOUSE_NUGGET;
+    u16 flag = FLAG_HIDDEN_ITEM_TRICKHOUSEEND;
     *specVar = flag;
     FlagClear(flag);
 }
@@ -1269,7 +1274,7 @@ void RemoveCameraObject(void)
 
 u8 GetPokeblockNameByMonNature(void)
 {
-    return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()]), gStringVar1);
+    return CopyMonFavoritePokeblockName(GetNature(&gPlayerParty[GetLeadMonIndex()], FALSE), gStringVar1);
 }
 
 void GetSecretBaseNearbyMapName(void)
@@ -1324,50 +1329,6 @@ u16 GetSlotMachineId(void)
         return sSlotMachineServiceDayIds[rnd % SLOT_MACHINE_COUNT];
 
     return sSlotMachineIds[rnd % SLOT_MACHINE_COUNT];
-}
-
-bool8 FoundAbandonedShipRoom1Key(void)
-{
-    u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_1_KEY;
-    *specVar = flag;
-    if (!FlagGet(flag))
-        return FALSE;
-
-    return TRUE;
-}
-
-bool8 FoundAbandonedShipRoom2Key(void)
-{
-    u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_2_KEY;
-    *specVar = flag;
-    if (!FlagGet(flag))
-        return FALSE;
-
-    return TRUE;
-}
-
-bool8 FoundAbandonedShipRoom4Key(void)
-{
-    u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_4_KEY;
-    *specVar = flag;
-    if (!FlagGet(flag))
-        return FALSE;
-
-    return TRUE;
-}
-
-bool8 FoundAbandonedShipRoom6Key(void)
-{
-    u16 *specVar = &gSpecialVar_0x8004;
-    u16 flag = FLAG_HIDDEN_ITEM_ABANDONED_SHIP_RM_6_KEY;
-    *specVar = flag;
-    if (!FlagGet(flag))
-        return FALSE;
-
-    return TRUE;
 }
 
 bool8 LeadMonHasEffortRibbon(void)
@@ -1442,7 +1403,7 @@ bool8 IsStarterInParty(void)
     u8 partyCount = CalculatePlayerPartyCount();
     for (i = 0; i < partyCount; i++)
     {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2, NULL) == starter)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) == starter)
             return TRUE;
     }
     return FALSE;
@@ -1535,8 +1496,8 @@ u8 GetLeadMonIndex(void)
     u8 partyCount = CalculatePlayerPartyCount();
     for (i = 0; i < partyCount; i++)
     {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2, NULL) != SPECIES_EGG
-         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2, NULL) != SPECIES_NONE)
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG
+         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_NONE)
             return i;
     }
     return 0;
@@ -1544,7 +1505,7 @@ u8 GetLeadMonIndex(void)
 
 u16 ScriptGetPartyMonSpecies(void)
 {
-    return GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES2, NULL);
+    return GetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_SPECIES_OR_EGG, NULL);
 }
 
 // Removed for Emerald
@@ -2619,7 +2580,7 @@ static void InitScrollableMultichoice(void)
 static void ScrollableMultichoice_MoveCursor(s32 itemIndex, bool8 onInit, struct ListMenu *list)
 {
     u8 taskId;
-    PlaySE(SE_SELECT);
+    PlaySE(SE_RG_BAG_CURSOR);
     taskId = FindTaskIdByFunc(ScrollableMultichoice_ProcessInput);
     if (taskId != TASK_NONE)
     {
@@ -2646,12 +2607,12 @@ static void ScrollableMultichoice_ProcessInput(u8 taskId)
         break;
     case LIST_CANCEL:
         gSpecialVar_Result = MULTI_B_PRESSED;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         CloseScrollableMultichoice(taskId);
         break;
     default:
         gSpecialVar_Result = input;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         if (!task->tKeepOpenAfterSelect)
         {
             CloseScrollableMultichoice(taskId);
@@ -2811,7 +2772,7 @@ void ShowNatureGirlMessage(void)
     if (gSpecialVar_0x8004 >= PARTY_SIZE)
         gSpecialVar_0x8004 = 0;
 
-    nature = GetNature(&gPlayerParty[gSpecialVar_0x8004]);
+    nature = GetNature(&gPlayerParty[gSpecialVar_0x8004], FALSE);
     ShowFieldMessage(sNatureGirlMessages[nature]);
 }
 
@@ -3057,40 +3018,9 @@ static void HideFrontierExchangeCornerItemIcon(u16 menu, u16 unused)
     }
 }
 
-static const u16 sBattleFrontier_TutorMoves1[] =
-{
-    MOVE_SOFT_BOILED,
-    MOVE_SEISMIC_TOSS,
-    MOVE_DREAM_EATER,
-    MOVE_MEGA_PUNCH,
-    MOVE_MEGA_KICK,
-    MOVE_BODY_SLAM,
-    MOVE_ROCK_SLIDE,
-    MOVE_COUNTER,
-    MOVE_THUNDER_WAVE,
-    MOVE_SWORDS_DANCE
-};
-
-static const u16 sBattleFrontier_TutorMoves2[] =
-{
-    MOVE_DEFENSE_CURL,
-    MOVE_SNORE,
-    MOVE_MUD_SLAP,
-    MOVE_SWIFT,
-    MOVE_ICY_WIND,
-    MOVE_ENDURE,
-    MOVE_PSYCH_UP,
-    MOVE_ICE_PUNCH,
-    MOVE_THUNDER_PUNCH,
-    MOVE_FIRE_PUNCH
-};
-
 void BufferBattleFrontierTutorMoveName(void)
 {
-    if (gSpecialVar_0x8005 != 0)
-        StringCopy(gStringVar1, gMoveNames[sBattleFrontier_TutorMoves2[gSpecialVar_0x8004]]);
-    else
-        StringCopy(gStringVar1, gMoveNames[sBattleFrontier_TutorMoves1[gSpecialVar_0x8004]]);
+    StringCopy(gStringVar1, gMoveNames[gSpecialVar_0x8005]);
 }
 
 static void ShowBattleFrontierTutorWindow(u8 menu, u16 selection)
@@ -3186,44 +3116,6 @@ void ScrollableMultichoice_RedrawPersistentMenu(void)
     }
 }
 
-void GetBattleFrontierTutorMoveIndex(void)
-{
-    u8 i;
-    u16 moveTutor = 0;
-    u16 moveIndex = 0;
-    gSpecialVar_0x8005 = 0;
-
-    moveTutor = VarGet(VAR_TEMP_E);
-    moveIndex = VarGet(VAR_TEMP_D);
-
-    if (moveTutor != 0)
-    {
-        i = 0;
-        do
-        {
-            if (gTutorMoves[i] == sBattleFrontier_TutorMoves2[moveIndex])
-            {
-                gSpecialVar_0x8005 = i;
-                break;
-            }
-            i++;
-        } while (i < TUTOR_MOVE_COUNT);
-    }
-    else
-    {
-        i = 0;
-        do
-        {
-            if (gTutorMoves[i] == sBattleFrontier_TutorMoves1[moveIndex])
-            {
-                gSpecialVar_0x8005 = i;
-                break;
-            }
-            i++;
-        } while (i < TUTOR_MOVE_COUNT);
-    }
-}
-
 // Never called
 // Close a scrollable multichoice that stays open after selection
 void ScrollableMultichoice_ClosePersistentMenu(void)
@@ -3260,6 +3152,7 @@ void ScrollableMultichoice_ClosePersistentMenu(void)
 #undef tTaskId
 
 #define DEOXYS_ROCK_LEVELS 11
+#define ROCK_PAL_ID 10
 
 void DoDeoxysRockInteraction(void)
 {
@@ -3339,7 +3232,7 @@ static void Task_DeoxysRockInteraction(u8 taskId)
 static void ChangeDeoxysRockLevel(u8 rockLevel)
 {
     u8 objectEventId;
-    LoadPalette(&sDeoxysRockPalettes[rockLevel], OBJ_PLTT_ID(10), PLTT_SIZEOF(4));
+    LoadPalette(&sDeoxysRockPalettes[rockLevel], OBJ_PLTT_ID(ROCK_PAL_ID), PLTT_SIZEOF(4));
     TryGetObjectEventIdByLocalIdAndMap(LOCALID_BIRTH_ISLAND_EXTERIOR_ROCK, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId);
 
     if (rockLevel == 0)
@@ -3376,21 +3269,20 @@ static void WaitForDeoxysRockMovement(u8 taskId)
 
 void IncrementBirthIslandRockStepCount(void)
 {
-    u16 var = VarGet(VAR_DEOXYS_ROCK_STEP_COUNT);
+    u16 stepCount = VarGet(VAR_DEOXYS_ROCK_STEP_COUNT);
     if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(BIRTH_ISLAND_EXTERIOR) && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(BIRTH_ISLAND_EXTERIOR))
     {
-        var++;
-        if (var > 99)
+        if (++stepCount > 99)
             VarSet(VAR_DEOXYS_ROCK_STEP_COUNT, 0);
         else
-            VarSet(VAR_DEOXYS_ROCK_STEP_COUNT, var);
+            VarSet(VAR_DEOXYS_ROCK_STEP_COUNT, stepCount);
     }
 }
 
 void SetDeoxysRockPalette(void)
 {
-    LoadPalette(&sDeoxysRockPalettes[(u8)VarGet(VAR_DEOXYS_ROCK_LEVEL)], OBJ_PLTT_ID(10), PLTT_SIZEOF(4));
-    BlendPalettes(0x04000000, 16, 0);
+    LoadPalette(&sDeoxysRockPalettes[(u8)VarGet(VAR_DEOXYS_ROCK_LEVEL)], OBJ_PLTT_ID(ROCK_PAL_ID), PLTT_SIZEOF(4));
+    BlendPalettes(1 << (ROCK_PAL_ID + 16), 16, 0);
 }
 
 void SetPCBoxToSendMon(u8 boxId)
@@ -3957,16 +3849,15 @@ bool8 InPokemonCenter(void)
 
 #define FANCLUB_BITFIELD (gSaveBlock1Ptr->vars[VAR_FANCLUB_FAN_COUNTER - VARS_START])
 #define FANCLUB_COUNTER    0x007F
-#define FANCLUB_FAN_FLAGS  0xFF80
 
 #define GET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD >> (flag) & 1)
 #define SET_TRAINER_FAN_CLUB_FLAG(flag) (FANCLUB_BITFIELD |= 1 << (flag))
 #define FLIP_TRAINER_FAN_CLUB_FLAG(flag)(FANCLUB_BITFIELD ^= 1 << (flag))
 
 #define GET_TRAINER_FAN_CLUB_COUNTER        (FANCLUB_BITFIELD & FANCLUB_COUNTER)
-#define SET_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD = (FANCLUB_BITFIELD & FANCLUB_FAN_FLAGS) | (count))
+#define SET_TRAINER_FAN_CLUB_COUNTER(count) (FANCLUB_BITFIELD = (FANCLUB_BITFIELD & ~FANCLUB_COUNTER) | (count))
 #define INCR_TRAINER_FAN_CLUB_COUNTER(count)(FANCLUB_BITFIELD += (count))
-#define CLEAR_TRAINER_FAN_CLUB_COUNTER      (FANCLUB_BITFIELD &= ~(FANCLUB_COUNTER))
+#define CLEAR_TRAINER_FAN_CLUB_COUNTER      (FANCLUB_BITFIELD &= ~FANCLUB_COUNTER)
 
 void ResetFanClub(void)
 {

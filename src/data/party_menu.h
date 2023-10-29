@@ -486,9 +486,9 @@ static const struct WindowTemplate sItemGiveTakeWindowTemplate =
 {
     .bg = 2,
     .tilemapLeft = 23,
-    .tilemapTop = 13,
+    .tilemapTop = 11,
     .width = 6,
-    .height = 6,
+    .height = 8,
     .paletteNum = 14,
     .baseBlock = 0x39D,
 };
@@ -624,6 +624,7 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_DO_WHAT_WITH_ITEM]      = gText_DoWhatWithItem,
     [PARTY_MSG_DO_WHAT_WITH_MAIL]      = gText_DoWhatWithMail,
     [PARTY_MSG_ALREADY_HOLDING_ONE]    = gText_AlreadyHoldingOne,
+    [PARTY_MSG_MOVE_ITEM_WHERE]        = gText_MoveItemWhere,
 };
 
 static const u8 *const sDescriptionStringTable[] =
@@ -663,6 +664,9 @@ struct
     [MENU_ITEM] = {gText_Item, CursorCb_Item},
     [MENU_GIVE] = {gMenuText_Give, CursorCb_Give},
     [MENU_TAKE_ITEM] = {gText_Take, CursorCb_TakeItem},
+    [MENU_MOVE_ITEM] = {gMenuText_Move, CursorCb_MoveItem},
+    [MENU_MOVES] = {gText_Moves_Menu, CursorCb_Moves},
+    [MENU_NICKNAME] = {gText_Nickname, CursorCb_Nickname},
     [MENU_MAIL] = {gText_Mail, CursorCb_Mail},
     [MENU_TAKE_MAIL] = {gText_Take2, CursorCb_TakeMail},
     [MENU_READ] = {gText_Read2, CursorCb_Read},
@@ -699,7 +703,7 @@ static const u8 sPartyMenuAction_SummaryCancel[] = {MENU_SUMMARY, MENU_CANCEL1};
 static const u8 sPartyMenuAction_EnterSummaryCancel[] = {MENU_ENTER, MENU_SUMMARY, MENU_CANCEL1};
 static const u8 sPartyMenuAction_NoEntrySummaryCancel[] = {MENU_NO_ENTRY, MENU_SUMMARY, MENU_CANCEL1};
 static const u8 sPartyMenuAction_StoreSummaryCancel[] = {MENU_STORE, MENU_SUMMARY, MENU_CANCEL1};
-static const u8 sPartyMenuAction_GiveTakeItemCancel[] = {MENU_GIVE, MENU_TAKE_ITEM, MENU_CANCEL2};
+static const u8 sPartyMenuAction_GiveTakeItemCancel[] = {MENU_GIVE, MENU_TAKE_ITEM, MENU_MOVE_ITEM, MENU_CANCEL2};
 static const u8 sPartyMenuAction_ReadTakeMailCancel[] = {MENU_READ, MENU_TAKE_MAIL, MENU_CANCEL2};
 static const u8 sPartyMenuAction_RegisterSummaryCancel[] = {MENU_REGISTER, MENU_SUMMARY, MENU_CANCEL1};
 static const u8 sPartyMenuAction_TradeSummaryCancel1[] = {MENU_TRADE1, MENU_SUMMARY, MENU_CANCEL1};
@@ -789,8 +793,8 @@ static const u8 *const sUnionRoomTradeMessages[] =
 {
     [UR_TRADE_MSG_NOT_MON_PARTNER_WANTS - 1]       = gText_NotPkmnOtherTrainerWants,
     [UR_TRADE_MSG_NOT_EGG - 1]                     = gText_ThatIsntAnEgg,
-    [UR_TRADE_MSG_MON_CANT_BE_TRADED_1 - 1]        = gText_PkmnCantBeTradedNow,
-    [UR_TRADE_MSG_MON_CANT_BE_TRADED_2 - 1]        = gText_PkmnCantBeTradedNow,
+    [UR_TRADE_MSG_MON_CANT_BE_TRADED_NOW - 1]      = gText_PkmnCantBeTradedNow,
+    [UR_TRADE_MSG_MON_CANT_BE_TRADED - 1]          = gText_PkmnCantBeTraded,
     [UR_TRADE_MSG_PARTNERS_MON_CANT_BE_TRADED - 1] = gText_OtherTrainersPkmnCantBeTraded,
     [UR_TRADE_MSG_EGG_CANT_BE_TRADED -1]           = gText_EggCantBeTradedNow,
     [UR_TRADE_MSG_PARTNER_CANT_ACCEPT_MON - 1]     = gText_OtherTrainerCantAcceptPkmn,
@@ -799,7 +803,7 @@ static const u8 *const sUnionRoomTradeMessages[] =
 };
 
 static const u32 sHeldItemGfx[] = INCBIN_U32("graphics/party_menu/hold_icons.4bpp");
-static const u16 sHeldItemPalette[] = INCBIN_U16("graphics/party_menu/hold_icons.gbapal");
+const u16 gHeldItemPalette[] = INCBIN_U16("graphics/party_menu/hold_icons.gbapal");
 
 static const struct OamData sOamData_HeldItem =
 {
@@ -836,14 +840,14 @@ static const union AnimCmd *const sSpriteAnimTable_HeldItem[] =
     sSpriteAnim_HeldMail,
 };
 
-static const struct SpriteSheet sSpriteSheet_HeldItem =
+const struct SpriteSheet gSpriteSheet_HeldItem =
 {
     .data = sHeldItemGfx, .size = sizeof(sHeldItemGfx), .tag = TAG_HELD_ITEM
 };
 
 static const struct SpritePalette sSpritePalette_HeldItem =
 {
-    .data = sHeldItemPalette, .tag = TAG_HELD_ITEM
+    .data = gHeldItemPalette, .tag = TAG_HELD_ITEM
 };
 
 static const struct SpriteTemplate sSpriteTemplate_HeldItem =
@@ -1054,7 +1058,7 @@ static const union AnimCmd sSpriteAnim_StatusFaint[] =
     ANIMCMD_END
 };
 
-static const union AnimCmd sSpriteAnim_Blank[] =
+static const union AnimCmd sSpriteAnim_StatusFrostbite[] =
 {
     ANIMCMD_FRAME(28, 0),
     ANIMCMD_END
@@ -1069,7 +1073,7 @@ static const union AnimCmd *const sSpriteTemplate_StatusCondition[] =
     sSpriteAnim_StatusBurn,
     sSpriteAnim_StatusPokerus,
     sSpriteAnim_StatusFaint,
-    sSpriteAnim_Blank
+    sSpriteAnim_StatusFrostbite
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_StatusIcons =
@@ -1082,7 +1086,7 @@ static const struct CompressedSpritePalette sSpritePalette_StatusIcons =
     gStatusPal_Icons, TAG_STATUS_ICONS
 };
 
-static const struct SpriteTemplate sSpriteTemplate_StatusIcons =
+const struct SpriteTemplate gSpriteTemplate_StatusIcons =
 {
     .tileTag = TAG_STATUS_ICONS,
     .paletteTag = TAG_STATUS_ICONS,
@@ -1093,20 +1097,6 @@ static const struct SpriteTemplate sSpriteTemplate_StatusIcons =
     .callback = SpriteCallbackDummy,
 };
 
-// Mask for the partners party in a multi battle. TRUE if in the partners party, FALSE otherwise
-// The 7th slot is Cancel, and the 8th slot is unreachable
-// Used only to determine whether or not to show the Deoxys form icon sprite
-static const bool8 sMultiBattlePartnersPartyMask[PARTY_SIZE + 2] =
-{
-    FALSE,
-    TRUE,
-    FALSE,
-    FALSE,
-    TRUE,
-    TRUE,
-    FALSE
-};
-
 static const u8 *const sUnused_StatStrings[] =
 {
     gText_HP4,
@@ -1115,66 +1105,4 @@ static const u8 *const sUnused_StatStrings[] =
     gText_SpAtk4,
     gText_SpDef4,
     gText_Speed2
-};
-
-static const u16 sTMHMMoves[] =
-{
-    [ITEM_TM01 - ITEM_TM01] = MOVE_FOCUS_PUNCH,
-    [ITEM_TM02 - ITEM_TM01] = MOVE_DRAGON_CLAW,
-    [ITEM_TM03 - ITEM_TM01] = MOVE_WATER_PULSE,
-    [ITEM_TM04 - ITEM_TM01] = MOVE_CALM_MIND,
-    [ITEM_TM05 - ITEM_TM01] = MOVE_ROAR,
-    [ITEM_TM06 - ITEM_TM01] = MOVE_TOXIC,
-    [ITEM_TM07 - ITEM_TM01] = MOVE_HAIL,
-    [ITEM_TM08 - ITEM_TM01] = MOVE_BULK_UP,
-    [ITEM_TM09 - ITEM_TM01] = MOVE_BULLET_SEED,
-    [ITEM_TM10 - ITEM_TM01] = MOVE_HIDDEN_POWER,
-    [ITEM_TM11 - ITEM_TM01] = MOVE_SUNNY_DAY,
-    [ITEM_TM12 - ITEM_TM01] = MOVE_TAUNT,
-    [ITEM_TM13 - ITEM_TM01] = MOVE_ICE_BEAM,
-    [ITEM_TM14 - ITEM_TM01] = MOVE_BLIZZARD,
-    [ITEM_TM15 - ITEM_TM01] = MOVE_HYPER_BEAM,
-    [ITEM_TM16 - ITEM_TM01] = MOVE_LIGHT_SCREEN,
-    [ITEM_TM17 - ITEM_TM01] = MOVE_PROTECT,
-    [ITEM_TM18 - ITEM_TM01] = MOVE_RAIN_DANCE,
-    [ITEM_TM19 - ITEM_TM01] = MOVE_GIGA_DRAIN,
-    [ITEM_TM20 - ITEM_TM01] = MOVE_SAFEGUARD,
-    [ITEM_TM21 - ITEM_TM01] = MOVE_FRUSTRATION,
-    [ITEM_TM22 - ITEM_TM01] = MOVE_SOLAR_BEAM,
-    [ITEM_TM23 - ITEM_TM01] = MOVE_IRON_TAIL,
-    [ITEM_TM24 - ITEM_TM01] = MOVE_THUNDERBOLT,
-    [ITEM_TM25 - ITEM_TM01] = MOVE_THUNDER,
-    [ITEM_TM26 - ITEM_TM01] = MOVE_EARTHQUAKE,
-    [ITEM_TM27 - ITEM_TM01] = MOVE_RETURN,
-    [ITEM_TM28 - ITEM_TM01] = MOVE_DIG,
-    [ITEM_TM29 - ITEM_TM01] = MOVE_PSYCHIC,
-    [ITEM_TM30 - ITEM_TM01] = MOVE_SHADOW_BALL,
-    [ITEM_TM31 - ITEM_TM01] = MOVE_BRICK_BREAK,
-    [ITEM_TM32 - ITEM_TM01] = MOVE_DOUBLE_TEAM,
-    [ITEM_TM33 - ITEM_TM01] = MOVE_REFLECT,
-    [ITEM_TM34 - ITEM_TM01] = MOVE_SHOCK_WAVE,
-    [ITEM_TM35 - ITEM_TM01] = MOVE_FLAMETHROWER,
-    [ITEM_TM36 - ITEM_TM01] = MOVE_SLUDGE_BOMB,
-    [ITEM_TM37 - ITEM_TM01] = MOVE_SANDSTORM,
-    [ITEM_TM38 - ITEM_TM01] = MOVE_FIRE_BLAST,
-    [ITEM_TM39 - ITEM_TM01] = MOVE_ROCK_TOMB,
-    [ITEM_TM40 - ITEM_TM01] = MOVE_AERIAL_ACE,
-    [ITEM_TM41 - ITEM_TM01] = MOVE_TORMENT,
-    [ITEM_TM42 - ITEM_TM01] = MOVE_FACADE,
-    [ITEM_TM43 - ITEM_TM01] = MOVE_SECRET_POWER,
-    [ITEM_TM44 - ITEM_TM01] = MOVE_REST,
-    [ITEM_TM45 - ITEM_TM01] = MOVE_ATTRACT,
-    [ITEM_TM46 - ITEM_TM01] = MOVE_THIEF,
-    [ITEM_TM47 - ITEM_TM01] = MOVE_STEEL_WING,
-    [ITEM_TM48 - ITEM_TM01] = MOVE_SKILL_SWAP,
-    [ITEM_TM49 - ITEM_TM01] = MOVE_SNATCH,
-    [ITEM_TM50 - ITEM_TM01] = MOVE_OVERHEAT,
-    [ITEM_HM01 - ITEM_TM01] = MOVE_CUT,
-    [ITEM_HM02 - ITEM_TM01] = MOVE_FLY,
-    [ITEM_HM03 - ITEM_TM01] = MOVE_SURF,
-    [ITEM_HM04 - ITEM_TM01] = MOVE_STRENGTH,
-    [ITEM_HM05 - ITEM_TM01] = MOVE_FLASH,
-    [ITEM_HM06 - ITEM_TM01] = MOVE_ROCK_SMASH,
-    [ITEM_HM07 - ITEM_TM01] = MOVE_WATERFALL,
-    [ITEM_HM08 - ITEM_TM01] = MOVE_DIVE,
 };

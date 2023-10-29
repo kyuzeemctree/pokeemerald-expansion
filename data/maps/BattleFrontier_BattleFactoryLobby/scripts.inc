@@ -16,11 +16,11 @@ BattleFrontier_BattleFactoryLobby_EventScript_TurnPlayerNorth::
 	end
 
 BattleFrontier_BattleFactoryLobby_OnFrame:
-	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_PAUSED, BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattleFactoryLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattleFactoryLobby_EventScript_LostChallenge
 	.2byte 0
 
 BattleFrontier_BattleFactoryLobby_EventScript_GetChallengeStatus::
@@ -36,7 +36,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_QuitWithoutSaving::
 	factory_set FACTORY_DATA_WIN_STREAK, 0
 	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, FALSE
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -92,7 +92,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_RecordBattle::
 BattleFrontier_BattleFactoryLobby_EventScript_EndRecordBattle::
 	msgbox BattleFrontier_BattleFactoryLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -104,7 +104,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_ResumeChallenge::
 	playse SE_SAVE
 	waitse
 	frontier_set FRONTIER_DATA_PAUSED, FALSE
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	setvar VAR_0x8006, 2
 	goto BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge
 
@@ -152,7 +152,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_TryEnterChallenge::
 	case MULTI_B_PRESSED, BattleFrontier_BattleFactoryLobby_EventScript_LoadPartyAndCancelChallenge
 
 BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge::
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	factory_init
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
 	factory_set FACTORY_DATA_WIN_STREAK_ACTIVE, TRUE
@@ -160,7 +160,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_SaveBeforeChallenge::
 	closemessage
 	delay 2
 	call Common_EventScript_SaveGame
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattleFactoryLobby_EventScript_CancelChallengeSaveFailed
 	setvar VAR_0x8006, 0
 BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge::
@@ -173,7 +173,7 @@ BattleFrontier_BattleFactoryLobby_EventScript_EnterChallenge::
 	applymovement OBJ_EVENT_ID_PLAYER, BattleFrontier_BattleFactoryLobby_Movement_PlayerEnterDoor
 	waitmovement 0
 	warp MAP_BATTLE_FRONTIER_BATTLE_FACTORY_PRE_BATTLE_ROOM, 8, 13
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
@@ -322,10 +322,10 @@ BattleFrontier_BattleFactoryLobby_EventScript_ExitRules::
 	releaseall
 	end
 
-BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle:
-	.string "Where the intelligence of TRAINERS\n"
+BattleFrontier_BattleFactoryLobby_Text_WelcomeForSingleBattle: @ 82588EE
+	.string "Where the intelligence of trainers\n"
 	.string "is put to the test!\p"
-	.string "Welcome to the BATTLE FACTORY!\p"
+	.string "Welcome to the Battle Factory!\p"
 	.string "I am your guide to the Battle Swap\n"
 	.string "Single Tournament.$"
 
@@ -335,14 +335,14 @@ BattleFrontier_BattleFactoryLobby_Text_TakeSinglesChallenge:
 
 BattleFrontier_BattleFactoryLobby_Text_ExplainSinglesChallenge:
 	.string "The Battle Swap Single Tournament\n"
-	.string "is a SINGLE BATTLE competition using\l"
-	.string "only rental POKéMON.\p"
+	.string "is a Single Battle competition using\l"
+	.string "only rental pokémon.\p"
 	.string "First, you will be loaned three\n"
-	.string "POKéMON specifically for this event.\p"
-	.string "Using the supplied rental POKéMON,\n"
-	.string "you must conduct a SINGLE BATTLE.\p"
+	.string "pokémon specifically for this event.\p"
+	.string "Using the supplied rental pokémon,\n"
+	.string "you must conduct a Single Battle.\p"
 	.string "If you win, you are permitted to trade\n"
-	.string "one of your rental POKéMON.\p"
+	.string "one of your rental pokémon.\p"
 	.string "Repeat this cycle of battling and\n"
 	.string "trading--if you win seven times in\l"
 	.string "a row, you will earn Battle Points.\p"
@@ -363,8 +363,8 @@ BattleFrontier_BattleFactoryLobby_Text_OkayToSaveBeforeChallenge:
 	.string "I need to save the game. Is that okay?$"
 
 @ Unused
-BattleFrontier_BattleFactoryLobby_Text_WillHoldMonsForSafekeeping:
-	.string "Okay, I will hold your POKéMON for\n"
+BattleFrontier_BattleFactoryLobby_Text_WillHoldMonsForSafekeeping: @ 8258C6F
+	.string "Okay, I will hold your pokémon for\n"
 	.string "safekeeping while you compete.$"
 
 BattleFrontier_BattleFactoryLobby_Text_StepThisWay:
@@ -372,15 +372,15 @@ BattleFrontier_BattleFactoryLobby_Text_StepThisWay:
 
 BattleFrontier_BattleFactoryLobby_Text_ReturnMonsSaveResults:
 	.string "Thank you for participating!\p"
-	.string "I will return your POKéMON in exchange\n"
-	.string "for our rental POKéMON.\p"
+	.string "I will return your pokémon in exchange\n"
+	.string "for our rental pokémon.\p"
 	.string "I must also save the event results.\n"
 	.string "Please wait.$"
 
 @ Unused
-BattleFrontier_BattleFactoryLobby_Text_ReturnMons:
-	.string "I will return your POKéMON in exchange\n"
-	.string "for our rental POKéMON.$"
+BattleFrontier_BattleFactoryLobby_Text_ReturnMons: @ 8258D54
+	.string "I will return your pokémon in exchange\n"
+	.string "for our rental pokémon.$"
 
 BattleFrontier_BattleFactoryLobby_Text_CongratsSevenWins:
 	.string "Congratulations! You've won seven\n"
@@ -410,18 +410,18 @@ BattleFrontier_BattleFactoryLobby_Text_DidntSaveBeforeQuitting:
 	.string "from your challenge.$"
 
 @ Unused
-BattleFrontier_BattleFactoryLobby_Text_WellReturnMons:
-	.string "We'll return your personal POKéMON.$"
+BattleFrontier_BattleFactoryLobby_Text_WellReturnMons: @ 8258F55
+	.string "We'll return your personal pokémon.$"
 
 @ Unused
 BattleFrontier_BattleFactoryLobby_Text_ReceivedPrizeItem:
 	.string "{PLAYER} received the prize\n"
 	.string "{STR_VAR_1}.$"
 
-BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle:
-	.string "Where the intelligence of TRAINERS\n"
+BattleFrontier_BattleFactoryLobby_Text_WelcomeForDoubleBattle: @ 8258F93
+	.string "Where the intelligence of Trainers\n"
 	.string "is put to the test!\p"
-	.string "Welcome to the BATTLE FACTORY!\p"
+	.string "Welcome to the Battle Factory!\p"
 	.string "I am your guide to the Battle Swap\n"
 	.string "Double Tournament.$"
 
@@ -431,14 +431,14 @@ BattleFrontier_BattleFactoryLobby_Text_TakeDoublesChallenge:
 
 BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge:
 	.string "The Battle Swap Double Tournament\n"
-	.string "is a DOUBLE BATTLE competition using\l"
-	.string "only rental POKéMON.\p"
+	.string "is a Double Battle competition using\l"
+	.string "only rental pokémon.\p"
 	.string "First, you will be loaned three\n"
-	.string "POKéMON specifically for this event.\p"
-	.string "Using the supplied rental POKéMON,\n"
-	.string "you must conduct a DOUBLE BATTLE.\p"
+	.string "pokémon specifically for this event.\p"
+	.string "Using the supplied rental pokémon,\n"
+	.string "you must conduct a Double Battle.\p"
 	.string "If you win, you are permitted to trade\n"
-	.string "one of your rental POKéMON.\p"
+	.string "one of your rental pokémon.\p"
 	.string "Repeat this cycle of battling and\n"
 	.string "trading--if you win seven times in\l"
 	.string "a row, you will earn Battle Points.\p"
@@ -449,7 +449,7 @@ BattleFrontier_BattleFactoryLobby_Text_ExplainDoublesChallenge:
 
 BattleFrontier_BattleFactoryLobby_Text_CongratsForDefeatingHead:
 	.string "Congratulations for defeating\n"
-	.string "the FACTORY HEAD and winning\l"
+	.string "the Factory Head and winning\l"
 	.string "seven matches in a row!$"
 
 BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints:
@@ -457,31 +457,31 @@ BattleFrontier_BattleFactoryLobby_Text_AwardBattlePoints:
 	.string "knowledge and keen intelligence,\l"
 	.string "we award you these Battle Point(s).$"
 
-BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave:
-	.string "Let me exchange your POKéMON\n"
-	.string "for our rental POKéMON.\p"
+BattleFrontier_BattleFactoryLobby_Text_ExchangeMonsAndSave: @ 8259323
+	.string "Let me exchange your pokémon\n"
+	.string "for our rental pokémon.\p"
 	.string "I need to save the battle data,\n"
 	.string "so please wait.$"
 
 BattleFrontier_BattleFactoryLobby_Text_RecordLastMatch:
 	.string "Would you like to record your last\n"
-	.string "BATTLE FACTORY match on your\l"
-	.string "FRONTIER PASS?$"
+	.string "Battle Factory match on your\l"
+	.string "Frontier Pass?$"
 
 BattleFrontier_BattleFactoryLobby_Text_NeedKnowledgeOfMonsMoves:
 	.string "Hi!\n"
 	.string "You, there!\p"
 	.string "Are you thinking that the events here\n"
 	.string "are easy since you don't need to have\l"
-	.string "a raised team of POKéMON?\p"
+	.string "a raised team of pokémon?\p"
 	.string "I wouldn't be too sure about winning\n"
 	.string "that easily.\p"
 	.string "If you don't have thorough knowledge\n"
-	.string "about POKéMON and their moves,\l"
+	.string "about pokémon and their moves,\l"
 	.string "it will be tough to keep winning.$"
 
-BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon:
-	.string "I swapped for a weak POKéMON…\n"
+BattleFrontier_BattleFactoryLobby_Text_SwappedForWeakMon: @ 82594E5
+	.string "I swapped for a weak pokémon…\n"
 	.string "I thought it was a good kind to have…\p"
 	.string "They wiped the floor with us…$"
 
@@ -489,7 +489,7 @@ BattleFrontier_BattleFactoryLobby_Text_NeedToCheckOpponentsMons:
 	.string "Things haven't been going my way\n"
 	.string "at all.\p"
 	.string "You need to check your opponent's\n"
-	.string "POKéMON during battle to see if\l"
+	.string "pokémon during battle to see if\l"
 	.string "they're any good.$"
 
 BattleFrontier_BattleFactoryLobby_Text_CantFigureOutStaffHints:
@@ -505,7 +505,7 @@ BattleFrontier_BattleFactoryLobby_Text_RentalMonsAreVaried:
 	.string "and battling over and over.\p"
 	.string "So anyway, when I kept entering\n"
 	.string "Battle Swap events, I noticed they\l"
-	.string "varied the rental POKéMON.$"
+	.string "varied the rental pokémon.$"
 
 BattleFrontier_BattleFactoryLobby_Text_RulesAreListed:
 	.string "The Battle Swap rules are listed.$"
@@ -515,37 +515,37 @@ BattleFrontier_BattleFactoryLobby_Text_ReadWhichHeading:
 
 BattleFrontier_BattleFactoryLobby_Text_ExplainBasicRules:
 	.string "In a Battle Swap event, you may use\n"
-	.string "only three POKéMON.\p"
+	.string "only three pokémon.\p"
 	.string "Whether you are renting or swapping,\n"
 	.string "your team may not have two or more\l"
-	.string "of the same POKéMON.$"
+	.string "of the same pokémon.$"
 
-BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules:
-	.string "You may swap POKéMON only with\n"
-	.string "the TRAINER you have just defeated.\p"
-	.string "You may swap for only those POKéMON\n"
-	.string "used by the beaten TRAINER.$"
+BattleFrontier_BattleFactoryLobby_Text_ExplainSwapPartnerRules: @ 82597FB
+	.string "You may swap pokémon only with\n"
+	.string "the Trainer you have just defeated.\p"
+	.string "You may swap for only those pokémon\n"
+	.string "used by the beaten Trainer.$"
 
 BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNumberRules:
 	.string "After every battle you win, you may\n"
 	.string "swap for one of your defeated\l"
-	.string "opponent's POKéMON.\p"
-	.string "You will not be able to swap POKéMON\n"
-	.string "with the seventh TRAINER in the event.$"
+	.string "opponent's pokémon.\p"
+	.string "You will not be able to swap pokémon\n"
+	.string "with the seventh Trainer in the event.$"
 
 BattleFrontier_BattleFactoryLobby_Text_ExplainSwapNotesRules:
 	.string "There are two key points to be aware\n"
-	.string "of when swapping POKéMON.\p"
+	.string "of when swapping pokémon.\p"
 	.string "First, when swapping, you can't check\n"
-	.string "the stats of the POKéMON you are\l"
+	.string "the stats of the pokémon you are\l"
 	.string "about to receive.\p"
-	.string "Second, the POKéMON on your team\n"
+	.string "Second, the pokémon on your team\n"
 	.string "are lined up in sequence, depending on\l"
 	.string "the order in which you rented them.\p"
 	.string "This sequence remains unchanged\n"
 	.string "even when swaps are made.$"
 
-BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules:
-	.string "In the Open Level, the rental POKéMON\n"
-	.string "and the opposing TRAINERS' POKéMON\l"
+BattleFrontier_BattleFactoryLobby_Text_ExplainOpenLvRules: @ 8259A5E
+	.string "In the Open Level, the rental pokémon\n"
+	.string "and the opposing Trainers' pokémon\l"
 	.string "are all Level 100.$"

@@ -36,9 +36,9 @@ LilycoveCity_DepartmentStore_3F_EventScript_ClerkRight::
 	.align 2
 LilycoveCity_DepartmentStore_3F_Pokemart_StatBoosters:
 	.2byte ITEM_X_SPEED
-	.2byte ITEM_X_SPECIAL
+	.2byte ITEM_X_SP_ATK
 	.2byte ITEM_X_ATTACK
-	.2byte ITEM_X_DEFEND
+	.2byte ITEM_X_DEFENSE
 	.2byte ITEM_DIRE_HIT
 	.2byte ITEM_GUARD_SPEC
 	.2byte ITEM_X_ACCURACY
@@ -58,19 +58,19 @@ LilycoveCity_DepartmentStore_3F_EventScript_Woman::
 	msgbox LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon:
-	.string "For quickly toughening up POKéMON,\n"
+LilycoveCity_DepartmentStore_3F_Text_ItemsBestForTougheningPokemon: @ 821FCD1
+	.string "For quickly toughening up pokémon,\n"
 	.string "items are the best.\p"
-	.string "PROTEIN boosts ATTACK,\n"
-	.string "and CALCIUM raises SP. ATK.$"
+	.string "Protein boosts Attack,\n"
+	.string "and Calcium raises Sp. Atk.$"
 
-LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance:
-	.string "I want my POKéMON to have more\n"
+LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance: @ 821FD3B
+	.string "I want my pokémon to have more\n"
 	.string "endurance.\p"
 	.string "I'm trying to decide whether to raise\n"
-	.string "DEFENSE with IRON, or SP. DEF with ZINC.$"
+	.string "Defense with Iron, or Sp. Def with Zinc.$"
 
-LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon:
-	.string "I gave a CARBOS to my POKéMON,\n"
-	.string "and its SPEED went up.$"
+LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon: @ 821FDB4
+	.string "I gave a carbos to my pokémon,\n"
+	.string "and its speed went up.$"
 

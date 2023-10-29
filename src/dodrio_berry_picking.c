@@ -552,8 +552,8 @@ static const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS] =
 };
 
 // Duplicate and unused gfx. Feel free to remove.
-static const u32 sDuplicateGfx[] = INCBIN_U32("graphics/dodrio_berry_picking/bg.gbapal",
-                                     "graphics/dodrio_berry_picking/tree_border.gbapal",
+static const u32 sDuplicateGfx[] = INCBIN_U32("graphics/dodrio_berry_picking/tree_border.gbapal",
+                                     "graphics/dodrio_berry_picking/bg.gbapal",
                                      "graphics/dodrio_berry_picking/dodrio.gbapal",
                                      "graphics/dodrio_berry_picking/shiny.gbapal",
                                      "graphics/dodrio_berry_picking/status.gbapal",
@@ -2906,7 +2906,7 @@ void IsDodrioInParty(void)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         if (GetMonData(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES)
-            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES2) == SPECIES_DODRIO)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_DODRIO)
         {
             gSpecialVar_Result = TRUE;
             return;
@@ -3586,8 +3586,8 @@ static const u8 sUnsharedColumns_Duplicate[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS] =
     {1, 3, 5, 6, 9},
 };
 
-static const u16 sBg_Pal[]                  = INCBIN_U16("graphics/dodrio_berry_picking/bg.gbapal",
-                                                         "graphics/dodrio_berry_picking/tree_border.gbapal");
+static const u16 sBg_Pal[]                  = INCBIN_U16("graphics/dodrio_berry_picking/tree_border.gbapal",
+                                                         "graphics/dodrio_berry_picking/bg.gbapal");
 static const u16 sDodrioNormal_Pal[]        = INCBIN_U16("graphics/dodrio_berry_picking/dodrio.gbapal");
 static const u16 sDodrioShiny_Pal[]         = INCBIN_U16("graphics/dodrio_berry_picking/shiny.gbapal");
 static const u16 sStatus_Pal[]              = INCBIN_U16("graphics/dodrio_berry_picking/status.gbapal");
@@ -4816,7 +4816,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             SetBerryIconsInvisibility(TRUE);
             sGfx->state++;
         }
@@ -4848,7 +4848,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (GetHighestScore() < PRIZE_SCORE)
             {
                 sGfx->state = 127; // Skip to end, past giving prize
@@ -4908,7 +4908,7 @@ static void ShowResults(void)
         if (++sGfx->timer >= 30 && JOY_NEW(A_BUTTON))
         {
             sGfx->timer = 0;
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sGfx->state++;
         }
         break;
@@ -4978,14 +4978,14 @@ static void Msg_WantToPlayAgain(void)
         // Increment state only if A or B button have been pressed.
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             if (sGfx->cursorSelection == PLAY_AGAIN_NONE)
                 sGfx->cursorSelection = PLAY_AGAIN_YES;
             sGfx->state++;
         }
         else if (JOY_NEW(DPAD_UP | DPAD_DOWN))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             switch (sGfx->cursorSelection)
             {
             case PLAY_AGAIN_NONE:
@@ -5001,7 +5001,7 @@ static void Msg_WantToPlayAgain(void)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sGfx->cursorSelection = PLAY_AGAIN_NO;
             sGfx->state++;
         }

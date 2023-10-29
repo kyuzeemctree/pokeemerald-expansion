@@ -8,7 +8,6 @@ LittlerootTown_BrendansHouse_2F_MapScripts::
 LittlerootTown_BrendansHouse_2F_OnTransition:
 	call_if_lt VAR_LITTLEROOT_RIVAL_STATE, 2, LittlerootTown_BrendansHouse_2F_EventScript_CheckSetReadyToMeetBrendan
 	call_if_ge VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_BrendansHouse_2F_EventScript_CheckShouldUpdateBrendanPos
-	call_if_eq VAR_LITTLEROOT_INTRO_STATE, 4, PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet
 	call SecretBase_EventScript_SetDecorationFlags
 	setvar VAR_SECRET_BASE_INITIALIZED, 0
 	end
@@ -268,37 +267,42 @@ PlayersHouse_2F_EventScript_Notebook::
 	msgbox PlayersHouse_2F_Text_Notebook, MSGBOX_SIGN
 	end
 
+PlayersHouse_2F_EventScript_Clock::
+	msgbox PlayersHouse_2F_Text_Clock, MSGBOX_SIGN
+	end
+
 PlayersHouse_2F_EventScript_GameCube::
 	msgbox PlayersHouse_2F_Text_ItsAGameCube, MSGBOX_SIGN
 	end
 
-PlayersHouse_2F_Text_ClockIsStopped:
-	.string "The clock is stopped…\p"
-	.string "Better set it and start it!$"
+PlayersHouse_2F_Text_Clock:
+	.string "An analog clock!\p"
+	.string "The wonders of technology!$"
 
-PlayersHouse_2F_Text_HowDoYouLikeYourRoom:
-	.string "MOM: {PLAYER}, how do you like your\n"
+PlayersHouse_2F_Text_HowDoYouLikeYourRoom: @ 81F869A
+	.string "Mom: {PLAYER}, how do you like your\n"
 	.string "new room?\p"
 	.string "Good! Everything's put away neatly!\p"
 	.string "They finished moving everything in\n"
 	.string "downstairs, too.\p"
-	.string "POKéMON movers are so convenient!\p"
+	.string "pokémon movers are so convenient!\p"
 	.string "Oh, you should make sure that\n"
 	.string "everything's all there on your desk.$"
 
 PlayersHouse_2F_Text_Notebook:
 	.string "{PLAYER} flipped open the notebook.\p"
-	.string "ADVENTURE RULE NO. 1\n"
-	.string "Open the MENU with START.\p"
-	.string "ADVENTURE RULE NO. 2\n"
-	.string "Record your progress with SAVE.\p"
+	.string "Adventure Rule No. 1\n"
+	.string "Open the Menu with Start.\p"
+	.string "Adventure Rule No. 2\n"
+	.string "Record your progress with Save.\p"
 	.string "The remaining pages are blank…$"
 
 Common_Text_LookCloserAtMap:
 	.string "{PLAYER} took a closer look at the\n"
-	.string "HOENN region map.$"
+	.string "Hoenn region map.$"
 
 PlayersHouse_2F_Text_ItsAGameCube:
 	.string "It's a Nintendo GameCube.\p"
 	.string "A Game Boy Advance is connected to\n"
 	.string "serve as the Controller.$"
+	

@@ -3,6 +3,8 @@
 #include "bike.h"
 #include "coord_event_weather.h"
 #include "daycare.h"
+#include "debug.h"
+#include "dexnav.h"
 #include "faraway_island.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -34,6 +36,7 @@
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "qol_field_moves.h"
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
@@ -60,8 +63,8 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader *, struct MapPosition *);
 static void SetupWarp(struct MapHeader *, s8, struct MapPosition *);
 static bool8 TryDoorWarp(struct MapPosition *, u16, u8);
 static s8 GetWarpEventAtPosition(struct MapHeader *, u16, u16, u8);
-static u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
-static struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *, u16, u16, u8);
+static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
+static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *, u16, u16, u8);
 static bool8 TryStartCoordEventScript(struct MapPosition *);
 static bool8 TryStartWarpEventScript(struct MapPosition *, u16);
 static bool8 TryStartMiscWalkingScripts(u16);
@@ -79,7 +82,7 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->heldDirection2 = FALSE;
     input->tookStep = FALSE;
     input->pressedBButton = FALSE;
-    input->input_field_1_0 = FALSE;
+    input->pressedRButton = FALSE;
     input->input_field_1_1 = FALSE;
     input->input_field_1_2 = FALSE;
     input->input_field_1_3 = FALSE;
@@ -104,6 +107,8 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
                 input->pressedAButton = TRUE;
             if (newKeys & B_BUTTON)
                 input->pressedBButton = TRUE;
+            if (newKeys & R_BUTTON && !FlagGet(FLAG_SYS_DEXNAV_SEARCH))
+                input->pressedRButton = TRUE;
         }
 
         if (heldKeys & (DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT))
@@ -129,6 +134,14 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
         input->dpadDirection = DIR_WEST;
     else if (heldKeys & DPAD_RIGHT)
         input->dpadDirection = DIR_EAST;
+
+#if DEBUG_OVERWORLD_MENU == TRUE && DEBUG_OVERWORLD_IN_MENU == FALSE
+    if ((heldKeys & DEBUG_OVERWORLD_HELD_KEYS) && input->DEBUG_OVERWORLD_TRIGGER_EVENT)
+    {
+        input->input_field_1_2 = TRUE;
+        input->DEBUG_OVERWORLD_TRIGGER_EVENT = FALSE;
+    }
+#endif
 }
 
 int ProcessPlayerFieldInput(struct FieldInput *input)
@@ -185,8 +198,25 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         ShowStartMenu();
         return TRUE;
     }
+    
+    if (input->tookStep && TryFindHiddenPokemon())
+        return TRUE;
+    
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
         return TRUE;
+    
+    if (input->pressedRButton && TryStartDexnavSearch())
+        return TRUE;
+
+#if DEBUG_OVERWORLD_MENU == TRUE && DEBUG_OVERWORLD_IN_MENU == FALSE
+    if (input->input_field_1_2)
+    {
+        PlaySE(SE_WIN_OPEN);
+        FreezeObjectEvents();
+        Debug_ShowMainMenu();
+        return TRUE;
+    }
+#endif
 
     return FALSE;
 }
@@ -231,7 +261,7 @@ static bool8 TryStartInteractionScript(struct MapPosition *position, u16 metatil
      && script != SecretBase_EventScript_DollInteract
      && script != SecretBase_EventScript_CushionInteract
      && script != EventScript_PC)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 
     ScriptContext_SetupScript(script);
     return TRUE;
@@ -315,7 +345,7 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
 
 static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position, u8 metatileBehavior, u8 direction)
 {
-    struct BgEvent *bgEvent = GetBackgroundEventAtPosition(&gMapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
+    const struct BgEvent *bgEvent = GetBackgroundEventAtPosition(&gMapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
 
     if (bgEvent == NULL)
         return NULL;
@@ -447,12 +477,18 @@ static const u8 *GetInteractedMetatileScript(struct MapPosition *position, u8 me
 
 static const u8 *GetInteractedWaterScript(struct MapPosition *unused1, u8 metatileBehavior, u8 direction)
 {
-    if (FlagGet(FLAG_BADGE05_GET) == TRUE && PartyHasMonWithSurf() == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
+    // Start qol_field_moves
+    if (CanUseSurfFromInteractedWater())
+    //if (FlagGet(FLAG_BADGE05_GET) == TRUE && PartyHasMonWithSurf() == TRUE && IsPlayerFacingSurfableFishableWater() == TRUE)
+    // End qol_field_moves
         return EventScript_UseSurf;
 
     if (MetatileBehavior_IsWaterfall(metatileBehavior) == TRUE)
     {
-        if (FlagGet(FLAG_BADGE08_GET) == TRUE && IsPlayerSurfingNorth() == TRUE)
+        // Start qol_field_moves
+        //if (FlagGet(FLAG_BADGE08_GET) == TRUE && IsPlayerSurfingNorth() == TRUE)
+        if (CanUseWaterfallFromInteractedWater())
+        // End qol_field_moves
             return EventScript_UseWaterfall;
         else
             return EventScript_CannotUseWaterfall;
@@ -462,7 +498,8 @@ static const u8 *GetInteractedWaterScript(struct MapPosition *unused1, u8 metati
 
 static bool32 TrySetupDiveDownScript(void)
 {
-    if (FlagGet(FLAG_BADGE07_GET) && TrySetDiveWarp() == 2)
+    //if (FlagGet(FLAG_BADGE07_GET) && TrySetDiveWarp() == 2) // qol_field_moves
+    if (CanUseDiveDown()) // qol_field_moves
     {
         ScriptContext_SetupScript(EventScript_UseDive);
         return TRUE;
@@ -472,7 +509,8 @@ static bool32 TrySetupDiveDownScript(void)
 
 static bool32 TrySetupDiveEmergeScript(void)
 {
-    if (FlagGet(FLAG_BADGE07_GET) && gMapHeader.mapType == MAP_TYPE_UNDERWATER && TrySetDiveWarp() == 1)
+    //if (FlagGet(FLAG_BADGE07_GET) && gMapHeader.mapType == MAP_TYPE_UNDERWATER && TrySetDiveWarp() == 1) // qol_field_moves
+    if (CanUseDiveEmerge())
     {
         ScriptContext_SetupScript(EventScript_UseDiveUnderwater);
         return TRUE;
@@ -497,7 +535,7 @@ static bool8 TryStartStepBasedScript(struct MapPosition *position, u16 metatileB
 
 static bool8 TryStartCoordEventScript(struct MapPosition *position)
 {
-    u8 *script = GetCoordEventScriptAtPosition(&gMapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
+    const u8 *script = GetCoordEventScriptAtPosition(&gMapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
 
     if (script == NULL)
         return FALSE;
@@ -546,11 +584,13 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_FORCED_MOVE) && !MetatileBehavior_IsForcedMovementTile(metatileBehavior))
     {
+    #if OW_POISON_DAMAGE < GEN_5
         if (UpdatePoisonStepCounter() == TRUE)
         {
             ScriptContext_SetupScript(EventScript_FieldPoison);
             return TRUE;
         }
+    #endif
         if (ShouldEggHatch())
         {
             IncrementGameStat(GAME_STAT_HATCHED_EGGS);
@@ -668,6 +708,9 @@ void RestartWildEncounterImmunitySteps(void)
 
 static bool8 CheckStandardWildEncounter(u16 metatileBehavior)
 {
+    if (FlagGet(OW_FLAG_NO_ENCOUNTER))
+        return FALSE;
+
     if (sWildEncounterImmunitySteps < 4)
     {
         sWildEncounterImmunitySteps++;
@@ -861,7 +904,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
 static s8 GetWarpEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)
 {
     s32 i;
-    struct WarpEvent *warpEvent = mapHeader->events->warps;
+    const struct WarpEvent *warpEvent = mapHeader->events->warps;
     u8 warpCount = mapHeader->events->warpCount;
 
     for (i = 0; i < warpCount; i++, warpEvent++)
@@ -875,7 +918,7 @@ static s8 GetWarpEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 e
     return WARP_ID_NONE;
 }
 
-static u8 *TryRunCoordEventScript(struct CoordEvent *coordEvent)
+static const u8 *TryRunCoordEventScript(const struct CoordEvent *coordEvent)
 {
     if (coordEvent != NULL)
     {
@@ -895,10 +938,10 @@ static u8 *TryRunCoordEventScript(struct CoordEvent *coordEvent)
     return NULL;
 }
 
-static u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)
+static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)
 {
     s32 i;
-    struct CoordEvent *coordEvents = mapHeader->events->coordEvents;
+    const struct CoordEvent *coordEvents = mapHeader->events->coordEvents;
     u8 coordEventCount = mapHeader->events->coordEventCount;
 
     for (i = 0; i < coordEventCount; i++)
@@ -907,7 +950,7 @@ static u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 x, u16
         {
             if (coordEvents[i].elevation == elevation || coordEvents[i].elevation == 0)
             {
-                u8 *script = TryRunCoordEventScript(&coordEvents[i]);
+                const u8 *script = TryRunCoordEventScript(&coordEvents[i]);
                 if (script != NULL)
                     return script;
             }
@@ -916,15 +959,15 @@ static u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 x, u16
     return NULL;
 }
 
-u8 *GetCoordEventScriptAtMapPosition(struct MapPosition *position)
+const u8 *GetCoordEventScriptAtMapPosition(struct MapPosition *position)
 {
     return GetCoordEventScriptAtPosition(&gMapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
 }
 
-static struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)
+static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *mapHeader, u16 x, u16 y, u8 elevation)
 {
     u8 i;
-    struct BgEvent *bgEvents = mapHeader->events->bgEvents;
+    const struct BgEvent *bgEvents = mapHeader->events->bgEvents;
     u8 bgEventCount = mapHeader->events->bgEventCount;
 
     for (i = 0; i < bgEventCount; i++)

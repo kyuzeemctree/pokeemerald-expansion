@@ -46,6 +46,27 @@ void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b);
 void FreeResourcesAndDestroySprite(struct Sprite *sprite, u8 spriteId);
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority);
 void StartEscapeRopeFieldEffect(void);
+void FieldEffectFreeGraphicsResources(struct Sprite *sprite);
+void FieldEff_CaveDust(void);
+
+
+// Start qol_field_moves
+#include "task.h"
+
+void Task_SurfFieldEffect(u8);
+void SurfFieldEffect_Init(struct Task *);
+void SurfFieldEffect_JumpOnSurfBlob(struct Task *);
+void SurfFieldEffect_End(struct Task *);
+
+bool8 WaterfallFieldEffect_Init(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_RideUp(struct Task *task, struct ObjectEvent *objectEvent);
+bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task *task, struct ObjectEvent *objectEvent);
+void Task_UseWaterfall(u8);
+
+void Task_UseDive(u8);
+bool8 DiveFieldEffect_Init(struct Task *);
+bool8 DiveFieldEffect_TryWarp(struct Task *);
+// End qol_field_moves
 
 void FieldEffectScript_LoadFadedPaletteDayNight(u8 **script);
 void FieldEffectScript_LoadPaletteDayNight(u8 **script);

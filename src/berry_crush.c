@@ -914,7 +914,7 @@ static const u8 *const sResultsTexts[] =
     [RESULTS_PAGE_POWER + NUM_RESULTS_PAGES]       = gText_PressingPowerRankings,
 };
 
-static u32 (*const sBerryCrushCommands[])(struct BerryCrushGame * game, u8 * data) =
+static u32 (*const sBerryCrushCommands[])(struct BerryCrushGame * game, u8 *data) =
 {
     [CMD_NONE]             = NULL,
     [CMD_FADE]             = Cmd_BeginNormalPaletteFade,
@@ -1947,7 +1947,7 @@ static void DrawPlayerNameWindows(struct BerryCrushGame *game)
 static void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *game)
 {
     u8 i = 0;
-    u8 * windowGfx;
+    u8 *windowGfx;
 
     LZ77UnCompWram(gBerryCrush_TextWindows_Tilemap, gDecompressionBuffer);
 
@@ -2898,13 +2898,13 @@ static u32 Cmd_FinishGame(struct BerryCrushGame *game, u8 *args)
     case 0:
         game->gameState = STATE_FINISHED;
         PlaySE(SE_M_STRENGTH);
-        BlendPalettes(PALETTES_ALL, 8, RGB(31, 31, 0));
+        BlendPalettes(PALETTES_ALL, 8, RGB_YELLOW);
         game->gfx.counter = 2;
         break;
     case 1:
         if (--game->gfx.counter != (u8)-1)
             return 0;
-        BlendPalettes(PALETTES_ALL, 0, RGB(31, 31, 0));
+        BlendPalettes(PALETTES_ALL, 0, RGB_YELLOW);
         game->gfx.vibrationIdx = 4;
         game->gfx.counter = 0;
         game->gfx.numVibrations = sIntroOutroVibrationData[game->gfx.vibrationIdx][0];
@@ -2955,13 +2955,13 @@ static u32 Cmd_HandleTimeUp(struct BerryCrushGame *game, u8 *args)
     case 0:
         game->gameState = STATE_TIMES_UP;
         PlaySE(SE_FAILURE);
-        BlendPalettes(PALETTES_ALL, 8, RGB(31, 0, 0));
+        BlendPalettes(PALETTES_ALL, 8, RGB_RED);
         game->gfx.counter = 4;
         break;
     case 1:
         if (--game->gfx.counter != (u8)-1)
             return 0;
-        BlendPalettes(PALETTES_ALL, 0, RGB(31, 0, 0));
+        BlendPalettes(PALETTES_ALL, 0, RGB_RED);
         game->gfx.counter = 0;
         break;
     case 2:
@@ -3197,7 +3197,7 @@ static u32 Cmd_ShowResults(struct BerryCrushGame *game, u8 *args)
         }
         if (!(JOY_NEW(A_BUTTON)))
             return 0;
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         CloseResultsWindow(game);
         break;
     case 3:

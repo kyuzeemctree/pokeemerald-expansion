@@ -725,14 +725,14 @@ static bool8 LoadMonAndSceneGfx(struct Pokemon *mon)
     {
     case 0:
         // Load mon gfx
-        species = GetMonData(mon, MON_DATA_SPECIES2);
+        species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
-        HandleLoadSpecialPokePic_2(&gMonFrontPicTable[species], gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT], species, personality);
+        HandleLoadSpecialPokePic(TRUE, gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT], species, personality);
         sPokeblockFeed->loadGfxState++;
         break;
     case 1:
         // Load mon palette
-        species = GetMonData(mon, MON_DATA_SPECIES2);
+        species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
         personality = GetMonData(mon, MON_DATA_PERSONALITY);
         trainerId = GetMonData(mon, MON_DATA_OT_ID);
         palette = GetMonSpritePalStructFromOtIdPersonality(species, trainerId, personality);
@@ -860,7 +860,7 @@ static void Task_PrintAtePokeblockMessage(u8 taskId)
     struct Pokemon *mon = &gPlayerParty[gPokeblockMonId];
     struct Pokeblock *pokeblock = &gSaveBlock1Ptr->pokeblocks[gSpecialVar_ItemId];
 
-    gPokeblockGain = PokeblockGetGain(GetNature(mon), pokeblock);
+    gPokeblockGain = PokeblockGetGain(GetNature(mon, FALSE), pokeblock);
     GetMonNickname(mon, gStringVar1);
     PokeblockCopyName(pokeblock, gStringVar2);
 
@@ -907,12 +907,12 @@ static void Task_FadeOutPokeblockFeed(u8 taskId)
 
 static u8 CreateMonSprite(struct Pokemon *mon)
 {
-    u16 species = GetMonData(mon, MON_DATA_SPECIES2);
+    u16 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
     u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, MON_X, MON_Y, 2);
 
     sPokeblockFeed->species = species;
     sPokeblockFeed->monSpriteId_ = spriteId;
-    sPokeblockFeed->nature = GetNature(mon);
+    sPokeblockFeed->nature = GetNature(mon, FALSE);
     gSprites[spriteId].sSpecies = species;
     gSprites[spriteId].callback = SpriteCallbackDummy;
 

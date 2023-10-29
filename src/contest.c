@@ -1076,10 +1076,10 @@ static void LoadContestPalettes(void)
 {
     s32 i;
 
-    LoadPalette(sText_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    LoadPalette(sText_Pal, BG_PLTT_ID(15), sizeof(sText_Pal));
     SetBackdropFromColor(RGB_BLACK);
     for (i = 10; i < 14; i++)
-        LoadPalette(gPlttBufferUnfaded + BG_PLTT_ID(15) + 1, BG_PLTT_ID(15) + i, PLTT_SIZEOF(1));
+        LoadPalette(&gPlttBufferUnfaded[BG_PLTT_ID(15) + 1], BG_PLTT_ID(15) + i, PLTT_SIZEOF(1));
     FillPalette(RGB(31, 17, 31), BG_PLTT_ID(15) + 3, PLTT_SIZEOF(1));
 }
 
@@ -1112,10 +1112,10 @@ static void InitContestResources(void)
 
     for (i = 0; i < CONTESTANT_COUNT; i++)
     {
-        eContestantStatus[i].nextTurnOrder = 0xFF;
+        eContestantStatus[i].nextTurnOrder = CONTESTANT_NONE;
         eContest.prevTurnOrder[i] = gContestantTurnOrder[i];
     }
-    // Calling this here while all the nextTurnOrder values are 0xFF will actually
+    // Calling this here while all the nextTurnOrder values are CONTESTANT_NONE will actually
     // just reverse the turn order.
     ApplyNextTurnOrder();
     memset(gContestResources->tv, 0, sizeof(*gContestResources->tv) * CONTESTANT_COUNT);
@@ -1189,7 +1189,6 @@ void CB2_StartContest(void)
         FreeAllSpritePalettes();
         gReservedSpritePaletteCount = 4;
         eContestDebugMode = CONTEST_DEBUG_MODE_OFF;
-        ClearBattleMonForms();
         InitContestResources();
         gMain.state++;
         break;
@@ -1301,8 +1300,8 @@ static void Task_ReadyStartLinkContest(u8 taskId)
 
 static bool8 SetupContestGraphics(u8 *stateVar)
 {
-    u16 tempPalette1[16];
-    u16 tempPalette2[16];
+    u16 ALIGNED(4) tempPalette1[16];
+    u16 ALIGNED(4) tempPalette2[16];
 
     switch (*stateVar)
     {
@@ -1331,10 +1330,10 @@ static bool8 SetupContestGraphics(u8 *stateVar)
         break;
     case 5:
         LoadCompressedPalette(gContestInterfaceAudiencePalette, BG_PLTT_OFFSET, BG_PLTT_SIZE);
-        CpuCopy32(gPlttBufferUnfaded + BG_PLTT_ID(8), tempPalette1, PLTT_SIZE_4BPP);
-        CpuCopy32(gPlttBufferUnfaded + BG_PLTT_ID(5 + gContestPlayerMonIndex), tempPalette2, PLTT_SIZE_4BPP);
-        CpuCopy32(tempPalette2, gPlttBufferUnfaded + BG_PLTT_ID(8), PLTT_SIZE_4BPP);
-        CpuCopy32(tempPalette1, gPlttBufferUnfaded + BG_PLTT_ID(5 + gContestPlayerMonIndex), PLTT_SIZE_4BPP);
+        CpuCopy32(&gPlttBufferUnfaded[BG_PLTT_ID(8)], tempPalette1, PLTT_SIZE_4BPP);
+        CpuCopy32(&gPlttBufferUnfaded[BG_PLTT_ID(5 + gContestPlayerMonIndex)], tempPalette2, PLTT_SIZE_4BPP);
+        CpuCopy32(tempPalette2, &gPlttBufferUnfaded[BG_PLTT_ID(8)], PLTT_SIZE_4BPP);
+        CpuCopy32(tempPalette1, &gPlttBufferUnfaded[BG_PLTT_ID(5 + gContestPlayerMonIndex)], PLTT_SIZE_4BPP);
         DmaCopy32Defvars(3, gPlttBufferUnfaded, eContestTempSave.cachedWindowPalettes, sizeof(eContestTempSave.cachedWindowPalettes));
         LoadContestPalettes();
         break;
@@ -1475,7 +1474,7 @@ static void Task_DisplayAppealNumberText(u8 taskId)
         gBattle_BG0_Y = 0;
         gBattle_BG2_Y = 0;
         ContestDebugDoPrint();
-        DmaCopy32Defvars(3, gPlttBufferUnfaded, eContestTempSave.cachedPlttBufferUnfaded, PLTT_BUFFER_SIZE * 2);
+        DmaCopy32Defvars(3, gPlttBufferUnfaded, eContestTempSave.cachedPlttBufferUnfaded, PLTT_SIZE);
         ConvertIntToDecimalStringN(gStringVar1, eContest.appealNumber + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
         if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
             StringCopy(gDisplayedStringBattle, gText_AppealNumWhichMoveWillBePlayed);
@@ -1501,7 +1500,7 @@ static void Task_TryShowMoveSelectScreen(u8 taskId)
     // Wait for button press to show move select screen
     if ((JOY_NEW(A_BUTTON)) || (gMain.newKeys == B_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
         {
             SetBottomSliderHeartsInvisibility(TRUE);
@@ -1567,7 +1566,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
 
     if (JOY_NEW(A_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         gTasks[taskId].func = Task_SelectedMove;
     }
     else
@@ -1576,7 +1575,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
         {
         case B_BUTTON:
             // Cancel move selection
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             SetBottomSliderHeartsInvisibility(FALSE);
             ConvertIntToDecimalStringN(gStringVar1, eContest.appealNumber + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
             if (!Contest_IsMonsTurnDisabled(gContestPlayerMonIndex))
@@ -1602,7 +1601,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
             DrawMoveSelectArrow(eContest.playerMoveChoice);
             PrintContestMoveDescription(gContestMons[gContestPlayerMonIndex].moves[eContest.playerMoveChoice]);
             if (numMoves > 1)
-                PlaySE(SE_SELECT);
+                PlaySE(SE_RG_BAG_CURSOR);
             break;
         case DPAD_DOWN:
             EraseMoveSelectArrow(eContest.playerMoveChoice);
@@ -1613,7 +1612,7 @@ static void Task_HandleMoveSelectInput(u8 taskId)
             DrawMoveSelectArrow(eContest.playerMoveChoice);
             PrintContestMoveDescription(gContestMons[gContestPlayerMonIndex].moves[eContest.playerMoveChoice]);
             if (numMoves > 1)
-                PlaySE(SE_SELECT);
+                PlaySE(SE_RG_BAG_CURSOR);
             break;
         }
     }
@@ -1674,8 +1673,8 @@ static void Task_HideMoveSelectScreen(u8 taskId)
     }
     Contest_SetBgCopyFlags(0);
     // This seems to be a bug; it should have just copied PLTT_BUFFER_SIZE.
-    DmaCopy32Defvars(3, gPlttBufferFaded, eContestTempSave.cachedPlttBufferFaded, PLTT_BUFFER_SIZE * 2);
-    LoadPalette(eContestTempSave.cachedPlttBufferUnfaded, 0, PLTT_BUFFER_SIZE * 2);
+    DmaCopy32Defvars(3, gPlttBufferFaded, eContestTempSave.cachedPlttBufferFaded, PLTT_SIZE);
+    LoadPalette(eContestTempSave.cachedPlttBufferUnfaded, 0, PLTT_SIZE);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 0;
     gTasks[taskId].func = Task_HideApplauseMeterForAppealStart;
@@ -1778,8 +1777,6 @@ static void Task_DoAppeals(u8 taskId)
         }
         return;
     case APPEALSTATE_SLIDE_MON_IN:
-        for (i = 0; i < CONTESTANT_COUNT; i++)
-            gBattleMonForms[i] = 0;
         memset(gContestResources->moveAnim, 0, sizeof(*gContestResources->moveAnim));
         SetMoveAnimAttackerData(eContest.currentContestant);
         spriteId = CreateContestantSprite(
@@ -2561,7 +2558,7 @@ static void Task_WaitForHeartSliders(u8 taskId)
 
 static void Task_RestorePlttBufferUnfaded(u8 taskId)
 {
-    DmaCopy32Defvars(3, eContestTempSave.cachedPlttBufferUnfaded, gPlttBufferUnfaded, PLTT_BUFFER_SIZE * 2);
+    DmaCopy32Defvars(3, eContestTempSave.cachedPlttBufferUnfaded, gPlttBufferUnfaded, PLTT_SIZE);
     gTasks[taskId].data[0] = 0;
     gTasks[taskId].data[1] = 2;
     gTasks[taskId].func = Task_WaitPrintRoundResult;
@@ -2775,7 +2772,7 @@ static bool8 IsPlayerLinkLeader(void)
 
 void CreateContestMonFromParty(u8 partyIndex)
 {
-    u8 name[20];
+    u8 name[max(PLAYER_NAME_LENGTH + 1, POKEMON_NAME_BUFFER_SIZE)];
     u16 heldItem;
     s16 cool;
     s16 beauty;
@@ -2785,10 +2782,8 @@ void CreateContestMonFromParty(u8 partyIndex)
 
     StringCopy(name, gSaveBlock2Ptr->playerName);
     if (gLinkContestFlags & LINK_CONTEST_FLAG_IS_LINK)
-    {
         StripPlayerNameForLinkContest(name);
-    }
-    memcpy(gContestMons[gContestPlayerMonIndex].trainerName, name, 8);
+    memcpy(gContestMons[gContestPlayerMonIndex].trainerName, name, PLAYER_NAME_LENGTH + 1);
     if (gSaveBlock2Ptr->playerGender == MALE)
         gContestMons[gContestPlayerMonIndex].trainerGfxId = OBJ_EVENT_GFX_LINK_BRENDAN;
     else
@@ -2856,7 +2851,7 @@ void SetContestants(u8 contestType, u8 rank)
     u8 opponentsCount = 0;
     u8 opponents[100];
     bool8 allowPostgameContestants = FALSE;
-    const u8 * filter;
+    const u8 *filter;
 
     TryPutPlayerLast();
 
@@ -2891,7 +2886,7 @@ void SetContestants(u8 contestType, u8 rank)
                 opponents[opponentsCount++] = i;
         }
     }
-    opponents[opponentsCount] = 0xFF;
+    opponents[opponentsCount] = CONTESTANT_NONE;
 
     // Choose three random opponents from the list
     for (i = 0; i < CONTESTANT_COUNT - 1; i++)
@@ -2900,7 +2895,7 @@ void SetContestants(u8 contestType, u8 rank)
         s32 j;
 
         gContestMons[i] = gContestOpponents[opponents[rnd]];
-        for (j = rnd; opponents[j] != 0xFF; j++)
+        for (j = rnd; opponents[j] != CONTESTANT_NONE; j++)
             opponents[j] = opponents[j + 1];
         opponentsCount--;
     }
@@ -2940,7 +2935,7 @@ void SetLinkAIContestants(u8 contestType, u8 rank, bool32 isPostgame)
             || (contestType == CONTEST_CATEGORY_TOUGH && gContestOpponents[i].aiPool_Tough))
             opponents[opponentsCount++] = i;
     }
-    opponents[opponentsCount] = 0xFF;
+    opponents[opponentsCount] = CONTESTANT_NONE;
 
     // Fill remaining contestant slots with random AI opponents from the list
     for (i = 0; i < CONTESTANT_COUNT - gNumLinkContestPlayers; i++)
@@ -2950,7 +2945,7 @@ void SetLinkAIContestants(u8 contestType, u8 rank, bool32 isPostgame)
         gContestMons[gNumLinkContestPlayers + i] = gContestOpponents[opponents[rnd]];
         StripPlayerNameForLinkContest(gContestMons[gNumLinkContestPlayers + i].trainerName);
         StripMonNameForLinkContest(gContestMons[gNumLinkContestPlayers + i].nickname, GAME_LANGUAGE);
-        for (j = rnd; opponents[j] != 0xFF; j++)
+        for (j = rnd; opponents[j] != CONTESTANT_NONE; j++)
             opponents[j] = opponents[j + 1];
         opponentsCount--;
     }
@@ -3012,7 +3007,7 @@ static void DrawContestantWindowText(void)
 
 static u8 *Contest_CopyStringWithColor(const u8 *string, u8 color)
 {
-    u8 * ptr = StringCopy(gDisplayedStringBattle, gText_ColorTransparent);
+    u8 *ptr = StringCopy(gDisplayedStringBattle, gText_ColorTransparent);
     ptr[-1] = color; // Overwrites the "{COLOR TRANSPARENT}" part of the string.
     ptr = StringCopy(ptr, string);
 
@@ -3124,10 +3119,7 @@ static u8 CreateContestantSprite(u16 species, u32 otId, u32 personality, u32 ind
     u8 spriteId;
     species = SanitizeSpecies(species);
 
-    if (index == gContestPlayerMonIndex)
-        HandleLoadSpecialPokePic_2(&gMonBackPicTable[species], gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT], species, personality);
-    else
-        HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonBackPicTable[species], gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT], species, personality);
+    HandleLoadSpecialPokePic(FALSE, gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT], species, personality);
 
     LoadCompressedPalette(GetMonSpritePalFromSpeciesAndPersonality(species, otId, personality), OBJ_PLTT_ID(2), PLTT_SIZE_4BPP);
     SetMultiuseSpriteTemplateToPokemon(species, B_POSITION_PLAYER_LEFT);
@@ -4068,14 +4060,14 @@ static void UpdateBlendTaskContestantData(u8 contestant)
 
     palOffset1 = contestant + 5;
     DmaCopy16Defvars(3,
-                     gPlttBufferUnfaded + palOffset1 * 16 + 10,
-                     gPlttBufferFaded   + palOffset1 * 16 + 10,
-                     2);
-    palOffset2 = (contestant + 5) * 16 + 12 + contestant;
+                     &gPlttBufferUnfaded[PLTT_ID(palOffset1) + 10],
+                     &gPlttBufferFaded[PLTT_ID(palOffset1) + 10],
+                     PLTT_SIZEOF(1));
+    palOffset2 = PLTT_ID(contestant + 5) + 12 + contestant;
     DmaCopy16Defvars(3,
-                     gPlttBufferUnfaded + palOffset2,
-                     gPlttBufferFaded + palOffset2,
-                     2);
+                     &gPlttBufferUnfaded[palOffset2],
+                     &gPlttBufferFaded[palOffset2],
+                     PLTT_SIZEOF(1));
 }
 
 // See comments on CreateUnusedBlendTask
@@ -4370,7 +4362,7 @@ void SortContestants(bool8 useRanking)
         // Note that ranking is calculated so that shared places still take up a ranking
         // space. A ranking like [1, 2, 2, 3] is not possible; it would be [1, 2, 2, 4]
         // instead.
-        memset(scratch, 0xFF, sizeof(scratch));
+        memset(scratch, CONTESTANT_NONE, sizeof(scratch));
         for (i = 0; i < CONTESTANT_COUNT; i++)
         {
             u8 j = eContestantStatus[i].ranking;
@@ -4378,7 +4370,7 @@ void SortContestants(bool8 useRanking)
             while (1)
             {
                 u8 *ptr = &scratch[j];
-                if (*ptr == 0xFF)
+                if (*ptr == CONTESTANT_NONE)
                 {
                     *ptr = i;
                     gContestantTurnOrder[i] = j;
@@ -4636,7 +4628,7 @@ static void ApplyNextTurnOrder(void)
             // First, look for the first unassigned contestant.
             for (j = 0; j < CONTESTANT_COUNT; j++)
             {
-                if (!isContestantOrdered[j] && eContestantStatus[j].nextTurnOrder == 0xFF)
+                if (!isContestantOrdered[j] && eContestantStatus[j].nextTurnOrder == CONTESTANT_NONE)
                 {
                     nextContestant = j;
                     j++;
@@ -4647,7 +4639,7 @@ static void ApplyNextTurnOrder(void)
             // Then, look for a better candidate, with a higher turn order.
             for (; j < CONTESTANT_COUNT; j++)
             {
-                if (!isContestantOrdered[j] && eContestantStatus[j].nextTurnOrder == 0xFF
+                if (!isContestantOrdered[j] && eContestantStatus[j].nextTurnOrder == CONTESTANT_NONE
                  && gContestantTurnOrder[nextContestant] > gContestantTurnOrder[j])
                     nextContestant = j;
             }
@@ -4661,7 +4653,7 @@ static void ApplyNextTurnOrder(void)
     for (i = 0; i < CONTESTANT_COUNT; i++)
     {
         eContestAppealResults.turnOrder[i] = newTurnOrder[i];
-        eContestantStatus[i].nextTurnOrder = 0xFF;
+        eContestantStatus[i].nextTurnOrder = CONTESTANT_NONE;
         eContestantStatus[i].turnOrderMod = 0;
         gContestantTurnOrder[i] = newTurnOrder[i];
     }
@@ -5315,8 +5307,6 @@ static void SetMoveSpecificAnimData(u8 contestant)
 
     memset(&gContestResources->moveAnim->species, 0, 20);
     ClearBattleAnimationVars();
-    for (i = 0; i < CONTESTANT_COUNT; i++)
-        gBattleMonForms[i] = 0;
     switch (move)
     {
     case MOVE_CURSE:
@@ -5391,7 +5381,7 @@ static void SetBattleTargetSpritePosition(void)
 
 static void SetMoveTargetPosition(u16 move)
 {
-    switch (gBattleMoves[move].target)
+    switch (GetBattlerMoveTargetType(gBattlerAttacker, move))
     {
     case MOVE_TARGET_USER_OR_SELECTED:
     case MOVE_TARGET_USER:
@@ -5503,7 +5493,7 @@ static void ContestBG_FillBoxWithTile(u8 bg, u16 firstTileNum, u8 x, u8 y, u8 wi
 static bool32 Contest_RunTextPrinters(void)
 {
     RunTextPrinters();
-    return IsTextPrinterActive(4);
+    return IsTextPrinterActive(WIN_GENERAL_TEXT);
 }
 
 static void Contest_SetBgCopyFlags(u32 flagIndex)
@@ -6020,8 +6010,10 @@ static u8 GetMonNicknameLanguage(u8 *nickname)
     if (nickname[0] == EXT_CTRL_CODE_BEGIN && nickname[1] == EXT_CTRL_CODE_JPN)
         return GAME_LANGUAGE;
 
-    if (StringLength(nickname) < PLAYER_NAME_LENGTH - 1)
+    if (StringLength(nickname) <= 5)
     {
+        // Name is short enough that it might be Japanese.
+        // Make sure  all the character values are valid latin name characters.
         while (*nickname != EOS)
         {
             if ((*nickname >= CHAR_A && *nickname <= CHAR_z)
@@ -6039,12 +6031,18 @@ static u8 GetMonNicknameLanguage(u8 *nickname)
                 || *nickname == CHAR_DBL_QUOTE_LEFT
                 || *nickname == CHAR_DBL_QUOTE_RIGHT
                 || *nickname == CHAR_SGL_QUOTE_LEFT
-                || *nickname == CHAR_DBL_QUOTE_LEFT) // Most likely a typo, CHAR_SGL_QUOTE_RIGHT should be here instead.
+#ifdef BUGFIX
+                || *nickname == CHAR_SGL_QUOTE_RIGHT
+#else
+                || *nickname == CHAR_DBL_QUOTE_LEFT // Most likely a typo, CHAR_SGL_QUOTE_RIGHT should be here instead.
+#endif
+                )
             {
                 nickname++;
             }
             else
             {
+                // Invalid latin name character, assume the name was Japanese.
                 ret = LANGUAGE_JAPANESE;
                 break;
             }
@@ -6101,7 +6099,7 @@ void StripPlayerAndMonNamesForLinkContest(struct ContestPokemon *mon, s32 langua
     name = mon->trainerName;
     if (language == LANGUAGE_JAPANESE)
     {
-        name[PLAYER_NAME_LENGTH] = EOS;
+        name[7] = EOS;
         name[6] = name[4];
         name[5] = name[3];
         name[4] = name[2];

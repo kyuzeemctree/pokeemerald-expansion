@@ -174,19 +174,20 @@ static const u8 sRegionMapSectionId_To_PopUpThemeIdMapping[] =
     [MAPSEC_DESERT_UNDERPASS - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_STONE,
     [MAPSEC_ALTERING_CAVE - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_STONE,
     [MAPSEC_NAVEL_ROCK - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_STONE,
-    [MAPSEC_TRAINER_HILL - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_MARBLE
+    [MAPSEC_TRAINER_HILL - KANTO_MAPSEC_COUNT] = MAPPOPUP_THEME_MARBLE,
+    [MAPSEC_DEWFORD_GROTTO] = MAPPOPUP_THEME_WOOD
 };
 
-static const u8 sText_PyramidFloor1[] = _("PYRAMID FLOOR 1");
-static const u8 sText_PyramidFloor2[] = _("PYRAMID FLOOR 2");
-static const u8 sText_PyramidFloor3[] = _("PYRAMID FLOOR 3");
-static const u8 sText_PyramidFloor4[] = _("PYRAMID FLOOR 4");
-static const u8 sText_PyramidFloor5[] = _("PYRAMID FLOOR 5");
-static const u8 sText_PyramidFloor6[] = _("PYRAMID FLOOR 6");
-static const u8 sText_PyramidFloor7[] = _("PYRAMID FLOOR 7");
-static const u8 sText_Pyramid[] = _("PYRAMID");
+static const u8 sText_PyramidFloor1[] = _("Pyramid Floor 1");
+static const u8 sText_PyramidFloor2[] = _("Pyramid Floor 2");
+static const u8 sText_PyramidFloor3[] = _("Pyramid Floor 3");
+static const u8 sText_PyramidFloor4[] = _("Pyramid Floor 4");
+static const u8 sText_PyramidFloor5[] = _("Pyramid Floor 5");
+static const u8 sText_PyramidFloor6[] = _("Pyramid Floor 6");
+static const u8 sText_PyramidFloor7[] = _("Pyramid Floor 7");
+static const u8 sText_Pyramid[] = _("Pyramid");
 
-static const u8 * const sBattlePyramid_MapHeaderStrings[FRONTIER_STAGES_PER_CHALLENGE + 1] =
+static const u8 *const sBattlePyramid_MapHeaderStrings[FRONTIER_STAGES_PER_CHALLENGE + 1] =
 {
     sText_PyramidFloor1,
     sText_PyramidFloor2,

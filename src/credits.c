@@ -9,6 +9,7 @@
 #include "menu.h"
 #include "international_string_util.h"
 #include "constants/songs.h"
+#include "constants/species.h"
 #include "gpu_regs.h"
 #include "m4a.h"
 #include "constants/rgb.h"
@@ -1370,7 +1371,7 @@ static void SpriteCB_Player(struct Sprite *sprite)
         break;
     case 4:
         StartSpriteAnimIfDifferent(sprite, 0);
-        if (sprite->x > 120)
+        if (sprite->x > DISPLAY_WIDTH / 2)
             sprite->x--;
         break;
     case 5:

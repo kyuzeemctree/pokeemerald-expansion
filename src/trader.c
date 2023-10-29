@@ -15,7 +15,7 @@
 #include "task.h"
 #include "script_menu.h"
 
-static const u8 * const sDefaultTraderNames[NUM_TRADER_ITEMS] =
+static const u8 *const sDefaultTraderNames[NUM_TRADER_ITEMS] =
 {
     gText_Tristan,
     gText_Philip,
@@ -123,11 +123,11 @@ void Task_HandleGetDecorationMenuInput(u8 taskId)
             break;
         case MENU_B_PRESSED:
         case NUM_TRADER_ITEMS: // EXIT
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             Task_BufferDecorSelectionAndCloseWindow(taskId, 0);
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             gSpecialVar_0x8005 = input;
             StringCopy(gStringVar1, trader->playerNames[input]);
             ConvertInternationalString(gStringVar1, trader->language[input]);

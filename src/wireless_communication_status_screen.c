@@ -222,7 +222,7 @@ static void CB2_InitWirelessCommunicationScreen(void)
     ChangeBgX(1, 0, BG_COORD_SET);
     ChangeBgY(1, 0, BG_COORD_SET);
     LoadPalette(sPalettes, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-    Menu_LoadStdPalAt(0xF0);
+    Menu_LoadStdPalAt(BG_PLTT_ID(15));
     DynamicPlaceholderTextUtil_Reset();
     FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 15);
     CopyBgTilemapBufferToVram(1);
@@ -323,7 +323,7 @@ static void Task_WirelessCommunicationScreen(u8 taskId)
         }
         if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             gTasks[sStatusScreen->rfuTaskId].data[15] = 0xFF;
             gTasks[taskId].tState++;
         }
@@ -345,7 +345,7 @@ static void Task_WirelessCommunicationScreen(u8 taskId)
 
 #undef tState
 
-static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 * str, u8 x, u8 y, u8 mode)
+static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 mode)
 {
     u8 color[3];
 

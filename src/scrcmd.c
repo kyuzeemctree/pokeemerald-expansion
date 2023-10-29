@@ -49,10 +49,11 @@
 #include "tv.h"
 #include "window.h"
 #include "constants/event_objects.h"
-#include "day_night.h"
+#include "pokevial.h" //Pokevial Branch
+#include "qol_field_moves.h" // qol_field_moves
 
 typedef u16 (*SpecialFunc)(void);
-typedef void (*NativeFunc)(void);
+typedef void (*NativeFunc)(struct ScriptContext *ctx);
 
 EWRAM_DATA const u8 *gRamScriptRetAddr = NULL;
 static EWRAM_DATA u32 sAddressOffset = 0; // For relative addressing in vgoto etc., used by saved scripts (e.g. Mystery Event)
@@ -63,6 +64,7 @@ static EWRAM_DATA u16 sMovingNpcMapNum = 0;
 static EWRAM_DATA u16 sFieldEffectScriptId = 0;
 
 static u8 sBrailleWindowId;
+static bool8 gIsScriptedWildDouble;
 
 extern const SpecialFunc gSpecials[];
 extern const u8 *gStdScripts[];
@@ -85,7 +87,7 @@ static const u8 sScriptConditionTable[6][3] =
     1, 0, 1, // !=
 };
 
-static u8 * const sScriptStringVars[] =
+static u8 *const sScriptStringVars[] =
 {
     gStringVar1,
     gStringVar2,
@@ -136,7 +138,7 @@ bool8 ScrCmd_callnative(struct ScriptContext *ctx)
 {
     NativeFunc func = (NativeFunc)ScriptReadWord(ctx);
 
-    func();
+    func(ctx);
     return FALSE;
 }
 
@@ -650,12 +652,12 @@ bool8 ScrCmd_fadescreenswapbuffers(struct ScriptContext *ctx)
     case FADE_TO_BLACK:
     case FADE_TO_WHITE:
     default:
-        CpuCopy32(gPlttBufferUnfaded, gPaletteDecompressionBuffer, PLTT_DECOMP_BUFFER_SIZE);
+        CpuCopy32(gPlttBufferUnfaded, gPaletteDecompressionBuffer, PLTT_SIZE);
         FadeScreen(mode, 0);
         break;
     case FADE_FROM_BLACK:
     case FADE_FROM_WHITE:
-        CpuCopy32(gPaletteDecompressionBuffer, gPlttBufferUnfaded, PLTT_DECOMP_BUFFER_SIZE);
+        CpuCopy32(gPaletteDecompressionBuffer, gPlttBufferUnfaded, PLTT_SIZE);
         FadeScreen(mode, 0);
         break;
     }
@@ -1178,7 +1180,7 @@ bool8 ScrCmd_setobjectmovementtype(struct ScriptContext *ctx)
 
 bool8 ScrCmd_createvobject(struct ScriptContext *ctx)
 {
-    u8 graphicsId = ScriptReadByte(ctx);
+    u16 graphicsId = ScriptReadHalfword(ctx);
     u8 virtualObjId = ScriptReadByte(ctx);
     u16 x = VarGet(ScriptReadHalfword(ctx));
     u32 y = VarGet(ScriptReadHalfword(ctx));
@@ -1553,7 +1555,7 @@ bool8 ScrCmd_bufferspeciesname(struct ScriptContext *ctx)
     u8 stringVarIndex = ScriptReadByte(ctx);
     u16 species = VarGet(ScriptReadHalfword(ctx));
 
-    StringCopy(sScriptStringVars[stringVarIndex], gSpeciesNames[species]);
+    StringCopy(sScriptStringVars[stringVarIndex], GetSpeciesName(species));
     return FALSE;
 }
 
@@ -1564,7 +1566,7 @@ bool8 ScrCmd_bufferleadmonspeciesname(struct ScriptContext *ctx)
     u8 *dest = sScriptStringVars[stringVarIndex];
     u8 partyIndex = GetLeadMonIndex();
     u32 species = GetMonData(&gPlayerParty[partyIndex], MON_DATA_SPECIES, NULL);
-    StringCopy(dest, gSpeciesNames[species]);
+    StringCopy(dest, GetSpeciesName(species));
     return FALSE;
 }
 
@@ -1873,15 +1875,33 @@ bool8 ScrCmd_setwildbattle(struct ScriptContext *ctx)
     u16 species = ScriptReadHalfword(ctx);
     u8 level = ScriptReadByte(ctx);
     u16 item = ScriptReadHalfword(ctx);
+    u16 species2 = ScriptReadHalfword(ctx);
+    u8 level2 = ScriptReadByte(ctx);
+    u16 item2 = ScriptReadHalfword(ctx);
 
-    CreateScriptedWildMon(species, level, item);
+    if(species2 == SPECIES_NONE)
+    {
+        CreateScriptedWildMon(species, level, item);
+        gIsScriptedWildDouble = FALSE;
+    }
+    else
+    {
+        CreateScriptedDoubleWildMon(species, level, item, species2, level2, item2);
+        gIsScriptedWildDouble = TRUE;
+    }
+
     return FALSE;
 }
 
 bool8 ScrCmd_dowildbattle(struct ScriptContext *ctx)
 {
-    BattleSetup_StartScriptedWildBattle();
+    if (gIsScriptedWildDouble == FALSE)
+        BattleSetup_StartScriptedWildBattle();
+    else
+        BattleSetup_StartScriptedDoubleWildBattle();
+
     ScriptContext_Stop();
+
     return TRUE;
 }
 
@@ -2208,21 +2228,21 @@ bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
     }
 }
 
-// This command will set a Pokémon's eventLegal bit; there is no similar command to clear it.
-bool8 ScrCmd_setmoneventlegal(struct ScriptContext *ctx)
+// This command will set a Pokémon's modernFatefulEncounter bit; there is no similar command to clear it.
+bool8 ScrCmd_setmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
-    bool8 isEventLegal = TRUE;
+    bool8 isModernFatefulEncounter = TRUE;
     u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
 
-    SetMonData(&gPlayerParty[partyIndex], MON_DATA_EVENT_LEGAL, &isEventLegal);
+    SetMonData(&gPlayerParty[partyIndex], MON_DATA_MODERN_FATEFUL_ENCOUNTER, &isModernFatefulEncounter);
     return FALSE;
 }
 
-bool8 ScrCmd_checkmoneventlegal(struct ScriptContext *ctx)
+bool8 ScrCmd_checkmonmodernfatefulencounter(struct ScriptContext *ctx)
 {
     u16 partyIndex = VarGet(ScriptReadHalfword(ctx));
 
-    gSpecialVar_Result = GetMonData(&gPlayerParty[partyIndex], MON_DATA_EVENT_LEGAL, NULL);
+    gSpecialVar_Result = GetMonData(&gPlayerParty[partyIndex], MON_DATA_MODERN_FATEFUL_ENCOUNTER, NULL);
     return FALSE;
 }
 
@@ -2307,3 +2327,52 @@ bool8 ScrCmd_warpwhitefade(struct ScriptContext *ctx)
     ResetInitialPlayerAvatarState();
     return TRUE;
 }
+
+//Start Pokevial Branch
+bool8 ScrCmd_pokevial(struct ScriptContext *ctx)
+{
+    u8 mode = ScriptReadByte(ctx);
+    u8 parameter = ScriptReadByte(ctx);
+    u8 amount = ScriptReadByte(ctx);
+
+    switch (mode) {
+        case VIAL_GET:
+            switch (parameter) {
+                case VIAL_SIZE:
+                    PokevialGetSize();
+                    break;
+                case VIAL_DOSE:
+                    PokevialGetDose();
+                    break;
+            }
+            break;
+
+        case VIAL_UP:
+            switch (parameter) {
+                case VIAL_SIZE:
+                    PokevialSizeUp(amount);
+                    break;
+                case VIAL_DOSE:
+                    PokevialDoseUp(amount);
+                    break;
+            }
+            break;
+
+        case VIAL_DOWN:
+            switch (parameter) {
+                case VIAL_SIZE:
+                    PokevialSizeDown(amount);
+                    break;
+                case VIAL_DOSE:
+                    PokevialDoseDown(amount);
+                    break;
+            }
+            break;
+
+        case VIAL_REFILL:
+            PokevialRefill();
+            break;
+    }
+    return TRUE;
+}
+//End Pokevial Branch

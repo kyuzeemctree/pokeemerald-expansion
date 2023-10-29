@@ -248,7 +248,7 @@ static void HoldContestPainting(void)
         if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
         {
             sHoldState++;
-            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB(0, 0, 0));
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
         }
 
         if (sVarsInitialized)
@@ -367,20 +367,18 @@ static void InitContestMonPixels(u16 species, bool8 backPic)
     LZDecompressVram(pal, gContestPaintingMonPalette);
     if (!backPic)
     {
-        HandleLoadSpecialPokePic_DontHandleDeoxys(
-            &gMonFrontPicTable[species],
-            gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT],
-            species,
-            gContestPaintingWinner->personality);
+        HandleLoadSpecialPokePic(TRUE,
+                                gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT],
+                                species,
+                                gContestPaintingWinner->personality);
         _InitContestMonPixels(gMonSpritesGfxPtr->sprites.ptr[B_POSITION_OPPONENT_LEFT], gContestPaintingMonPalette, (void *)gContestMonPixels);
     }
     else
     {
-        HandleLoadSpecialPokePic_DontHandleDeoxys(
-            &gMonBackPicTable[species],
-            gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT],
-            species,
-            gContestPaintingWinner->personality);
+        HandleLoadSpecialPokePic(FALSE,
+                                gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT],
+                                species,
+                                gContestPaintingWinner->personality);
         _InitContestMonPixels(gMonSpritesGfxPtr->sprites.ptr[B_POSITION_PLAYER_LEFT], gContestPaintingMonPalette, (void *)gContestMonPixels);
     }
 }

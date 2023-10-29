@@ -6,10 +6,10 @@ BattleFrontier_BattlePikeLobby_MapScripts::
 	.byte 0
 
 BattleFrontier_BattlePikeLobby_OnFrame:
-	map_script_2 VAR_TEMP_0, 0, BattleFrontier_BattlePikeLobby_EventScript_GetChallengeStatus
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_SAVING, BattleFrontier_BattlePikeLobby_EventScript_QuitWithoutSaving
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_WON, BattleFrontier_BattlePikeLobby_EventScript_WonChallenge
-	map_script_2 VAR_TEMP_0, CHALLENGE_STATUS_LOST, BattleFrontier_BattlePikeLobby_EventScript_LostChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, 0, BattleFrontier_BattlePikeLobby_EventScript_GetChallengeStatus
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING, BattleFrontier_BattlePikeLobby_EventScript_QuitWithoutSaving
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_WON, BattleFrontier_BattlePikeLobby_EventScript_WonChallenge
+	map_script_2 VAR_TEMP_CHALLENGE_STATUS, CHALLENGE_STATUS_LOST, BattleFrontier_BattlePikeLobby_EventScript_LostChallenge
 	.2byte 0
 
 BattleFrontier_BattlePikeLobby_OnWarp:
@@ -34,7 +34,7 @@ BattleFrontier_BattlePikeLobby_EventScript_QuitWithoutSaving::
 	pike_set PIKE_DATA_WIN_STREAK, 0
 	pike_set PIKE_DATA_WIN_STREAK_ACTIVE, FALSE
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -67,7 +67,7 @@ BattleFrontier_BattlePikeLobby_EventScript_GiveBattlePoints::
 	waitse
 	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -86,7 +86,7 @@ BattleFrontier_BattlePikeLobby_EventScript_LostChallenge::
 	waitse
 	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
 	closemessage
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
@@ -132,7 +132,7 @@ BattleFrontier_BattlePikeLobby_EventScript_TryEnterChallenge::
 	case MULTI_B_PRESSED, BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge
 
 BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge::
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	setvar VAR_TEMP_1, 0
 	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
 	pike_init
@@ -144,7 +144,7 @@ BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge::
 	closemessage
 	delay 2
 	call Common_EventScript_SaveGame
-	setvar VAR_TEMP_0, 255
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	pike_savehelditems
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePikeLobby_EventScript_CancelChallengeSaveFailed
 	special SavePlayerParty
@@ -156,7 +156,7 @@ BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge::
 	special HealPlayerParty
 	call BattleFrontier_BattlePike_EventScript_CloseCurtain
 	warpsilent MAP_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR, 6, 7
-	setvar VAR_TEMP_0, 0
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 	waitstate
 	end
 
@@ -267,11 +267,11 @@ BattleFrontier_BattlePike_EventScript_CloseCurtain::
 	waitse
 	return
 
-BattleFrontier_BattlePikeLobby_Text_WelcomeToBattlePike:
-	.string "Where the luck of TRAINERS\n"
+BattleFrontier_BattlePikeLobby_Text_WelcomeToBattlePike: @ 825BB52
+	.string "Where the luck of trainers\n"
 	.string "is put to the test…\p"
-	.string "Welcome to the BATTLE PIKE…\p"
-	.string "I am your guide to the BATTLE PIKE…$"
+	.string "Welcome to the Battle Pike…\p"
+	.string "I am your guide to the Battle Pike…$"
 
 BattleFrontier_BattlePikeLobby_Text_TakeChallenge:
 	.string "Would you like to take the Battle\n"
@@ -284,7 +284,7 @@ BattleFrontier_BattlePikeLobby_Text_ExplainBattlePike:
 	.string "simple…\p"
 	.string "Choose one of three paths and make\n"
 	.string "your way to the goal room at the end\l"
-	.string "of the BATTLE PIKE. It's that simple.\p"
+	.string "of the Battle Pike. It's that simple.\p"
 	.string "However, what happens on the chosen\n"
 	.string "path depends entirely on the luck\l"
 	.string "of the challenger…\p"
@@ -308,29 +308,29 @@ BattleFrontier_BattlePikeLobby_Text_WhichChallengeMode:
 BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLv50:
 	.string "I beg your pardon, but…\p"
 	.string "You do not have three eligible\n"
-	.string "POKéMON for the Battle Choice event.\p"
-	.string "You must have three different POKéMON\n"
+	.string "pokémon for the Battle Choice event.\p"
+	.string "You must have three different pokémon\n"
 	.string "of Level 50 or less to enter.\p"
 	.string "They also must be holding different\n"
 	.string "kinds of items.\p"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
+	.string "Eggs{STR_VAR_1} ineligible.\p"
 	.string "Please come see me when\n"
 	.string "you are ready…$"
 
 BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLvOpen:
 	.string "I beg your pardon, but…\p"
 	.string "You do not have three eligible\n"
-	.string "POKéMON for the Battle Choice event.\p"
+	.string "pokémon for the Battle Choice event.\p"
 	.string "You must have three different\n"
-	.string "POKéMON to enter.\p"
+	.string "pokémon to enter.\p"
 	.string "They also must be holding different\n"
 	.string "kinds of items.\p"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
+	.string "Eggs{STR_VAR_1} ineligible.\p"
 	.string "Please come see me when\n"
 	.string "you are ready…$"
 
-BattleFrontier_BattlePikeLobby_Text_PleaseChooseThreeMons:
-	.string "Please choose the three POKéMON\n"
+BattleFrontier_BattlePikeLobby_Text_PleaseChooseThreeMons: @ 825C094
+	.string "Please choose the three pokémon\n"
 	.string "you wish to enter in the challenge…$"
 
 BattleFrontier_BattlePikeLobby_Text_SaveBeforeChallenge:
@@ -378,7 +378,7 @@ BattleFrontier_BattlePikeLobby_Text_FailedToSaveBeforeQuitting:
 BattleFrontier_BattlePikeLobby_Text_SnatchedVictoryFromQueen:
 	.string "Congratulations…\p"
 	.string "You have snatched victory from the\n"
-	.string "PIKE QUEEN and cleared the event…$"
+	.string "Pike Queen and cleared the event…$"
 
 BattleFrontier_BattlePikeLobby_Text_AwardYouTheseBattlePoints:
 	.string "In recognition of your amazing luck,\n"
@@ -393,12 +393,12 @@ BattleFrontier_BattlePikeLobby_Text_OneRoomAwayFromGoal:
 BattleFrontier_BattlePikeLobby_Text_NeverHadToBattleTrainer:
 	.string "I've completed the challenge 10 times\n"
 	.string "now, but I've never had to battle\l"
-	.string "a TRAINER once.$"
+	.string "a Trainer once.$"
 
 BattleFrontier_BattlePikeLobby_Text_ThinkAbilitiesUsefulHere:
 	.string "Listen! Listen!\p"
 	.string "Don't you think that the special\n"
-	.string "abilities of POKéMON will be useful\l"
+	.string "abilities of pokémon will be useful\l"
 	.string "here?$"
 
 @ Unused
@@ -407,7 +407,7 @@ BattleFrontier_BattlePikeLobby_Text_TrainersWhicheverPathIChoose:
 	.string "I can't figure it out at all!\p"
 	.string "I've taken the challenge a bunch\n"
 	.string "of times, but all I ever do is run into\l"
-	.string "TRAINERS whichever path I choose.$"
+	.string "Trainers whichever path I choose.$"
 
 BattleFrontier_BattlePikeLobby_Text_RulesAreListed:
 	.string "The Battle Choice's rules are listed.$"
@@ -415,18 +415,18 @@ BattleFrontier_BattlePikeLobby_Text_RulesAreListed:
 BattleFrontier_BattlePikeLobby_Text_ReadWhichHeading:
 	.string "Which heading do you want to read?$"
 
-BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules:
-	.string "The BAG and POKéNAV may not be used\n"
+BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules: @ 825C644
+	.string "The bag and Pokénav may not be used\n"
 	.string "during a Battle Choice challenge.$"
 
 BattleFrontier_BattlePikeLobby_Text_ExplainHeldItemRules:
 	.string "During a Battle Choice challenge,\n"
-	.string "any BERRY or HERB held by POKéMON\l"
+	.string "any Berry or Herb held by pokémon\l"
 	.string "will be effective only once.$"
 
 BattleFrontier_BattlePikeLobby_Text_ExplainMonOrderRules:
 	.string "During a Battle Choice challenge,\n"
-	.string "the sequence of POKéMON cannot be\l"
+	.string "the sequence of pokémon cannot be\l"
 	.string "changed.\p"
 	.string "The sequence must be set before\n"
 	.string "starting your challenge.$"

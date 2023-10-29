@@ -47,6 +47,8 @@
 #include "constants/songs.h"
 #include "constants/trainers.h"
 
+#define TAG_SCROLL_ARROW 5112
+
 // Values for registryStatus
 enum {
     UNREGISTERED,
@@ -95,8 +97,6 @@ static u8 GetSecretBaseOwnerType(u8);
 
 static const struct SecretBaseEntranceMetatiles sSecretBaseEntranceMetatiles[] =
 {
-    {.closedMetatileId = METATILE_General_SecretBase_TreeLeft,  .openMetatileId = METATILE_General_SecretBase_VineLeft},
-    {.closedMetatileId = METATILE_General_SecretBase_TreeRight, .openMetatileId = METATILE_General_SecretBase_VineRight},
     {.closedMetatileId = METATILE_General_RedCaveIndent,        .openMetatileId = METATILE_General_RedCaveOpen},
     {.closedMetatileId = METATILE_General_YellowCaveIndent,     .openMetatileId = METATILE_General_YellowCaveOpen},
     {.closedMetatileId = METATILE_General_BlueCaveIndent,       .openMetatileId = METATILE_General_BlueCaveOpen},
@@ -157,7 +157,7 @@ static const struct YesNoFuncTable sDeleteRegistryYesNoFuncs =
     .noFunc = DeleteRegistry_No,
 };
 
-static const u8 sSecretBaseOwnerGfxIds[10] =
+static const u16 sSecretBaseOwnerGfxIds[10] =
 {
     // Male
     OBJ_EVENT_GFX_YOUNGSTER,
@@ -970,7 +970,7 @@ static void BuildRegistryMenuItems(u8 taskId)
 static void RegistryMenu_OnCursorMove(s32 unused, bool8 flag, struct ListMenu *menu)
 {
     if (flag != TRUE)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 }
 
 static void FinalizeRegistryMenu(u8 taskId)
@@ -985,7 +985,7 @@ static void FinalizeRegistryMenu(u8 taskId)
 static void AddRegistryMenuScrollArrows(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    tArrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 188, 12, 148, tNumBases - tMaxShownItems, 0x13f8, 0x13f8, &tScrollOffset);
+    tArrowTaskId = AddScrollIndicatorArrowPairParameterized(SCROLL_ARROW_UP, 188, 12, 148, tNumBases - tMaxShownItems, TAG_SCROLL_ARROW, TAG_SCROLL_ARROW, &tScrollOffset);
 }
 
 static void HandleRegistryMenuInput(u8 taskId)
@@ -999,7 +999,7 @@ static void HandleRegistryMenuInput(u8 taskId)
     case LIST_NOTHING_CHOSEN:
         break;
     case LIST_CANCEL:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         DestroyListMenuTask(tListTaskId, NULL, NULL);
         RemoveScrollIndicatorArrowPair(tArrowTaskId);
         ClearStdWindowAndFrame(tMainWindowId, FALSE);
@@ -1010,7 +1010,7 @@ static void HandleRegistryMenuInput(u8 taskId)
         GoToSecretBasePCRegisterMenu(taskId);
         break;
     default:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         tSelectedBaseId = input;
         ShowRegistryMenuActions(taskId);
         break;
@@ -1038,13 +1038,13 @@ static void HandleRegistryMenuActionsInput(u8 taskId)
     switch (input)
     {
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         ReturnToMainRegistryMenu(taskId);
         break;
     case MENU_NOTHING_CHOSEN:
         break;
     default:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         sRegistryMenuActions[input].func.void_u8(taskId);
         break;
     }

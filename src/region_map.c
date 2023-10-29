@@ -27,6 +27,7 @@
 #include "constants/map_types.h"
 #include "constants/rgb.h"
 #include "constants/weather.h"
+#include "qol_field_moves.h" // qol_field_moves
 
 /*
  *  This file handles region maps generally, and the map used when selecting a fly destination.
@@ -621,7 +622,7 @@ bool8 LoadRegionMapGfx(void)
 void BlendRegionMap(u16 color, u32 coeff)
 {
     BlendPalettes(0x380, coeff, color);
-    CpuCopy16(gPlttBufferFaded + 0x70, gPlttBufferUnfaded + 0x70, 0x60);
+    CpuCopy16(&gPlttBufferFaded[BG_PLTT_ID(7)], &gPlttBufferUnfaded[BG_PLTT_ID(7)], 3 * PLTT_SIZE_4BPP);
 }
 
 void FreeRegionMapIconResources(void)
@@ -1419,7 +1420,7 @@ void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
             sRegionMap->cursorSprite->y = 8 * sRegionMap->cursorPosY + 4;
         }
         sRegionMap->cursorSprite->data[1] = 2;
-        sRegionMap->cursorSprite->data[2] = (IndexOfSpritePaletteTag(paletteTag) << 4) + 0x101;
+        sRegionMap->cursorSprite->data[2] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(paletteTag)) + 1;
         sRegionMap->cursorSprite->data[3] = TRUE;
     }
 }
@@ -1966,13 +1967,13 @@ static void CB_HandleFlyMapInput(void)
         case MAP_INPUT_A_BUTTON:
             if (sFlyMap->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY || sFlyMap->regionMap.mapSecType == MAPSECTYPE_BATTLE_FRONTIER)
             {
-                m4aSongNumStart(SE_SELECT);
+                m4aSongNumStart(SE_RG_BAG_CURSOR);
                 sFlyMap->choseFlyLocation = TRUE;
                 SetFlyMapCallback(CB_ExitFlyMap);
             }
             break;
         case MAP_INPUT_B_BUTTON:
-            m4aSongNumStart(SE_SELECT);
+            m4aSongNumStart(SE_RG_BAG_CURSOR);
             sFlyMap->choseFlyLocation = FALSE;
             SetFlyMapCallback(CB_ExitFlyMap);
             break;
@@ -2015,12 +2016,22 @@ static void CB_ExitFlyMap(void)
                         SetWarpDestinationToMapWarp(sMapHealLocations[sFlyMap->regionMap.mapSecId][0], sMapHealLocations[sFlyMap->regionMap.mapSecId][1], WARP_ID_NONE);
                     break;
                 }
-                ReturnToFieldFromFlyMapSelect();
+            // Start qol_field_moves
+                if (IsFlyToolUsed())
+                    ReturnToFieldFromFlyToolMapSelect();
+                else
+                    ReturnToFieldFromFlyMapSelect();
+            }
+            else if (IsFlyToolUsed())
+            {
+                ReturnToFieldOrBagFromFlyTool();
+            // End qol_field_moves
             }
             else
             {
                 SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
             }
+            ResetFlyTool(); // qol_field_moves
             TRY_FREE_AND_SET_NULL(sFlyMap);
             FreeAllWindowBuffers();
         }

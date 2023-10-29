@@ -422,7 +422,16 @@ static const u8 sDecorationSlideElevation[] =
 };
 
 static const u16 sDecorShapeSizes[] = {
-    0x04, 0x08, 0x10, 0x20, 0x10, 0x08, 0x10, 0x20, 0x40, 0x20
+    [DECORSHAPE_1x1] = 4,
+    [DECORSHAPE_2x1] = 8,
+    [DECORSHAPE_3x1] = 16,
+    [DECORSHAPE_4x2] = 32,
+    [DECORSHAPE_2x2] = 16,
+    [DECORSHAPE_1x2] = 8,
+    [DECORSHAPE_1x3] = 16,
+    [DECORSHAPE_2x4] = 32,
+    [DECORSHAPE_3x3] = 64,
+    [DECORSHAPE_3x2] = 32,
 };
 
 static const u16 sBrendanPalette[] = INCBIN_U16("graphics/decorations/brendan.gbapal");
@@ -597,7 +606,7 @@ static void HandleDecorationActionsMenuInput(u8 taskId)
         switch (Menu_ProcessInput())
         {
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sDecorationMainMenuActions[sDecorationActionsCursorPos].func.void_u8(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
@@ -606,7 +615,7 @@ static void HandleDecorationActionsMenuInput(u8 taskId)
                 PrintCurMainMenuDescription();
             break;
         case MENU_B_PRESSED:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             DecorationMenuAction_Cancel(taskId);
             break;
         }
@@ -688,7 +697,7 @@ static void ReturnToDecorationActionsAfterInvalidSelection(u8 taskId)
 
 static void SecretBasePC_PrepMenuForSelectingStoredDecors(u8 taskId)
 {
-    LoadPalette(sDecorationMenuPalette, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+    LoadPalette(sDecorationMenuPalette, BG_PLTT_ID(13), sizeof(sDecorationMenuPalette));
     ClearDialogWindowAndFrame(0, FALSE);
     RemoveDecorationWindow(WINDOW_MAIN_MENU);
     InitDecorationCategoriesWindow(taskId);
@@ -775,13 +784,13 @@ static void HandleDecorationCategoriesMenuInput(u8 taskId)
         {
         case MENU_B_PRESSED:
         case DECORCAT_COUNT: // CANCEL
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ExitDecorationCategoriesMenu(taskId);
             break;
         case MENU_NOTHING_CHOSEN:
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sCurDecorationCategory = input;
             SelectDecorationCategory(taskId);
             break;
@@ -834,7 +843,7 @@ static void ReturnToActionsMenuFromCategories(u8 taskId)
 
 void ShowDecorationCategoriesWindow(u8 taskId)
 {
-    LoadPalette(sDecorationMenuPalette, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
+    LoadPalette(sDecorationMenuPalette, BG_PLTT_ID(13), sizeof(sDecorationMenuPalette));
     ClearDialogWindowAndFrame(0, FALSE);
     gTasks[taskId].tDecorationMenuCommand = DECOR_MENU_TRADE;
     sCurDecorationCategory = DECORCAT_DESK;
@@ -908,7 +917,7 @@ static void CopyDecorationMenuItemName(u8 *dest, u16 decoration)
 static void DecorationItemsMenu_OnCursorMove(s32 itemIndex, bool8 flag, struct ListMenu *menu)
 {
     if (flag != TRUE)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 
     PrintDecorationItemDescription(itemIndex);
 }
@@ -991,11 +1000,11 @@ static void HandleDecorationItemsMenuInput(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sSecretBasePC_SelectedDecorationActions[tDecorationMenuCommand][1](taskId);
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             gCurDecorationIndex = input;
             RemoveDecorationItemsScrollIndicators();
             DestroyListMenuTask(tMenuTaskId, &sDecorationsScrollOffset, &sDecorationsCursorPos);
@@ -1916,7 +1925,7 @@ static void CopyPalette(u16 *dest, u16 pal)
 
 static void CopyTile(u8 *dest, u16 tile)
 {
-    u8 buffer[TILE_SIZE_4BPP];
+    u8 ALIGNED(4) buffer[TILE_SIZE_4BPP];
     u16 mode;
     u16 i;
 

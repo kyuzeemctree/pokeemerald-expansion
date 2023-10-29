@@ -29,6 +29,7 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/trainer_types.h"
+#include "qol_field_moves.h" // qol_field_moves
 
 #define NUM_FORCED_MOVEMENTS 18
 #define NUM_ACRO_BIKE_COLLISIONS 5
@@ -75,7 +76,7 @@ static u8 CheckForPlayerAvatarStaticCollision(u8);
 static u8 CheckForObjectEventStaticCollision(struct ObjectEvent *, s16, s16, u8, u8);
 static bool8 CanStopSurfing(s16, s16, u8);
 static bool8 ShouldJumpLedge(s16, s16, u8);
-static bool8 TryPushBoulder(s16, s16, u8);
+//static bool8 TryPushBoulder(s16, s16, u8); //qol_field_moves
 static void CheckAcroBikeCollision(s16, s16, u8, u8 *);
 
 static void DoPlayerAvatarTransition(void);
@@ -83,7 +84,7 @@ static void PlayerAvatarTransition_Dummy(struct ObjectEvent *);
 static void PlayerAvatarTransition_Normal(struct ObjectEvent *);
 static void PlayerAvatarTransition_MachBike(struct ObjectEvent *);
 static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *);
-static void PlayerAvatarTransition_Surfing(struct ObjectEvent *);
+//static void PlayerAvatarTransition_Surfing(struct ObjectEvent *); // qol_field_moves
 static void PlayerAvatarTransition_Underwater(struct ObjectEvent *);
 static void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *);
 
@@ -141,6 +142,9 @@ static u8 Fishing_EndNoMon(struct Task *);
 static void AlignFishingAnimationFrames(void);
 
 static u8 TrySpinPlayerForWarp(struct ObjectEvent *, s16 *);
+static void PlayerGoSlow(u8 direction);
+
+// .rodata
 
 static bool8 (*const sForcedMovementTestFuncs[NUM_FORCED_MOVEMENTS])(u8) =
 {
@@ -232,7 +236,7 @@ static bool8 (*const sArrowWarpMetatileBehaviorChecks[])(u8) =
     [DIR_EAST - 1]  = MetatileBehavior_IsEastArrowWarp,
 };
 
-static const u8 sRivalAvatarGfxIds[][2] =
+static const u16 sRivalAvatarGfxIds[][2] =
 {
     [PLAYER_AVATAR_STATE_NORMAL]     = {OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL,     OBJ_EVENT_GFX_RIVAL_MAY_NORMAL},
     [PLAYER_AVATAR_STATE_MACH_BIKE]  = {OBJ_EVENT_GFX_RIVAL_BRENDAN_MACH_BIKE,  OBJ_EVENT_GFX_RIVAL_MAY_MACH_BIKE},
@@ -244,7 +248,7 @@ static const u8 sRivalAvatarGfxIds[][2] =
     [PLAYER_AVATAR_STATE_WATERING]   = {OBJ_EVENT_GFX_BRENDAN_WATERING,         OBJ_EVENT_GFX_MAY_WATERING}
 };
 
-static const u8 sPlayerAvatarGfxIds[][2] =
+static const u16 sPlayerAvatarGfxIds[][2] =
 {
     [PLAYER_AVATAR_STATE_NORMAL]     = {OBJ_EVENT_GFX_BRENDAN_NORMAL,     OBJ_EVENT_GFX_MAY_NORMAL},
     [PLAYER_AVATAR_STATE_MACH_BIKE]  = {OBJ_EVENT_GFX_BRENDAN_MACH_BIKE,  OBJ_EVENT_GFX_MAY_MACH_BIKE},
@@ -256,19 +260,19 @@ static const u8 sPlayerAvatarGfxIds[][2] =
     [PLAYER_AVATAR_STATE_WATERING]   = {OBJ_EVENT_GFX_BRENDAN_WATERING,   OBJ_EVENT_GFX_MAY_WATERING},
 };
 
-static const u8 sFRLGAvatarGfxIds[GENDER_COUNT] =
+static const u16 sFRLGAvatarGfxIds[GENDER_COUNT] =
 {
     [MALE]   = OBJ_EVENT_GFX_RED,
     [FEMALE] = OBJ_EVENT_GFX_LEAF
 };
 
-static const u8 sRSAvatarGfxIds[GENDER_COUNT] =
+static const u16 sRSAvatarGfxIds[GENDER_COUNT] =
 {
     [MALE]   = OBJ_EVENT_GFX_LINK_RS_BRENDAN,
     [FEMALE] = OBJ_EVENT_GFX_LINK_RS_MAY
 };
 
-static const u8 sPlayerAvatarGfxToStateFlag[GENDER_COUNT][5][2] =
+static const u16 sPlayerAvatarGfxToStateFlag[GENDER_COUNT][5][2] =
 {
     [MALE] =
     {
@@ -441,8 +445,16 @@ static bool8 DoForcedMovement(u8 direction, void (*moveFunc)(u8))
 {
     struct PlayerAvatar *playerAvatar = &gPlayerAvatar;
     u8 collision = CheckForPlayerAvatarCollision(direction);
+    u32 fieldMoveStatus; // qol_field_moves
 
     playerAvatar->flags |= PLAYER_AVATAR_FLAG_FORCED_MOVE;
+
+    // Start qol_field_moves
+    fieldMoveStatus = CanUseWaterfall(direction);
+    if (fieldMoveStatus)
+        return UseWaterfall(gPlayerAvatar, fieldMoveStatus);
+    // End qol_field_moves
+
     if (collision)
     {
         ForcedMovement_None();
@@ -626,11 +638,20 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
             return;
         }
     }
-
+    
+    gPlayerAvatar.creeping = FALSE;
     if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
-        // same speed as running
-        PlayerWalkFast(direction);
+        if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))
+        {
+            gPlayerAvatar.creeping = TRUE;
+            PlayerGoSlow(direction);
+        }
+        else
+        {
+            // speed 2 is fast, same speed as running
+            PlayerWalkFast(direction);
+        }
         return;
     }
 
@@ -640,6 +661,11 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         PlayerRun(direction);
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
         return;
+    }
+    else if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))
+    {
+        gPlayerAvatar.creeping = TRUE;
+        PlayerGoSlow(direction);
     }
     else
     {
@@ -672,14 +698,36 @@ static u8 CheckForPlayerAvatarStaticCollision(u8 direction)
 u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior)
 {
     u8 collision = GetCollisionAtCoords(objectEvent, x, y, direction);
+    u32 fieldMoveStatus; // qol_field_moves
+
     if (collision == COLLISION_ELEVATION_MISMATCH && CanStopSurfing(x, y, direction))
         return COLLISION_STOP_SURFING;
+
+    // Start qol_field_moves
+    fieldMoveStatus = CanUseSurf(x,y,collision);
+    if (fieldMoveStatus)
+        return UseSurf(fieldMoveStatus);
+
+    fieldMoveStatus = CanUseCut(x,y);
+    if (fieldMoveStatus)
+        return UseCut(fieldMoveStatus);
+
+    fieldMoveStatus = CanUseRockSmash(x,y);
+    if (fieldMoveStatus)
+        return UseRockSmash(fieldMoveStatus);
+    // End qol_field_moves
 
     if (ShouldJumpLedge(x, y, direction))
     {
         IncrementGameStat(GAME_STAT_JUMPED_DOWN_LEDGES);
         return COLLISION_LEDGE_JUMP;
     }
+    // Start qol_field_moves
+    fieldMoveStatus = CanUseStrength(collision);
+    if (fieldMoveStatus)
+        return UseStrength(fieldMoveStatus,x,y,direction);
+    // End qol_field_moves
+
     if (collision == COLLISION_OBJECT_EVENT && TryPushBoulder(x, y, direction))
         return COLLISION_PUSHED_BOULDER;
 
@@ -728,7 +776,7 @@ static bool8 ShouldJumpLedge(s16 x, s16 y, u8 direction)
         return FALSE;
 }
 
-static bool8 TryPushBoulder(s16 x, s16 y, u8 direction)
+bool8 TryPushBoulder(s16 x, s16 y, u8 direction)
 {
     if (FlagGet(FLAG_SYS_USE_STRENGTH))
     {
@@ -849,7 +897,10 @@ static void PlayerAvatarTransition_AcroBike(struct ObjectEvent *objEvent)
     Bike_HandleBumpySlopeJump();
 }
 
-static void PlayerAvatarTransition_Surfing(struct ObjectEvent *objEvent)
+// Start qol_field_moves
+//static void PlayerAvatarTransition_Surfing(struct ObjectEvent *objEvent)
+void PlayerAvatarTransition_Surfing(struct ObjectEvent *objEvent)
+// End qol_field_moves
 {
     u8 spriteId;
 
@@ -951,6 +1002,12 @@ void PlayerSetAnimId(u8 movementActionId, u8 copyableMovement)
     }
 }
 
+// slow
+static void PlayerGoSlow(u8 direction)
+{
+    PlayerSetAnimId(GetWalkSlowMovementAction(direction), 2);
+}
+
 void PlayerWalkNormal(u8 direction)
 {
     PlayerSetAnimId(GetWalkNormalMovementAction(direction), COPY_MOVE_WALK);
@@ -1045,28 +1102,28 @@ void PlayerEndWheelie(u8 direction)
 // wheelie hopping standing
 void PlayerStandingHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieHopFaceDirectionMovementAction(direction), COPY_MOVE_FACE);
 }
 
 // wheelie hopping moving
 void PlayerMovingHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieHopDirectionMovementAction(direction), COPY_MOVE_WALK);
 }
 
 // wheelie hopping ledge
 void PlayerLedgeHoppingWheelie(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetAcroWheelieJumpDirectionMovementAction(direction), COPY_MOVE_JUMP2);
 }
 
 // acro turn jump
 void PlayerAcroTurnJump(u8 direction)
 {
-    PlaySE(SE_BIKE_HOP);
+    PlaySE(SE_RG_BAG_CURSOR);
     PlayerSetAnimId(GetJumpInPlaceTurnAroundMovementAction(direction), COPY_MOVE_FACE);
 }
 
@@ -1212,32 +1269,32 @@ void StopPlayerAvatar(void)
     }
 }
 
-u8 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
+u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
     return sRivalAvatarGfxIds[state][gender];
 }
 
-u8 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
+u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender)
 {
     return sPlayerAvatarGfxIds[state][gender];
 }
 
-u8 GetFRLGAvatarGraphicsIdByGender(u8 gender)
+u16 GetFRLGAvatarGraphicsIdByGender(u8 gender)
 {
     return sFRLGAvatarGfxIds[gender];
 }
 
-u8 GetRSAvatarGraphicsIdByGender(u8 gender)
+u16 GetRSAvatarGraphicsIdByGender(u8 gender)
 {
     return sRSAvatarGfxIds[gender];
 }
 
-u8 GetPlayerAvatarGraphicsIdByStateId(u8 state)
+u16 GetPlayerAvatarGraphicsIdByStateId(u8 state)
 {
     return GetPlayerAvatarGraphicsIdByStateIdAndGender(state, gPlayerAvatar.gender);
 }
 
-u8 unref_GetRivalAvatarGenderByGraphicsId(u8 gfxId)
+u8 unref_GetRivalAvatarGenderByGraphicsId(u16 gfxId)
 {
     switch (gfxId)
     {
@@ -1255,7 +1312,7 @@ u8 unref_GetRivalAvatarGenderByGraphicsId(u8 gfxId)
     }
 }
 
-u8 GetPlayerAvatarGenderByGraphicsId(u8 gfxId)
+u8 GetPlayerAvatarGenderByGraphicsId(u16 gfxId)
 {
     switch (gfxId)
     {
@@ -1324,7 +1381,7 @@ void SetPlayerAvatarStateMask(u8 flags)
     gPlayerAvatar.flags |= flags;
 }
 
-static u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 graphicsId, u8 gender)
+static u8 GetPlayerAvatarStateTransitionByGraphicsId(u16 graphicsId, u8 gender)
 {
     u8 i;
 
@@ -1336,7 +1393,7 @@ static u8 GetPlayerAvatarStateTransitionByGraphicsId(u8 graphicsId, u8 gender)
     return PLAYER_AVATAR_FLAG_ON_FOOT;
 }
 
-u8 GetPlayerAvatarGraphicsIdByCurrentState(void)
+u16 GetPlayerAvatarGraphicsIdByCurrentState(void)
 {
     u8 i;
     u8 flags = gPlayerAvatar.flags;
@@ -1349,7 +1406,7 @@ u8 GetPlayerAvatarGraphicsIdByCurrentState(void)
     return 0;
 }
 
-void SetPlayerAvatarExtraStateTransition(u8 graphicsId, u8 transitionFlag)
+void SetPlayerAvatarExtraStateTransition(u16 graphicsId, u8 transitionFlag)
 {
     u8 stateFlag = GetPlayerAvatarStateTransitionByGraphicsId(graphicsId, gPlayerAvatar.gender);
 
@@ -1786,15 +1843,6 @@ static bool8 Fishing_ShowDots(struct Task *task)
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;
-    if (JOY_NEW(A_BUTTON))
-    {
-        task->tStep = FISHING_NO_BITE;
-        if (task->tRoundsPlayed != 0)
-            task->tStep = FISHING_GOT_AWAY;
-        return TRUE;
-    }
-    else
-    {
         if (task->tFrameCounter >= 20)
         {
             task->tFrameCounter = 0;
@@ -1807,12 +1855,11 @@ static bool8 Fishing_ShowDots(struct Task *task)
             }
             else
             {
-                AddTextPrinterParameterized(0, FONT_NORMAL, dot, task->tNumDots * 8, 1, 0, NULL);
+                AddTextPrinterParameterized(0, 1, dot, task->tNumDots * 8, 1, 0, NULL);
                 task->tNumDots++;
             }
         }
         return FALSE;
-    }
 }
 
 static bool8 Fishing_CheckForBite(struct Task *task)
@@ -1831,7 +1878,7 @@ static bool8 Fishing_CheckForBite(struct Task *task)
     {
         if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
         {
-            u8 ability = GetMonAbility(&gPlayerParty[0]);
+            u16 ability = GetMonAbility(&gPlayerParty[0]);
             if (ability == ABILITY_SUCTION_CUPS || ability  == ABILITY_STICKY_HOLD)
             {
                 if (Random() % 100 > 14)
@@ -1855,10 +1902,7 @@ static bool8 Fishing_CheckForBite(struct Task *task)
 
 static bool8 Fishing_GotBite(struct Task *task)
 {
-    AlignFishingAnimationFrames();
-    AddTextPrinterParameterized(0, FONT_NORMAL, gText_OhABite, 0, 17, 0, NULL);
-    task->tStep++;
-    task->tFrameCounter = 0;
+    task->tStep += 3;
     return FALSE;
 }
 

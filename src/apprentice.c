@@ -335,7 +335,7 @@ static u16 GetRandomAlternateMove(u8 monId)
     u8 id;
     u8 numLearnsetMoves;
     u16 species;
-    const u16 *learnset;
+    const struct LevelUpMove *learnset;
     bool32 needTMs = FALSE;
     u16 moveId = MOVE_NONE;
     bool32 shouldUseMove;
@@ -346,15 +346,14 @@ static u16 GetRandomAlternateMove(u8 monId)
     learnset = gLevelUpLearnsets[species];
     j = 0;
 
-    // Despite being open level, level up moves are only read up to level 60
     if (PLAYER_APPRENTICE.lvlMode == APPRENTICE_LVL_MODE_50)
-        level = 50;
+        level = FRONTIER_MAX_LEVEL_50;
     else // == APPRENTICE_LVL_MODE_OPEN
-        level = 60;
+        level = 60; // Despite being open level, level up moves are only read up to level 60
 
-    for (j = 0; learnset[j] != LEVEL_UP_END; j++)
+    for (j = 0; learnset[j].move != LEVEL_UP_END; j++)
     {
-        if ((learnset[j] & LEVEL_UP_MOVE_LV) > (level << 9))
+        if (learnset[j].level > level)
             break;
     }
 
@@ -376,7 +375,7 @@ static u16 GetRandomAlternateMove(u8 monId)
                 do
                 {
                     id = Random() % (NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES);
-                    shouldUseMove = CanSpeciesLearnTMHM(species, id);
+                    shouldUseMove = CanLearnTeachableMove(species, ItemIdToBattleMoveId(ITEM_TM01 + id));
                 }
                 while (!shouldUseMove);
 
@@ -391,7 +390,7 @@ static u16 GetRandomAlternateMove(u8 monId)
                 for (; j < numLearnsetMoves; j++)
                 {
                     // Keep looking for TMs until one not in the level up learnset is found
-                    if ((learnset[j] & LEVEL_UP_MOVE_ID) == moveId)
+                    if ((learnset[j].move) == moveId)
                     {
                         shouldUseMove = FALSE;
                         break;
@@ -415,13 +414,13 @@ static u16 GetRandomAlternateMove(u8 monId)
                 {
                     // Get a random move excluding the 4 it would know at max level
                     u8 learnsetId = Random() % (numLearnsetMoves - MAX_MON_MOVES);
-                    moveId = learnset[learnsetId] & LEVEL_UP_MOVE_ID;
+                    moveId = learnset[learnsetId].move;
                     shouldUseMove = TRUE;
 
                     for (j = numLearnsetMoves - MAX_MON_MOVES; j < numLearnsetMoves; j++)
                     {
                         // Keep looking for moves until one not in the last 4 is found
-                        if ((learnset[j] & LEVEL_UP_MOVE_ID) == moveId)
+                        if ((learnset[j].move) == moveId)
                         {
                             shouldUseMove = FALSE;
                             break;
@@ -461,17 +460,17 @@ static void GetLatestLearnedMoves(u16 species, u16 *moves)
 {
     u8 i, j;
     u8 level, numLearnsetMoves;
-    const u16 *learnset;
+    const struct LevelUpMove *learnset;
 
     if (PLAYER_APPRENTICE.lvlMode == APPRENTICE_LVL_MODE_50)
-        level = 50;
+        level = FRONTIER_MAX_LEVEL_50;
     else // == APPRENTICE_LVL_MODE_OPEN
         level = 60;
 
     learnset = gLevelUpLearnsets[species];
-    for (i = 0; learnset[i] != LEVEL_UP_END; i++)
+    for (i = 0; learnset[i].move != LEVEL_UP_END; i++)
     {
-        if ((learnset[i] & LEVEL_UP_MOVE_LV) > (level << 9))
+        if (learnset[i].level > level)
             break;
     }
 
@@ -480,7 +479,7 @@ static void GetLatestLearnedMoves(u16 species, u16 *moves)
         numLearnsetMoves = MAX_MON_MOVES;
 
     for (j = 0; j < numLearnsetMoves; j++)
-        moves[j] = learnset[(i - 1) - j] & LEVEL_UP_MOVE_ID;
+        moves[j] = learnset[(i - 1) - j].move;
 }
 
 // Get the level up move or previously suggested move to be the first move choice
@@ -592,7 +591,7 @@ static void CreateApprenticeMenu(u8 menu)
 
             speciesTableId = APPRENTICE_SPECIES_ID(i);
             species =  gApprentices[PLAYER_APPRENTICE.id].species[speciesTableId];
-            strings[i] = gSpeciesNames[species];
+            strings[i] = GetSpeciesName(species);
         }
         break;
     case APPRENTICE_ASK_2SPECIES:
@@ -600,8 +599,8 @@ static void CreateApprenticeMenu(u8 menu)
         top = 8;
         if (PLAYER_APPRENTICE.questionsAnswered >= NUM_WHICH_MON_QUESTIONS)
             return;
-        strings[1] = gSpeciesNames[gApprenticeQuestionData->altSpeciesId];
-        strings[0] = gSpeciesNames[gApprenticeQuestionData->speciesId];
+        strings[1] = GetSpeciesName(gApprenticeQuestionData->altSpeciesId);
+        strings[0] = GetSpeciesName(gApprenticeQuestionData->speciesId);
         break;
     case APPRENTICE_ASK_MOVES:
         left = 17;
@@ -666,11 +665,12 @@ static void Task_ChooseAnswer(u8 taskId)
     case MENU_NOTHING_CHOSEN:
         return;
     case MENU_B_PRESSED:
+        // Only ever true. Answering Apprentice questions is required.
         if (tNoBButton)
             return;
 
-        PlaySE(SE_SELECT);
-        gSpecialVar_Result = 0x7F;
+        PlaySE(SE_RG_BAG_CURSOR);
+        gSpecialVar_Result = MULTI_B_PRESSED;
         break;
     default:
         gSpecialVar_Result = input;
@@ -1050,13 +1050,13 @@ static void ApprenticeBufferString(void)
     switch (gSpecialVar_0x8006)
     {
     case APPRENTICE_BUFF_SPECIES1:
-        StringCopy(stringDst, gSpeciesNames[gApprenticeQuestionData->speciesId]);
+        StringCopy(stringDst, GetSpeciesName(gApprenticeQuestionData->speciesId));
         break;
     case APPRENTICE_BUFF_SPECIES2:
-        StringCopy(stringDst, gSpeciesNames[gApprenticeQuestionData->altSpeciesId]);
+        StringCopy(stringDst, GetSpeciesName(gApprenticeQuestionData->altSpeciesId));
         break;
     case APPRENTICE_BUFF_SPECIES3:
-        StringCopy(stringDst, gSpeciesNames[gApprenticeQuestionData->speciesId]);
+        StringCopy(stringDst, GetSpeciesName(gApprenticeQuestionData->speciesId));
         break;
     case APPRENTICE_BUFF_MOVE1:
         StringCopy(stringDst, gMoveNames[gApprenticeQuestionData->moveId1]);
@@ -1083,7 +1083,7 @@ static void ApprenticeBufferString(void)
         break;
     case APPRENTICE_BUFF_LEAD_MON_SPECIES:
         speciesArrayId = APPRENTICE_SPECIES_ID(PLAYER_APPRENTICE.leadMonId);
-        StringCopy(stringDst, gSpeciesNames[gApprentices[PLAYER_APPRENTICE.id].species[speciesArrayId]]);
+        StringCopy(stringDst, GetSpeciesName(gApprentices[PLAYER_APPRENTICE.id].species[speciesArrayId]));
         break;
     }
 }
@@ -1199,7 +1199,7 @@ static void SaveApprentice(void)
 static void SetSavedApprenticeTrainerGfxId(void)
 {
     u8 i;
-    u8 objectEventGfxId;
+    u16 objectEventGfxId;
     u8 class = gApprentices[gSaveBlock2Ptr->apprentices[0].id].facilityClass;
 
     for (i = 0; i < ARRAY_COUNT(gTowerMaleFacilityClasses) && gTowerMaleFacilityClasses[i] != class; i++)
@@ -1223,7 +1223,7 @@ static void SetSavedApprenticeTrainerGfxId(void)
 static void SetPlayerApprenticeTrainerGfxId(void)
 {
     u8 i;
-    u8 objectEventGfxId;
+    u16 objectEventGfxId;
     u8 class = gApprentices[PLAYER_APPRENTICE.id].facilityClass;
 
     for (i = 0; i < ARRAY_COUNT(gTowerMaleFacilityClasses) && gTowerMaleFacilityClasses[i] != class; i++)

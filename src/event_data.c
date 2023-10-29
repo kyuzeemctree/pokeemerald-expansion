@@ -1,11 +1,7 @@
 #include "global.h"
 #include "event_data.h"
 #include "pokedex.h"
-
-#define NUM_SPECIAL_FLAGS (SPECIAL_FLAGS_END - SPECIAL_FLAGS_START + 1)
-#define NUM_TEMP_FLAGS    (TEMP_FLAGS_END - TEMP_FLAGS_START + 1)
-#define NUM_DAILY_FLAGS   (DAILY_FLAGS_END - DAILY_FLAGS_START + 1)
-#define NUM_TEMP_VARS     (TEMP_VARS_END - TEMP_VARS_START + 1)
+#include "qol_field_moves.h" // qol_field_moves
 
 #define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
 #define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
@@ -43,18 +39,19 @@ void InitEventData(void)
 
 void ClearTempFieldEventData(void)
 {
-    memset(gSaveBlock1Ptr->flags + (TEMP_FLAGS_START / 8), 0, TEMP_FLAGS_SIZE);
-    memset(gSaveBlock1Ptr->vars + ((TEMP_VARS_START - VARS_START) * 2), 0, TEMP_VARS_SIZE);
+    memset(&gSaveBlock1Ptr->flags[TEMP_FLAGS_START / 8], 0, TEMP_FLAGS_SIZE);
+    memset(&gSaveBlock1Ptr->vars[TEMP_VARS_START - VARS_START], 0, TEMP_VARS_SIZE);
     FlagClear(FLAG_SYS_ENC_UP_ITEM);
     FlagClear(FLAG_SYS_ENC_DOWN_ITEM);
     FlagClear(FLAG_SYS_USE_STRENGTH);
+    ClearFieldMoveFlags(); // qol_field_moves
     FlagClear(FLAG_SYS_CTRL_OBJ_DELETE);
     FlagClear(FLAG_NURSE_UNION_ROOM_REMINDER);
 }
 
 void ClearDailyFlags(void)
 {
-    memset(gSaveBlock1Ptr->flags + (DAILY_FLAGS_START / 8), 0, DAILY_FLAGS_SIZE);
+    memset(&gSaveBlock1Ptr->flags[DAILY_FLAGS_START / 8], 0, DAILY_FLAGS_SIZE);
 }
 
 void DisableNationalPokedex(void)
@@ -184,6 +181,14 @@ u16 VarGet(u16 id)
     return *ptr;
 }
 
+u16 VarGetIfExist(u16 id)
+{
+    u16 *ptr = GetVarPointer(id);
+    if (!ptr)
+        return 65535;
+    return *ptr;
+}
+
 bool8 VarSet(u16 id, u16 value)
 {
     u16 *ptr = GetVarPointer(id);
@@ -193,7 +198,7 @@ bool8 VarSet(u16 id, u16 value)
     return TRUE;
 }
 
-u8 VarGetObjectEventGraphicsId(u8 id)
+u16 VarGetObjectEventGraphicsId(u8 id)
 {
     return VarGet(VAR_OBJ_GFX_ID_0 + id);
 }
@@ -213,6 +218,14 @@ u8 FlagSet(u16 id)
     u8 *ptr = GetFlagPointer(id);
     if (ptr)
         *ptr |= 1 << (id & 7);
+    return 0;
+}
+
+u8 FlagToggle(u16 id)
+{
+    u8 *ptr = GetFlagPointer(id);
+    if (ptr)
+        *ptr ^= 1 << (id & 7);
     return 0;
 }
 

@@ -313,7 +313,7 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
 {
     u16 species;
     u32 personality, pokerus;
-    u8 i, friendship, language, gameMet, markings, isEventLegal;
+    u8 i, friendship, language, gameMet, markings, isModernFatefulEncounter;
     u16 moves[MAX_MON_MOVES];
     u32 ivs[NUM_STATS];
 
@@ -332,7 +332,7 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
     gameMet = GetMonData(egg, MON_DATA_MET_GAME);
     markings = GetMonData(egg, MON_DATA_MARKINGS);
     pokerus = GetMonData(egg, MON_DATA_POKERUS);
-    isEventLegal = GetMonData(egg, MON_DATA_EVENT_LEGAL);
+    isModernFatefulEncounter = GetMonData(egg, MON_DATA_MODERN_FATEFUL_ENCOUNTER);
 
     CreateMon(temp, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, TRUE, personality, OT_ID_PLAYER_ID, 0);
 
@@ -350,7 +350,7 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
     friendship = 120;
     SetMonData(temp, MON_DATA_FRIENDSHIP, &friendship);
     SetMonData(temp, MON_DATA_POKERUS, &pokerus);
-    SetMonData(temp, MON_DATA_EVENT_LEGAL, &isEventLegal);
+    SetMonData(temp, MON_DATA_MODERN_FATEFUL_ENCOUNTER, &isModernFatefulEncounter);
 
     *egg = *temp;
 }
@@ -369,7 +369,7 @@ static void AddHatchedMonToParty(u8 id)
     SetMonData(mon, MON_DATA_IS_EGG, &isEgg);
 
     species = GetMonData(mon, MON_DATA_SPECIES);
-    GetSpeciesName(name, species);
+    StringCopy(name, GetSpeciesName(species));
     SetMonData(mon, MON_DATA_NICKNAME, name);
 
     species = SpeciesToNationalPokedexNum(species);
@@ -377,9 +377,6 @@ static void AddHatchedMonToParty(u8 id)
     GetSetPokedexFlag(species, FLAG_SET_CAUGHT);
 
     GetMonNickname2(mon, gStringVar1);
-
-    ball = ITEM_POKE_BALL;
-    SetMonData(mon, MON_DATA_POKEBALL, &ball);
 
     // A met level of 0 is interpreted on the summary screen as "hatched at"
     metLevel = 0;
@@ -399,7 +396,7 @@ void ScriptHatchMon(void)
 
 static bool8 _CheckDaycareMonReceivedMail(struct DayCare *daycare, u8 daycareId)
 {
-    u8 nickname[32];
+    u8 nickname[max(32, POKEMON_NAME_BUFFER_SIZE)];
     struct DaycareMon *daycareMon = &daycare->mons[daycareId];
 
     GetBoxMonNickname(&daycareMon->mon, nickname);
@@ -444,9 +441,9 @@ static u8 EggHatchCreateMonSprite(u8 useAlt, u8 state, u8 partyId, u16 *speciesL
         {
             u16 species = GetMonData(mon, MON_DATA_SPECIES);
             u32 pid = GetMonData(mon, MON_DATA_PERSONALITY);
-            HandleLoadSpecialPokePic_DontHandleDeoxys(&gMonFrontPicTable[species],
-                                                      gMonSpritesGfxPtr->sprites.ptr[(useAlt * 2) + B_POSITION_OPPONENT_LEFT],
-                                                      species, pid);
+            HandleLoadSpecialPokePic(TRUE,
+                                     gMonSpritesGfxPtr->sprites.ptr[(useAlt * 2) + B_POSITION_OPPONENT_LEFT],
+                                     species, pid);
             LoadCompressedSpritePalette(GetMonSpritePalStruct(mon));
             *speciesLoc = species;
         }
@@ -930,8 +927,10 @@ u8 GetEggCyclesToSubtract(void)
     {
         if (!GetMonData(&gPlayerParty[i], MON_DATA_SANITY_IS_EGG))
         {
-            u8 ability = GetMonAbility(&gPlayerParty[i]);
-            if (ability == ABILITY_MAGMA_ARMOR || ability == ABILITY_FLAME_BODY)
+            u16 ability = GetMonAbility(&gPlayerParty[i]);
+            if (ability == ABILITY_MAGMA_ARMOR
+             || ability == ABILITY_FLAME_BODY
+             || ability == ABILITY_STEAM_ENGINE)
                 return 2;
         }
     }

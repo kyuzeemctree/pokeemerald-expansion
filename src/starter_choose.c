@@ -112,9 +112,9 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
 
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {
-    SPECIES_TREECKO,
-    SPECIES_TORCHIC,
-    SPECIES_MUDKIP,
+    SPECIES_GROOKEY,
+    SPECIES_CYNDAQUIL,
+    SPECIES_POPPLIO,
 };
 
 static const struct BgTemplate sBgTemplates[3] =
@@ -549,7 +549,7 @@ static void Task_HandleConfirmStarterInput(u8 taskId)
         break;
     case 1:  // NO
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         spriteId = gTasks[taskId].tPkmnSpriteId;
         FreeOamMatrix(gSprites[spriteId].oam.matrixNum);
         FreeAndDestroyMonPicSprite(spriteId);
@@ -577,7 +577,7 @@ static void CreateStarterPokemonLabel(u8 selection)
 
     u16 species = GetStarterPokemon(selection);
     CopyMonCategoryText(SpeciesToNationalPokedexNum(species), categoryText);
-    speciesName = gSpeciesNames[species];
+    speciesName = GetSpeciesName(species);
 
     winTemplate = sWindowTemplate_StarterLabel;
     winTemplate.tilemapLeft = sStarterLabelCoords[selection][0];

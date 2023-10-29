@@ -24,6 +24,7 @@
 #include "task.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "party_menu.h"
 
 /*
  * Move relearner state machine
@@ -679,7 +680,15 @@ static void DoMoveRelearnerMain(void)
         if (!gPaletteFade.active)
         {
             FreeMoveRelearnerResources();
-            SetMainCallback2(CB2_ReturnToField);
+            if (FlagGet(FLAG_PARTY_MOVES))
+			{
+				CB2_ReturnToPartyMenuFromSummaryScreen();
+				FlagClear(FLAG_PARTY_MOVES);
+			}
+			else
+			{
+				SetMainCallback2(CB2_ReturnToField);
+			}
         }
         break;
     case MENU_STATE_FADE_FROM_SUMMARY_SCREEN:
@@ -741,7 +750,7 @@ static void DoMoveRelearnerMain(void)
     case MENU_STATE_WAIT_FOR_A_BUTTON:
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sMoveRelearnerStruct->state = MENU_STATE_FADE_AND_RETURN;
         }
         break;
@@ -786,7 +795,7 @@ static void HandleInput(bool8 showContest)
         if (!(JOY_NEW(DPAD_LEFT | DPAD_RIGHT)) && !GetLRKeysPressed())
             break;
 
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         if (showContest == FALSE)
         {
@@ -805,14 +814,14 @@ static void HandleInput(bool8 showContest)
         MoveRelearnerShowHideHearts(GetCurrentSelectedMove());
         break;
     case LIST_CANCEL:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveScrollArrows();
         sMoveRelearnerStruct->state = MENU_STATE_PRINT_GIVE_UP_PROMPT;
         StringExpandPlaceholders(gStringVar4, gText_MoveRelearnerGiveUp);
         MoveRelearnerPrintMessage(gStringVar4);
         break;
     default:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         RemoveScrollArrows();
         sMoveRelearnerStruct->state = MENU_STATE_PRINT_TEACH_MOVE_PROMPT;
         StringCopy(gStringVar2, gMoveNames[itemId]);

@@ -1,4 +1,3 @@
-CASTFORMGFXDIR := graphics/pokemon/castform
 TILESETGFXDIR := data/tilesets
 FONTGFXDIR := graphics/fonts
 INTERFACEGFXDIR := graphics/interface
@@ -21,45 +20,10 @@ JPCONTESTGFXDIR := graphics/contest/japanese
 POKEDEXGFXDIR := graphics/pokedex
 STARTERGFXDIR := graphics/starter_choose
 NAMINGGFXDIR := graphics/naming_screen
+SPINDAGFXDIR := graphics/spinda_spots
 
-types := normal fight flying poison ground rock bug ghost steel mystery fire water grass electric psychic ice dragon dark
+types := normal fight flying poison ground rock bug ghost steel mystery fire water grass electric psychic ice dragon dark fairy
 contest_types := cool beauty cute smart tough
-
-
-
-### Castform ###
-
-$(CASTFORMGFXDIR)/front.4bpp: $(CASTFORMGFXDIR)/front_normal_form.4bpp \
-                              $(CASTFORMGFXDIR)/front_sunny_form.4bpp \
-                              $(CASTFORMGFXDIR)/front_rainy_form.4bpp \
-                              $(CASTFORMGFXDIR)/front_snowy_form.4bpp
-	@cat $^ >$@
-
-$(CASTFORMGFXDIR)/back.4bpp: $(CASTFORMGFXDIR)/back_normal_form.4bpp \
-                             $(CASTFORMGFXDIR)/back_sunny_form.4bpp \
-                             $(CASTFORMGFXDIR)/back_rainy_form.4bpp \
-                             $(CASTFORMGFXDIR)/back_snowy_form.4bpp
-	@cat $^ >$@
-
-$(CASTFORMGFXDIR)/anim_front.4bpp: $(CASTFORMGFXDIR)/anim_front_normal_form.4bpp \
-                                   $(CASTFORMGFXDIR)/anim_front_sunny_form.4bpp \
-                                   $(CASTFORMGFXDIR)/anim_front_rainy_form.4bpp \
-                                   $(CASTFORMGFXDIR)/anim_front_snowy_form.4bpp
-	@cat $^ >$@
-
-$(CASTFORMGFXDIR)/normal.gbapal: $(CASTFORMGFXDIR)/normal_normal_form.gbapal \
-                                 $(CASTFORMGFXDIR)/normal_sunny_form.gbapal \
-                                 $(CASTFORMGFXDIR)/normal_rainy_form.gbapal \
-                                 $(CASTFORMGFXDIR)/normal_snowy_form.gbapal
-	@cat $^ >$@
-
-$(CASTFORMGFXDIR)/shiny.gbapal: $(CASTFORMGFXDIR)/shiny_normal_form.gbapal \
-                                $(CASTFORMGFXDIR)/shiny_sunny_form.gbapal \
-                                $(CASTFORMGFXDIR)/shiny_rainy_form.gbapal \
-                                $(CASTFORMGFXDIR)/shiny_snowy_form.gbapal
-	@cat $^ >$@
-
-
 
 ### Tilesets ###
 
@@ -680,3 +644,15 @@ $(NAMINGGFXDIR)/cursor_squished.4bpp: %.4bpp: %.png
 
 $(NAMINGGFXDIR)/cursor_filled.4bpp: %.4bpp: %.png
 	$(GFX) $< $@ -num_tiles 5 -Wnum_tiles
+
+$(SPINDAGFXDIR)/spot_0.1bpp: %.1bpp: %.png
+	$(GFX) $< $@ -plain -data_width 2
+
+$(SPINDAGFXDIR)/spot_1.1bpp: %.1bpp: %.png
+	$(GFX) $< $@ -plain -data_width 2
+
+$(SPINDAGFXDIR)/spot_2.1bpp: %.1bpp: %.png
+	$(GFX) $< $@ -plain -data_width 2
+
+$(SPINDAGFXDIR)/spot_3.1bpp: %.1bpp: %.png
+	$(GFX) $< $@ -plain -data_width 2

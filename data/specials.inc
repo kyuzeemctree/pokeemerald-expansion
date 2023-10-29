@@ -111,8 +111,8 @@ gSpecials::
 	def_special Script_GetCurrentMauvilleMan
 	def_special HasBardSongBeenChanged
 	def_special SaveBardSongLyrics
-	def_special GetHipsterSpokenFlag
-	def_special SetHipsterSpokenFlag
+	def_special HasHipsterTaughtWord
+	def_special SetHipsterTaughtWord
 	def_special HipsterTryTeachWord
 	def_special PlayBardSong
 	def_special SetMauvilleOldManObjEventGfx
@@ -298,10 +298,6 @@ gSpecials::
 	def_special BufferEReaderTrainerName
 	def_special GetSlotMachineId
 	def_special GetPlayerFacingDirection
-	def_special FoundAbandonedShipRoom1Key
-	def_special FoundAbandonedShipRoom2Key
-	def_special FoundAbandonedShipRoom4Key
-	def_special FoundAbandonedShipRoom6Key
 	def_special LeadMonHasEffortRibbon
 	def_special GiveLeadMonEffortRibbon
 	def_special Special_AreLeadMonEVsMaxedOut
@@ -486,11 +482,10 @@ gSpecials::
 	def_special CloseBattleFrontierTutorWindow
 	def_special ScrollableMultichoice_RedrawPersistentMenu
 	def_special ChooseMonForMoveTutor
-	def_special GetBattleFrontierTutorMoveIndex
 	def_special ScrollableMultichoice_ClosePersistentMenu
 	def_special DoDeoxysRockInteraction
 	def_special SetDeoxysRockPalette
-	def_special CreateEventLegalEnemyMon
+	def_special CreateEnemyEventMon
 	def_special StartMirageTowerDisintegration
 	def_special StartMirageTowerShake
 	def_special StartMirageTowerFossilFallAndSink
@@ -535,3 +530,10 @@ gSpecials::
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
+	def_special SetTotemBoost
+	def_special TrySpecialOverworldEvo
+    //Start Pokevial Branch
+    def_special PokevialGetDose
+    def_special PokevialGetSize
+    def_special PokevialRefill
+    //End Pokevial Branch

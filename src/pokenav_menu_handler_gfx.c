@@ -470,14 +470,14 @@ static u32 LoopedTask_OpenMenu(s32 state)
             return LT_PAUSE;
         DecompressAndCopyTileDataToVram(2, sPokenavDeviceBgTiles, 0, 0, 0);
         DecompressAndCopyTileDataToVram(2, sPokenavDeviceBgTilemap, 0, 0, 1);
-        CopyPaletteIntoBufferUnfaded(sPokenavDeviceBgPal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(sPokenavDeviceBgPal, BG_PLTT_ID(2), sizeof(sPokenavDeviceBgPal));
         return LT_INC_AND_PAUSE;
     case 2:
         if (FreeTempTileDataBuffersIfPossible())
             return LT_PAUSE;
         DecompressAndCopyTileDataToVram(3, sPokenavBgDotsTiles, 0, 0, 0);
         DecompressAndCopyTileDataToVram(3, sPokenavBgDotsTilemap, 0, 0, 1);
-        CopyPaletteIntoBufferUnfaded(sPokenavBgDotsPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(sPokenavBgDotsPal, BG_PLTT_ID(3), sizeof(sPokenavBgDotsPal));
         if (GetPokenavMenuType() == POKENAV_MENU_TYPE_CONDITION || GetPokenavMenuType() == POKENAV_MENU_TYPE_CONDITION_SEARCH)
             ChangeBgDotsColorToPurple();
         return LT_INC_AND_PAUSE;
@@ -560,7 +560,7 @@ static u32 LoopedTask_MoveMenuCursor(s32 state)
         SetMenuOptionGlow();
         StartOptionAnimations_CursorMoved();
         PrintCurrentOptionDescription();
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 1:
         if (AreMenuOptionSpritesMoving())
@@ -580,7 +580,7 @@ static u32 LoopedTask_OpenConditionMenu(s32 state)
         ResetBldCnt();
         StartOptionAnimations_Exit();
         HideMainOrSubMenuLeftHeader(POKENAV_GFX_MAIN_MENU, FALSE);
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 1:
         if (AreMenuOptionSpritesMoving())
@@ -656,7 +656,7 @@ static u32 LoopedTask_OpenConditionSearchMenu(s32 state)
     case 0:
         ResetBldCnt();
         StartOptionAnimations_Exit();
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 1:
         if (AreMenuOptionSpritesMoving())
@@ -735,7 +735,7 @@ static u32 LoopedTask_ReShowDescription(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PrintCurrentOptionDescription();
         return LT_INC_AND_PAUSE;
     case 1:
@@ -772,7 +772,7 @@ static u32 LoopedTask_OpenPokenavFeature(s32 state)
             HideMainOrSubMenuLeftHeader(POKENAV_GFX_MAIN_MENU, FALSE);
             break;
         }
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         return LT_INC_AND_PAUSE;
     case 2:
         if (AreMenuOptionSpritesMoving())
@@ -1222,7 +1222,7 @@ static void PrintCurrentOptionDescription(void)
 {
     struct Pokenav_MenuGfx * gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MENU_GFX);
     int menuItem = GetCurrentMenuItemId();
-    const u8 * desc = sPageDescriptions[menuItem];
+    const u8 *desc = sPageDescriptions[menuItem];
     u32 width = GetStringWidth(FONT_NORMAL, desc, -1);
     FillWindowPixelBuffer(gfx->optionDescWindowId, PIXEL_FILL(6));
     AddTextPrinterParameterized3(gfx->optionDescWindowId, FONT_NORMAL, (192 - width) / 2, 1, sOptionDescTextColors, 0, desc);
@@ -1233,7 +1233,7 @@ static void PrintCurrentOptionDescription(void)
 static void PrintNoRibbonWinners(void)
 {
     struct Pokenav_MenuGfx * gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MENU_GFX);
-    const u8 * s = gText_NoRibbonWinners;
+    const u8 *s = gText_NoRibbonWinners;
     u32 width = GetStringWidth(FONT_NORMAL, s, -1);
     FillWindowPixelBuffer(gfx->optionDescWindowId, PIXEL_FILL(6));
     AddTextPrinterParameterized3(gfx->optionDescWindowId, FONT_NORMAL, (192 - width) / 2, 1, sOptionDescTextColors2, 0, s);

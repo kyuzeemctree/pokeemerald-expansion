@@ -22,7 +22,7 @@ VerdanturfTown_Mart_Pokemart:
 	.2byte ITEM_BURN_HEAL
 	.2byte ITEM_ICE_HEAL
 	.2byte ITEM_REPEL
-	.2byte ITEM_X_SPECIAL
+	.2byte ITEM_X_SP_ATK
 	.2byte ITEM_FLUFFY_TAIL
 	.2byte ITEM_NONE
 	release
@@ -40,21 +40,21 @@ VerdanturfTown_Mart_EventScript_Lass::
 	msgbox VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon, MSGBOX_NPC
 	end
 
-VerdanturfTown_Mart_Text_XSpecialIsCrucial:
-	.string "For any POKéMON match, X SPECIAL\n"
+VerdanturfTown_Mart_Text_XSpecialIsCrucial: @ 82025D5
+	.string "For any pokémon match, X Special\n"
 	.string "is crucial.\p"
 	.string "It jacks up the power of some moves\n"
 	.string "even though it's only for one battle.$"
 
 VerdanturfTown_Mart_Text_NoStrategyGuidesForBattleTent:
 	.string "They don't seem to sell any winning\n"
-	.string "strategy guides for the BATTLE TENT…\p"
+	.string "strategy guides for the Battle Tent…\p"
 	.string "It seems one must rely on one's\n"
 	.string "own wits after all…$"
 
-VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon:
-	.string "The NEST BALL works better on\n"
-	.string "weakened POKéMON.\p"
-	.string "VERDANTURF is the only place you can\n"
+VerdanturfTown_Mart_Text_NestBallOnWeakenedPokemon: @ 82026C9
+	.string "The Nest Ball works better on\n"
+	.string "weakened pokémon.\p"
+	.string "Verdanturf is the only place you can\n"
 	.string "buy it.$"
 

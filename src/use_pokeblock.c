@@ -88,7 +88,7 @@ struct UsePokeblockMenu
 {
     u32 unused;
     u16 partyPalettes[PARTY_SIZE][0x40];
-    u8 partySheets[NUM_SELECTIONS_LOADED][0x2000];
+    u8 partySheets[NUM_SELECTIONS_LOADED][MON_PIC_SIZE * MAX_MON_PIC_FRAMES];
     u8 unusedBuffer[0x1000];
     u8 tilemapBuffer[BG_SCREEN_SIZE + 2];
     u8 selectionIconSpriteIds[PARTY_SIZE + 1];
@@ -173,8 +173,8 @@ static EWRAM_DATA struct UsePokeblockMenu *sMenu = NULL;
 
 static const u32 sMonFrame_Pal[] = INCBIN_U32("graphics/pokeblock/use_screen/mon_frame_pal.bin");
 static const u32 sMonFrame_Gfx[] = INCBIN_U32("graphics/pokeblock/use_screen/mon_frame.4bpp");
-static const u32 sMonFrame_Tilemap[] = INCBIN_U32("graphics/pokeblock/use_screen/mon_frame.bin");
-static const u32 sGraphData_Tilemap[] = INCBIN_U32("graphics/pokeblock/use_screen/graph_data.bin");
+static const u32 sMonFrame_Tilemap[] = INCBIN_U32("graphics/pokeblock/use_screen/mon_frame.bin.lz");
+static const u32 sGraphData_Tilemap[] = INCBIN_U32("graphics/pokeblock/use_screen/graph_data.bin.lz");
 
 // The condition/flavors aren't listed in their normal order in this file, they're listed as shown on the graph going counter-clockwise
 // Normally they would go Cool/Spicy, Beauty/Dry, Cute/Sweet, Smart/Bitter, Tough/Sour (also graph order, but clockwise)
@@ -613,26 +613,26 @@ static void UsePokeblockMenu(void)
     case STATE_HANDLE_INPUT:
         if (JOY_HELD(DPAD_UP))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             UpdateSelection(TRUE);
             DestroyConditionSparkleSprites(sMenu->sparkles);
             sInfo->mainState = STATE_UPDATE_SELECTION;
         }
         else if (JOY_HELD(DPAD_DOWN))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             UpdateSelection(FALSE);
             DestroyConditionSparkleSprites(sMenu->sparkles);
             sInfo->mainState = STATE_UPDATE_SELECTION;
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             sInfo->mainState = STATE_CLOSE;
         }
         else if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
 
             // If last item, selected Cancel. Otherwise selected mon
             if (sMenu->info.curSelection == sMenu->info.numSelections - 1)
@@ -889,7 +889,7 @@ static s8 HandleAskUsePokeblockInput(void)
         break;
     case MENU_B_PRESSED:
     case 1: // NO
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         rbox_fill_rectangle(2);
         ClearWindowTilemap(2);
         break;
@@ -1388,7 +1388,7 @@ static void UpdateMonInfoText(u16 loadId, bool8 firstPrint)
     {
         AddTextPrinterParameterized(WIN_NAME, FONT_NORMAL, sMenu->monNameStrings[loadId], 0, 1, 0, NULL);
         partyIndex = GetPartyIdFromSelectionId(sMenu->info.curSelection);
-        nature = GetNature(&gPlayerParty[partyIndex]);
+        nature = GetNature(&gPlayerParty[partyIndex], FALSE);
         str = StringCopy(sMenu->info.natureText, gText_NatureSlash);
         str = StringCopy(str, gNatureNamePointers[nature]);
         AddTextPrinterParameterized3(WIN_NATURE, FONT_NORMAL, 2, 1, sNatureTextColors, 0, sMenu->info.natureText);

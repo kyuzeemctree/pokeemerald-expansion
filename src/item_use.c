@@ -1,6 +1,7 @@
 #include "global.h"
 #include "item_use.h"
 #include "battle.h"
+#include "battle_anim.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
 #include "berry.h"
@@ -17,6 +18,7 @@
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
 #include "field_weather.h"
+#include "fldeff.h"
 #include "item.h"
 #include "item_menu.h"
 #include "item_use.h"
@@ -36,11 +38,20 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
+#include "tm_case.h"
 #include "constants/event_bg.h"
 #include "constants/event_objects.h"
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "tv.h" //Pokevial Branch
+#include "pokevial.h" //Pokevial Branch
+// Start qol_field_moves
+#include "qol_field_moves.h"
+#include "field_control_avatar.h"
+#include "region_map.h"
+#include "fldeff.h"
+// End qol_field_moves
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -66,10 +77,29 @@ static void Task_ShowTMHMContainedMessage(u8);
 static void UseTMHMYesNo(u8);
 static void UseTMHM(u8);
 static void Task_StartUseRepel(u8);
+static void Task_StartUseLure(u8 taskId);
 static void Task_UseRepel(u8);
+static void Task_UseLure(u8 taskId);
 static void Task_CloseCantUseKeyItemMessage(u8);
 static void SetDistanceOfClosestHiddenItem(u8, s16, s16);
 static void CB2_OpenPokeblockFromBag(void);
+static void ItemUseOnFieldCB_Honey(u8 taskId);
+static bool32 CannotUseBagBattleItem(u16 itemId);
+
+//Start Pokevial Branch
+static void UsePokevialFieldYes(u8 taskId);
+static void Task_UsePokevialFieldYes(u8 taskId);
+static void UsePokevialFieldNo(u8 taskId);
+static void UsePokevialYesNo(u8);
+static void UsePokevialYes(u8);
+void ItemUseOutOfBattle_Pokevial(u8);
+//End Pokevial Branch
+// Start qol_field_moves
+static void ItemUseOnFieldCB_TeleportTool(u8);
+static void SetUpFieldAndUseTeleportTool(u8 taskId);
+static void UseTeleportToolYesNo(u8 taskId);
+static void AskPlayerTeleportTool(u8 taskId);
+// End qol_field_moves
 
 // EWRAM variables
 EWRAM_DATA static void(*sItemUseOnFieldCB)(u8 taskId) = NULL;
@@ -81,9 +111,10 @@ EWRAM_DATA static void(*sItemUseOnFieldCB)(u8 taskId) = NULL;
 // Never occurs in vanilla, but can occur with improperly created items
 static const MainCallback sItemUseCallbacks[] =
 {
-    [ITEM_USE_PARTY_MENU - 1]  = CB2_ShowPartyMenuForItemUse,
-    [ITEM_USE_FIELD - 1]       = CB2_ReturnToField,
-    [ITEM_USE_PBLOCK_CASE - 1] = NULL,
+    [ITEM_USE_PARTY_MENU - 1]       = CB2_ShowPartyMenuForItemUse,
+    [ITEM_USE_FIELD - 1]            = CB2_ReturnToField,
+    [ITEM_USE_PBLOCK_CASE - 1]      = NULL,
+    [ITEM_USE_PARTY_MENU_MOVES - 1] = CB2_ShowPartyMenuForItemUse,
 };
 
 static const u8 sClockwiseDirections[] = {DIR_NORTH, DIR_EAST, DIR_SOUTH, DIR_WEST};
@@ -98,7 +129,7 @@ static const struct YesNoFuncTable sUseTMHMYesNoFuncTable =
 static void SetUpItemUseCallback(u8 taskId)
 {
     u8 type;
-    if (gSpecialVar_ItemId == ITEM_ENIGMA_BERRY)
+    if (gSpecialVar_ItemId == ITEM_ENIGMA_BERRY_E_READER)
         type = gTasks[taskId].tEnigmaBerryType - 1;
     else
         type = ItemId_GetType(gSpecialVar_ItemId) - 1;
@@ -191,6 +222,33 @@ void ItemUseOutOfBattle_Mail(u8 taskId)
 {
     gBagMenu->newScreenCallback = CB2_CheckMail;
     Task_FadeAndCloseBagMenu(taskId);
+}
+
+STATIC_ASSERT(I_EXP_SHARE_ITEM < GEN_6 || I_EXP_SHARE_FLAG > TEMP_FLAGS_END, YouNeedToSetAFlagToUseGen6ExpShare);
+
+void ItemUseOutOfBattle_ExpShare(u8 taskId)
+{
+#if I_EXP_SHARE_ITEM >= GEN_6
+    if (IsGen6ExpShareEnabled())
+    {
+        PlaySE(SE_PC_OFF);
+        if (!gTasks[taskId].data[2]) // to account for pressing select in the overworld
+            DisplayItemMessageOnField(taskId, gText_ExpShareOff, Task_CloseCantUseKeyItemMessage);
+        else
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_ExpShareOff, CloseItemMessage);
+    }
+    else
+    {
+        PlaySE(SE_EXP_MAX);
+        if (!gTasks[taskId].data[2]) // to account for pressing select in the overworld
+            DisplayItemMessageOnField(taskId, gText_ExpShareOn, Task_CloseCantUseKeyItemMessage);
+        else
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_ExpShareOn, CloseItemMessage);
+    }
+    FlagToggle(I_EXP_SHARE_FLAG);
+#else
+    DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+#endif
 }
 
 void ItemUseOutOfBattle_Bike(u8 taskId)
@@ -375,7 +433,7 @@ static bool8 ItemfinderCheckForHiddenItems(const struct MapEvents *events, u8 ta
 static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, s16 y)
 {
     u8 bgEventCount = events->bgEventCount;
-    struct BgEvent *bgEvent = events->bgEvents;
+    const struct BgEvent *bgEvent = events->bgEvents;
     int i;
 
     for (i = 0; i < bgEventCount; i++)
@@ -391,7 +449,7 @@ static bool8 IsHiddenItemPresentAtCoords(const struct MapEvents *events, s16 x, 
     return FALSE;
 }
 
-static bool8 IsHiddenItemPresentInConnection(struct MapConnection *connection, int x, int y)
+static bool8 IsHiddenItemPresentInConnection(const struct MapConnection *connection, int x, int y)
 {
 
     u16 localX, localY;
@@ -456,7 +514,7 @@ static void CheckForHiddenItemsInMapConnection(u8 taskId)
              || var2 > y
              || y >= height)
             {
-                struct MapConnection *conn = GetMapConnectionAtPos(x, y);
+                const struct MapConnection *conn = GetMapConnectionAtPos(x, y);
                 if (conn && IsHiddenItemPresentInConnection(conn, x, y) == TRUE)
                     SetDistanceOfClosestHiddenItem(taskId, x - playerX, y - playerY);
             }
@@ -749,6 +807,18 @@ void ItemUseOutOfBattle_Medicine(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+void ItemUseOutOfBattle_AbilityCapsule(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_AbilityCapsule;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_AbilityPatch(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_AbilityPatch;
+    SetUpItemUseCallback(taskId);
+}
+
 void ItemUseOutOfBattle_ReduceEV(u8 taskId)
 {
     gItemUseCB = ItemUseCB_ReduceEV;
@@ -781,7 +851,7 @@ void ItemUseOutOfBattle_RareCandy(u8 taskId)
 
 void ItemUseOutOfBattle_TMHM(u8 taskId)
 {
-    if (gSpecialVar_ItemId >= ITEM_HM01_CUT)
+    if (gSpecialVar_ItemId >= ITEM_HM01)
         DisplayItemMessage(taskId, FONT_NORMAL, gText_BootedUpHM, BootUpSoundTMHM); // HM
     else
         DisplayItemMessage(taskId, FONT_NORMAL, gText_BootedUpTM, BootUpSoundTMHM); // TM
@@ -814,6 +884,42 @@ static void UseTMHM(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+
+static void CB2_OpenTMCaseOnField(void)
+{
+    InitTMCase(0, CB2_BagMenuFromStartMenu, 0);
+}
+
+static void Task_InitTMCaseFromField(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        // sub_80A1184();
+        InitTMCase(0, CB2_ReturnToField, 1);
+        DestroyTask(taskId);
+    }
+}
+
+void ItemUseOutOfBattle_TmCase(u8 taskId)
+{
+    if (MenuHelpers_IsLinkActive() == TRUE) // link func
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+    else if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
+    {
+        gBagMenu->newScreenCallback = CB2_OpenTMCaseOnField;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else
+    {
+        gFieldCallback = FieldCB_ReturnToFieldNoScript; //FieldCB_ReturnToFieldNoScript
+        FadeScreen(FADE_TO_BLACK, 0);
+        gTasks[taskId].func = Task_InitTMCaseFromField;
+    }
+}
+
 static void RemoveUsedItem(void)
 {
     RemoveBagItem(gSpecialVar_ItemId, 1);
@@ -833,7 +939,7 @@ static void RemoveUsedItem(void)
 
 void ItemUseOutOfBattle_Repel(u8 taskId)
 {
-    if (VarGet(VAR_REPEL_STEP_COUNT) == 0)
+    if (REPEL_STEP_COUNT == 0)
         gTasks[taskId].func = Task_StartUseRepel;
     else if (!InBattlePyramid())
         DisplayItemMessage(taskId, FONT_NORMAL, gText_RepelEffectsLingered, CloseItemMessage);
@@ -858,12 +964,66 @@ static void Task_UseRepel(u8 taskId)
     if (!IsSEPlaying())
     {
         VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId));
+    #if VAR_LAST_REPEL_LURE_USED != 0
+        VarSet(VAR_LAST_REPEL_LURE_USED, gSpecialVar_ItemId);
+    #endif
         RemoveUsedItem();
         if (!InBattlePyramid())
             DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
+}
+void HandleUseExpiredRepel(struct ScriptContext *ctx)
+{
+#if VAR_LAST_REPEL_LURE_USED != 0
+    VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(VarGet(VAR_LAST_REPEL_LURE_USED)));
+#endif
+}
+
+void ItemUseOutOfBattle_Lure(u8 taskId)
+{
+    if (LURE_STEP_COUNT == 0)
+        gTasks[taskId].func = Task_StartUseLure;
+    else if (!InBattlePyramid())
+        DisplayItemMessage(taskId, FONT_NORMAL, gText_LureEffectsLingered, CloseItemMessage);
+    else
+        DisplayItemMessageInBattlePyramid(taskId, gText_LureEffectsLingered, Task_CloseBattlePyramidBagMessage);
+}
+
+static void Task_StartUseLure(u8 taskId)
+{
+    s16* data = gTasks[taskId].data;
+
+    if (++data[8] > 7)
+    {
+        data[8] = 0;
+        PlaySE(SE_REPEL);
+        gTasks[taskId].func = Task_UseLure;
+    }
+}
+
+static void Task_UseLure(u8 taskId)
+{
+    if (!IsSEPlaying())
+    {
+        VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(gSpecialVar_ItemId) | REPEL_LURE_MASK);
+    #if VAR_LAST_REPEL_LURE_USED != 0
+        VarSet(VAR_LAST_REPEL_LURE_USED, gSpecialVar_ItemId);
+    #endif
+        RemoveUsedItem();
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
+    }
+}
+
+void HandleUseExpiredLure(struct ScriptContext *ctx)
+{
+#if VAR_LAST_REPEL_LURE_USED != 0
+    VarSet(VAR_REPEL_STEP_COUNT, ItemId_GetHoldEffectParam(VarGet(VAR_LAST_REPEL_LURE_USED)) | REPEL_LURE_MASK);
+#endif
 }
 
 static void Task_UsedBlackWhiteFlute(u8 taskId)
@@ -907,7 +1067,12 @@ void Task_UseDigEscapeRopeOnField(u8 taskId)
 static void ItemUseOnFieldCB_EscapeRope(u8 taskId)
 {
     Overworld_ResetStateAfterDigEscRope();
-    RemoveUsedItem();
+    #if I_KEY_ESCAPE_ROPE < GEN_8
+        RemoveUsedItem();
+    #else
+        CopyItemName(gSpecialVar_ItemId, gStringVar2);
+        StringExpandPlaceholders(gStringVar4, gText_PlayerUsedVar2);
+    #endif
     gTasks[taskId].data[0] = 0;
     DisplayItemMessageOnField(taskId, gStringVar4, Task_UseDigEscapeRopeOnField);
 }
@@ -939,22 +1104,70 @@ void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+static u32 GetBallThrowableState(void)
+{
+    if (IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+     && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
+        return BALL_THROW_UNABLE_TWO_MONS;
+    else if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
+        return BALL_THROW_UNABLE_NO_ROOM;
+#if B_SEMI_INVULNERABLE_CATCH >= GEN_4
+    else if (gStatuses3[GetCatchingBattler()] & STATUS3_SEMI_INVULNERABLE)
+        return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
+#endif
+    else if (FlagGet(B_FLAG_NO_CATCHING))
+        return BALL_THROW_UNABLE_DISABLED_FLAG;
+
+    return BALL_THROW_ABLE;
+}
+
+bool32 CanThrowBall(void)
+{
+    return (GetBallThrowableState() == BALL_THROW_ABLE);
+}
+
+static const u8 sText_CantThrowPokeBall_TwoMons[] = _("Cannot throw a ball!\nThere are two pokémon out there!\p");
+static const u8 sText_CantThrowPokeBall_SemiInvulnerable[] = _("Cannot throw a ball!\nThere's no pokémon in sight!\p");
+static const u8 sText_CantThrowPokeBall_Disabled[] = _("POKé BALLS cannot be used\nright now!\p");
 void ItemUseInBattle_PokeBall(u8 taskId)
 {
-    if (IsPlayerPartyAndPokemonStorageFull() == FALSE) // have room for mon?
+    switch (GetBallThrowableState())
     {
+    case BALL_THROW_ABLE:
+    default:
         RemoveBagItem(gSpecialVar_ItemId, 1);
         if (!InBattlePyramid())
             Task_FadeAndCloseBagMenu(taskId);
         else
             CloseBattlePyramidBag(taskId);
+        break;
+    case BALL_THROW_UNABLE_TWO_MONS:
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_TwoMons, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_TwoMons, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_NO_ROOM:
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BoxFull, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, gText_BoxFull, Task_CloseBattlePyramidBagMessage);
+        break;
+#if B_SEMI_INVULNERABLE_CATCH >= GEN_4
+    case BALL_THROW_UNABLE_SEMI_INVULNERABLE:
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_SemiInvulnerable, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_SemiInvulnerable, Task_CloseBattlePyramidBagMessage);
+        break;
+#endif
+    case BALL_THROW_UNABLE_DISABLED_FLAG:
+        if (!InBattlePyramid())
+            DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_Disabled, CloseItemMessage);
+        else
+            DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_Disabled, Task_CloseBattlePyramidBagMessage);
+        break;
     }
-    else if (!InBattlePyramid())
-    {
-        DisplayItemMessage(taskId, FONT_NORMAL, gText_BoxFull, CloseItemMessage);
-    }
-    else
-        DisplayItemMessageInBattlePyramid(taskId, gText_BoxFull, Task_CloseBattlePyramidBagMessage);
 }
 
 static void Task_CloseStatIncreaseMessage(u8 taskId)
@@ -981,25 +1194,6 @@ static void Task_UseStatIncreaseItem(u8 taskId)
     }
 }
 
-// e.g. X Attack, Guard Spec
-void ItemUseInBattle_StatIncrease(u8 taskId)
-{
-    u16 partyId = gBattlerPartyIndexes[gBattlerInMenuId];
-
-    if (ExecuteTableBasedItemEffect(&gPlayerParty[partyId], gSpecialVar_ItemId, partyId, 0) != FALSE)
-    {
-        if (!InBattlePyramid())
-            DisplayItemMessage(taskId, FONT_NORMAL, gText_WontHaveEffect, CloseItemMessage);
-        else
-            DisplayItemMessageInBattlePyramid(taskId, gText_WontHaveEffect, Task_CloseBattlePyramidBagMessage);
-    }
-    else
-    {
-        gTasks[taskId].func = Task_UseStatIncreaseItem;
-        gTasks[taskId].data[8] = 0;
-    }
-}
-
 static void ItemUseInBattle_ShowPartyMenu(u8 taskId)
 {
     if (!InBattlePyramid())
@@ -1014,40 +1208,119 @@ static void ItemUseInBattle_ShowPartyMenu(u8 taskId)
     }
 }
 
-void ItemUseInBattle_Medicine(u8 taskId)
+void ItemUseInBattle_PartyMenu(u8 taskId)
 {
-    gItemUseCB = ItemUseCB_Medicine;
+    gItemUseCB = ItemUseCB_BattleScript;
     ItemUseInBattle_ShowPartyMenu(taskId);
 }
 
-// Unused. Sacred Ash cannot be used in battle
-void ItemUseInBattle_SacredAsh(u8 taskId)
+void ItemUseInBattle_PartyMenuChooseMove(u8 taskId)
 {
-    gItemUseCB = ItemUseCB_SacredAsh;
+    gItemUseCB = ItemUseCB_BattleChooseMove;
     ItemUseInBattle_ShowPartyMenu(taskId);
 }
 
-void ItemUseInBattle_PPRecovery(u8 taskId)
+// Returns whether an item can be used in battle and sets the fail text.
+static bool32 CannotUseBagBattleItem(u16 itemId)
 {
-    gItemUseCB = ItemUseCB_PPRecovery;
-    ItemUseInBattle_ShowPartyMenu(taskId);
-}
+    u8 cannotUse = FALSE;
+    u16 battleUsage = ItemId_GetBattleUsage(itemId);
+    const u8* failStr = NULL;
 
-// Fluffy Tail / Poke Doll
-void ItemUseInBattle_Escape(u8 taskId)
-{
-
-    if((gBattleTypeFlags & BATTLE_TYPE_TRAINER) == FALSE)
+    // Embargo Check
+    if ((gPartyMenu.slotId == 0 && gStatuses3[B_POSITION_PLAYER_LEFT] & STATUS3_EMBARGO)
+        || (gPartyMenu.slotId == 1 && gStatuses3[B_POSITION_PLAYER_RIGHT] & STATUS3_EMBARGO))
     {
-        RemoveUsedItem();
+        return TRUE;
+    }
+    // X-Items
+    if (battleUsage == EFFECT_ITEM_INCREASE_STAT
+        && gBattleMons[gBattlerInMenuId].statStages[gItemEffectTable[itemId][1]] == MAX_STAT_STAGE)
+    {
+        cannotUse++;
+    }
+    // Dire Hit
+    if (battleUsage == EFFECT_ITEM_SET_FOCUS_ENERGY
+        && (gBattleMons[gBattlerInMenuId].status2 & STATUS2_FOCUS_ENERGY))
+    {
+        cannotUse++;
+    }
+    // Guard Spec
+    if (battleUsage == EFFECT_ITEM_SET_MIST
+        && gSideStatuses[GetBattlerSide(gBattlerInMenuId)] & SIDE_STATUS_MIST)
+    {
+        cannotUse++;
+    }
+    // Escape Items
+    if (battleUsage == EFFECT_ITEM_ESCAPE
+        && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        cannotUse++;
+    }
+    // Poke Balls
+    if (battleUsage == EFFECT_ITEM_THROW_BALL)
+    {
+        switch (GetBallThrowableState())
+        {
+            case BALL_THROW_UNABLE_TWO_MONS:
+                failStr = sText_CantThrowPokeBall_TwoMons;
+                cannotUse++;
+                break;
+            case BALL_THROW_UNABLE_NO_ROOM:
+                failStr = gText_BoxFull;
+                cannotUse++;
+                break;
+        #if B_SEMI_INVULNERABLE_CATCH >= GEN_4
+            case BALL_THROW_UNABLE_SEMI_INVULNERABLE:
+                failStr = sText_CantThrowPokeBall_SemiInvulnerable;
+                cannotUse++;
+                break;
+        #endif
+            case BALL_THROW_UNABLE_DISABLED_FLAG:
+                failStr = sText_CantThrowPokeBall_Disabled;
+                cannotUse++;
+                break;
+        }
+    }
+    // Max Mushrooms
+    if (battleUsage == EFFECT_ITEM_INCREASE_ALL_STATS)
+    {
+        u32 i;
+        for (i = 1; i < NUM_STATS; i++)
+        {
+            if (CompareStat(gBattlerInMenuId, i, MAX_STAT_STAGE, CMP_EQUAL))
+            {
+                cannotUse++;
+                break;
+            }
+        }
+    }
+
+    if (failStr != NULL)
+        StringExpandPlaceholders(gStringVar4, failStr);
+    else
+        StringExpandPlaceholders(gStringVar4, gText_WontHaveEffect);
+    return cannotUse;
+}
+
+void ItemUseInBattle_BagMenu(u8 taskId)
+{
+    if (CannotUseBagBattleItem(gSpecialVar_ItemId))
+    {
         if (!InBattlePyramid())
-            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, Task_FadeAndCloseBagMenu);
+            DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
         else
-            DisplayItemMessageInBattlePyramid(taskId, gStringVar4, CloseBattlePyramidBag);
+            DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
     else
     {
-        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+        PlaySE(SE_RG_BAG_CURSOR);
+        RemoveUsedItem();
+        ScheduleBgCopyTilemapToVram(2);
+        if (!InBattlePyramid())
+            gTasks[taskId].func = Task_FadeAndCloseBagMenu;
+        else
+            gTasks[taskId].func = CloseBattlePyramidBag;
     }
 }
 
@@ -1059,7 +1332,7 @@ void ItemUseOutOfBattle_EnigmaBerry(u8 taskId)
     case ITEM_EFFECT_CURE_POISON:
     case ITEM_EFFECT_CURE_SLEEP:
     case ITEM_EFFECT_CURE_BURN:
-    case ITEM_EFFECT_CURE_FREEZE:
+    case ITEM_EFFECT_CURE_FREEZE_FROSTBITE:
     case ITEM_EFFECT_CURE_PARALYSIS:
     case ITEM_EFFECT_CURE_ALL_STATUS:
     case ITEM_EFFECT_ATK_EV:
@@ -1095,31 +1368,41 @@ void ItemUseOutOfBattle_EnigmaBerry(u8 taskId)
     }
 }
 
-void ItemUseInBattle_EnigmaBerry(u8 taskId)
+void ItemUseOutOfBattle_FormChange(u8 taskId)
 {
-    switch (GetItemEffectType(gSpecialVar_ItemId))
-    {
-    case ITEM_EFFECT_X_ITEM:
-        ItemUseInBattle_StatIncrease(taskId);
-        break;
-    case ITEM_EFFECT_HEAL_HP:
-    case ITEM_EFFECT_CURE_POISON:
-    case ITEM_EFFECT_CURE_SLEEP:
-    case ITEM_EFFECT_CURE_BURN:
-    case ITEM_EFFECT_CURE_FREEZE:
-    case ITEM_EFFECT_CURE_PARALYSIS:
-    case ITEM_EFFECT_CURE_ALL_STATUS:
-    case ITEM_EFFECT_CURE_CONFUSION:
-    case ITEM_EFFECT_CURE_INFATUATION:
-        ItemUseInBattle_Medicine(taskId);
-        break;
-    case ITEM_EFFECT_HEAL_PP:
-        ItemUseInBattle_PPRecovery(taskId);
-        break;
-    default:
-        ItemUseOutOfBattle_CannotUse(taskId);
-        break;
-    }
+    gItemUseCB = ItemUseCB_FormChange;
+    gTasks[taskId].data[0] = FALSE;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_FormChange_ConsumedOnUse(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_FormChange_ConsumedOnUse;
+    gTasks[taskId].data[0] = TRUE;
+    SetUpItemUseCallback(taskId);
+}
+
+void Task_UseHoneyOnField(u8 taskId)
+{
+    //ResetInitialPlayerAvatarState();
+    StartSweetScentFieldEffect();
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_Honey(u8 taskId)
+{
+    Overworld_ResetStateAfterDigEscRope();
+    RemoveUsedItem();
+    gTasks[taskId].data[0] = 0;
+    DisplayItemMessageOnField(taskId, gStringVar4, Task_UseHoneyOnField);
+}
+
+void ItemUseOutOfBattle_Honey(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_Honey;
+    gFieldCallback = FieldCB_UseItemOnField;
+    gBagMenu->newScreenCallback = CB2_ReturnToField;
+    Task_FadeAndCloseBagMenu(taskId);
 }
 
 void ItemUseOutOfBattle_CannotUse(u8 taskId)
@@ -1127,4 +1410,308 @@ void ItemUseOutOfBattle_CannotUse(u8 taskId)
     DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
 }
 
+void ItemUseOutOfBattle_Mints(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_Mints;
+    SetUpItemUseCallback(taskId);
+}
+
+//Start Pokevial Branch
+static const struct YesNoFuncTable sUsePokevialYesNoFuncTable =
+{
+    .yesFunc = UsePokevialYes,
+    .noFunc = CloseItemMessage,
+};
+
+static const struct YesNoFuncTable sYesNoTable_PokevialFieldFuncTable =
+{
+    .yesFunc = UsePokevialFieldYes,
+    .noFunc = UsePokevialFieldNo,
+};
+
+static void UsePokevialYesNo(u8 taskId)
+{
+    BagMenu_YesNo(taskId, ITEMWIN_YESNO_HIGH, &sUsePokevialYesNoFuncTable);
+}
+
+static void UsePokevialFieldYesNo(u8 taskId)
+{
+    DisplayYesNoMenuDefaultYes();
+    DoYesNoFuncWithChoice(taskId, &sYesNoTable_PokevialFieldFuncTable);
+}
+
+static void UsePokevialYes(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_UsePokevial;
+    SetUpItemUseCallback(taskId);
+}
+
+static void UsePokevialFieldYes(u8 taskId)
+{
+    LockPlayerFieldControls();
+    FadeScreen(FADE_TO_BLACK,0);
+    CreateTask(Task_UsePokevialFieldYes, 1);
+}
+
+static void Task_UsePokevialFieldYes(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        InitPartyMenuForPokevialFromField(taskId);
+        DestroyTask(taskId);
+    }
+}
+
+static void UsePokevialFieldNo(u8 taskId)
+{
+    ClearDialogWindowAndFrame(0, FALSE);
+    DestroyTask(taskId);
+    ScriptContext_Enable();
+}
+
+void PokevialPrintDosesAndConfirmMessage(u32 currentDoses, bool32 isPlayerUsingRegisteredKeyItem, u8 taskId)
+{
+    u32 numDigits = CountDigits(currentDoses);
+
+    ConvertIntToDecimalStringN(gStringVar2, currentDoses, STR_CONV_MODE_LEFT_ALIGN, numDigits);
+    StringExpandPlaceholders(gStringVar4, gText_PokevialHasDoses);
+
+    if (isPlayerUsingRegisteredKeyItem)
+        DisplayItemMessageOnField(taskId, gStringVar4, UsePokevialFieldYesNo);
+    else
+        DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, UsePokevialYesNo);
+}
+
+void PokevialPrintNoDosesMessage(bool32 isPlayerUsingRegisteredKeyItem, u8 taskId)
+{
+    StringCopy(gStringVar2, gText_PokemonCenter);
+    StringExpandPlaceholders(gStringVar4, gText_PokevialIsEmpty);
+
+    if (isPlayerUsingRegisteredKeyItem)
+        DisplayItemMessageOnField(taskId, gStringVar4, Task_CloseCantUseKeyItemMessage);
+    else
+        DisplayItemMessage(taskId,FONT_NORMAL,gStringVar4,CloseItemMessage);
+}
+
+void ItemUseOutOfBattle_Pokevial(u8 taskId)
+{
+    u32 currentDoses = PokevialGetDose();
+    bool32 isPlayerUsingRegisteredKeyItem = gTasks[taskId].tUsingRegisteredKeyItem;
+
+    CopyItemName(ITEM_POKEVIAL, gStringVar1);
+
+    if (currentDoses > EMPTY_VIAL)
+        PokevialPrintDosesAndConfirmMessage(currentDoses, isPlayerUsingRegisteredKeyItem, taskId);
+    else
+        PokevialPrintNoDosesMessage(isPlayerUsingRegisteredKeyItem, taskId);
+}
+//End Pokevial Branch
+
+// Start qol_field_moves
+void ItemUseOutOfBattle_CutTool(u8 taskId)
+{
+    if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_CUTTABLE_TREE))
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_CutTool;
+		SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+void ItemUseOnFieldCB_CutTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseCutTool);
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_FlyTool(u8 taskId)
+{
+    if (MenuHelpers_IsLinkActive() == TRUE)
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+    else if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
+    {
+        gBagMenu->newScreenCallback = CB2_OpenFlyToolFromBag;
+        Task_FadeAndCloseBagMenu(taskId);
+    }
+    else
+    {
+        FadeScreen(FADE_TO_BLACK, 0);
+        gTasks[taskId].func = Task_OpenRegisteredFlyTool;
+    }
+}
+static void CB2_OpenFlyToolFromBag(void)
+{
+    VarSet(VAR_FLY_TOOL_SOURCE,FLY_SOURCE_BAG);
+    CB2_OpenFlyMap();
+}
+static void Task_OpenRegisteredFlyTool(u8 taskId)
+{
+    VarSet(VAR_FLY_TOOL_SOURCE,FLY_SOURCE_FIELD);
+    if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        SetMainCallback2(CB2_OpenFlyMap);
+        DestroyTask(taskId);
+    }
+}
+void ItemUseOutOfBattle_SurfTool(u8 taskId)
+{
+    if (IsPlayerFacingSurfableFishableWater())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_SurfTool;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+void ItemUseOnFieldCB_SurfTool(u8 taskId)
+{
+    ScriptContext_SetupScript(EventScript_UseSurfTool);
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_StrengthTool(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_StrengthTool;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+void ItemUseOnFieldCB_StrengthTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseStrengthTool);
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_FlashTool(u8 taskId)
+{
+    if (CanUseFlash())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_FlashTool;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+void ItemUseOnFieldCB_FlashTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    FldEff_UseFlashTool();
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_RockSmashTool(u8 taskId)
+{
+    if (CheckObjectGraphicsInFrontOfPlayer(OBJ_EVENT_GFX_BREAKABLE_ROCK))
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_RockSmashTool;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+static void ItemUseOnFieldCB_RockSmashTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseRockSmashTool);
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_WaterfallTool(u8 taskId)
+{
+    if (CanUseWaterfallTool())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_WaterfallTool;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+void ItemUseOnFieldCB_WaterfallTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseWaterfallTool);
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_DiveTool(u8 taskId)
+{
+    if (TrySetDiveWarp())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_DiveTool;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+
+void ItemUseOnFieldCB_DiveTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseDiveTool);
+    DestroyTask(taskId);
+}
+
+static const struct YesNoFuncTable sUseTeleportToolFuncTable =
+{
+    .yesFunc = SetUpFieldAndUseTeleportTool,
+    .noFunc = CloseItemMessage,
+};
+
+void ItemUseOutOfBattle_TeleportTool(u8 taskId)
+{
+    if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
+        AskPlayerTeleportTool(taskId);
+    else
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+}
+static void AskPlayerTeleportTool(u8 taskId)
+{
+    const struct MapHeader *mapHeader;
+    mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->lastHealLocation.mapGroup, gSaveBlock1Ptr->lastHealLocation.mapNum);
+    GetMapNameGeneric(gStringVar1, mapHeader->regionMapSectionId);
+    StringExpandPlaceholders(gStringVar4, gText_ReturnToHealingSpot);
+
+    if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
+        DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, UseTeleportToolYesNo);
+    else
+        ItemUseOnFieldCB_TeleportTool(taskId);
+}
+static void UseTeleportToolYesNo(u8 taskId)
+{
+    BagMenu_YesNo(taskId, ITEMWIN_YESNO_HIGH, &sUseTeleportToolFuncTable);
+}
+static void SetUpFieldAndUseTeleportTool(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_TeleportTool;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+void ItemUseOnFieldCB_TeleportTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+
+    if (gTasks[taskId].tUsingRegisteredKeyItem != TRUE)
+        FldEff_UseTeleportTool();
+    else
+        ScriptContext_SetupScript(EventScript_AskTeleportTool);
+
+    DestroyTask(taskId);
+}
+void ItemUseOutOfBattle_SweetScentTool(u8 taskId)
+{
+        sItemUseOnFieldCB = ItemUseOnFieldCB_SweetScentTool;
+        SetUpItemUseOnFieldCallback(taskId);
+}
+void ItemUseOnFieldCB_SweetScentTool(u8 taskId)
+{
+    LockPlayerFieldControls();
+    FldEff_SweetScentTool();
+    DestroyTask(taskId);
+}
+// End qol_field_moves
 #undef tUsingRegisteredKeyItem
+
+void ItemUseOutOfBattle_PokeBall(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_PokeBall;
+    gBagMenu->newScreenCallback = CB2_ShowPartyMenuForItemUse;
+    Task_FadeAndCloseBagMenu(taskId);
+}
+    

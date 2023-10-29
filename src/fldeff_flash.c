@@ -26,7 +26,7 @@ struct FlashStruct
 };
 
 static void FieldCallback_Flash(void);
-static void FldEff_UseFlash(void);
+//static void FldEff_UseFlash(void); // qol_field_moves
 static bool8 TryDoMapTransition(void);
 static void DoExitCaveTransition(void);
 static void Task_ExitCaveTransition1(u8 taskId);
@@ -98,7 +98,10 @@ static void FieldCallback_Flash(void)
     gTasks[taskId].data[9] = (uintptr_t)FldEff_UseFlash;
 }
 
-static void FldEff_UseFlash(void)
+// Start qol_field_moves
+//static void FldEff_UseFlash(void)
+void FldEff_UseFlash(void)
+// End qol_field_moves
 {
     PlaySE(SE_M_REFLECT);
     FlagSet(FLAG_SYS_USE_FLASH);
@@ -270,7 +273,7 @@ static void Task_ExitCaveTransition4(u8 taskId)
     if (count < 8)
     {
         gTasks[taskId].data[2]++;
-        LoadPalette(&sCaveTransitionPalette_Exit[count], BG_PLTT_ID(14), PLTT_SIZEOF(8) - PLTT_SIZEOF(count));
+        LoadPalette(&sCaveTransitionPalette_Exit[count], BG_PLTT_ID(14), sizeof(sCaveTransitionPalette_Exit) - PLTT_SIZEOF(count));
     }
     else
     {

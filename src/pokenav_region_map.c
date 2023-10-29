@@ -35,7 +35,7 @@ struct Pokenav_RegionMapGfx
     u32 loopTaskId;
     u16 infoWindowId;
     struct Sprite *cityZoomTextSprites[3];
-    u8 tilemapBuffer[BG_SCREEN_SIZE];
+    u8 ALIGNED(2) tilemapBuffer[BG_SCREEN_SIZE];
     u8 cityZoomPics[NUM_CITY_MAPS][200];
 };
 
@@ -400,7 +400,7 @@ static u32 LoopedTask_RegionMapZoomOut(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         ChangeBgYForZoom(FALSE);
         SetRegionMapDataForZoom();
         return LT_INC_AND_PAUSE;
@@ -427,7 +427,7 @@ static u32 LoopedTask_RegionMapZoomIn(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         UpdateMapSecInfoWindow(state);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -459,7 +459,7 @@ static u32 LoopedTask_ExitRegionMap(s32 taskState)
     switch (taskState)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -515,7 +515,7 @@ static void LoadPokenavRegionMapGfx(struct Pokenav_RegionMapGfx *state)
     FillWindowPixelBuffer(state->infoWindowId, PIXEL_FILL(1));
     PutWindowTilemap(state->infoWindowId);
     CopyWindowToVram(state->infoWindowId, COPYWIN_FULL);
-    CopyPaletteIntoBufferUnfaded(sMapSecInfoWindow_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+    CopyPaletteIntoBufferUnfaded(sMapSecInfoWindow_Pal, BG_PLTT_ID(1), sizeof(sMapSecInfoWindow_Pal));
     CopyPaletteIntoBufferUnfaded(gRegionMapCityZoomTiles_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
     if (!IsRegionMapZoomed())
         ChangeBgY(1, -0x6000, BG_COORD_SET);

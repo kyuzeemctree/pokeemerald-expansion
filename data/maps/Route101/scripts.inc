@@ -18,7 +18,7 @@ Route101_EventScript_HideMapNamePopup::
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	setvar VAR_ROUTE101_STATE, 1
 	end
-
+	
 Route101_EventScript_StartBirchRescue::
 	lockall
 	playbgm MUS_HELP, TRUE
@@ -243,7 +243,7 @@ Route101_EventScript_BirchsBag::
 	checkplayergender
 	call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
 	call_if_eq VAR_RESULT, FEMALE, Route101_EventScript_HideBrendanInBedroom
-	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
+	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 7, 7
 	waitstate
 	release
 	end
@@ -266,37 +266,37 @@ Route101_Text_HelpMe:
 Route101_Text_PleaseHelp:
 	.string "Hello! You over there!\n"
 	.string "Please! Help!\p"
-	.string "In my BAG!\n"
-	.string "There's a POKé BALL!$"
+	.string "In my Bag!\n"
+	.string "There's a Poké Ball!$"
 
 Route101_Text_DontLeaveMe:
 	.string "Wh-Where are you going?!\n"
 	.string "Don't leave me like this!$"
 
-Route101_Text_YouSavedMe:
-	.string "PROF. BIRCH: Whew…\p"
+Route101_Text_YouSavedMe: @ 81EBF12
+	.string "Prof. Birch: Whew…\p"
 	.string "I was in the tall grass studying wild\n"
-	.string "POKéMON when I was jumped.\p"
+	.string "pokémon when I was jumped.\p"
 	.string "You saved me.\n"
 	.string "Thanks a lot!\p"
 	.string "Oh?\p"
 	.string "Hi, you're {PLAYER}{KUN}!\p"
 	.string "This is not the place to chat, so come\n"
-	.string "by my POKéMON LAB later, okay?$"
+	.string "by my Lab later, okay?$"
 
-Route101_Text_TakeTiredPokemonToPokeCenter:
-	.string "If POKéMON get tired, take them to\n"
-	.string "a POKéMON CENTER.\p"
-	.string "There's a POKéMON CENTER in OLDALE\n"
-	.string "TOWN right close by.$"
+Route101_Text_TakeTiredPokemonToPokeCenter: @ 81EBFDD
+	.string "If pokémon get tired, take them to\n"
+	.string "a Pokémon Center.\p"
+	.string "There's a Pokémon Center in Oldale\n"
+	.string "Town right close by.$"
 
-Route101_Text_WildPokemonInTallGrass:
-	.string "Wild POKéMON will jump out at you in\n"
+Route101_Text_WildPokemonInTallGrass: @ 81EC04A
+	.string "Wild pokémon will jump out at you in\n"
 	.string "tall grass.\p"
-	.string "If you want to catch POKéMON, you have\n"
+	.string "If you want to catch pokémon, you have\n"
 	.string "to go into the tall grass and search.$"
 
-Route101_Text_RouteSign:
-	.string "ROUTE 101\n"
-	.string "{UP_ARROW} OLDALE TOWN$"
+Route101_Text_RouteSign: @ 81EC0C8
+	.string "Route 101\n"
+	.string "{UP_ARROW} Oldale Town$"
 

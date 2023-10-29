@@ -584,7 +584,7 @@ static u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
             SetBgTilemapBuffer(1, menu->tilemapBuffers[1]);
             FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 32, 20);
             CopyPaletteIntoBufferUnfaded(sRibbonIcons1_Pal, BG_PLTT_ID(2), 5 * PLTT_SIZE_4BPP);
-            CopyPaletteIntoBufferUnfaded(sMonInfo_Pal, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
+            CopyPaletteIntoBufferUnfaded(sMonInfo_Pal, BG_PLTT_ID(10), sizeof(sMonInfo_Pal));
             CopyBgTilemapBufferToVram(1);
             return LT_INC_AND_PAUSE;
         }
@@ -655,7 +655,7 @@ static u32 LoopedTask_ExitRibbonsSummaryMenu(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         PokenavFadeScreen(POKENAV_FADE_TO_BLACK);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -672,7 +672,7 @@ static u32 LoopedTask_SwitchRibbonsSummaryMon(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         SlideMonSpriteOff(menu);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -711,7 +711,7 @@ static u32 LoopedTask_ExpandSelectedRibbon(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         UpdateAndZoomInSelectedRibbon(menu);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -735,7 +735,7 @@ static u32 LoopedTask_MoveRibbonsCursorExpanded(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         ZoomOutSelectedRibbon(menu);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -765,7 +765,7 @@ static u32 LoopedTask_ShrinkExpandedRibbon(s32 state)
     switch (state)
     {
     case 0:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         ZoomOutSelectedRibbon(menu);
         return LT_INC_AND_PAUSE;
     case 1:
@@ -963,7 +963,7 @@ static u16 DrawRibbonsMonFrontPic(s32 x, s32 y)
     u32 personality, otId;
 
     GetMonSpeciesPersonalityOtId(&species, &personality, &otId);
-    spriteId = CreateMonPicSprite_HandleDeoxys(species, otId, personality, TRUE, MON_SPRITE_X_ON, MON_SPRITE_Y, 15, TAG_NONE);
+    spriteId = CreateMonPicSprite(species, otId, personality, TRUE, MON_SPRITE_X_ON, MON_SPRITE_Y, 15, TAG_NONE);
     gSprites[spriteId].oam.priority = 0;
     return spriteId;
 }

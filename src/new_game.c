@@ -44,7 +44,11 @@
 #include "berry_powder.h"
 #include "mystery_gift.h"
 #include "union_room_chat.h"
+#include "constants/map_groups.h"
 #include "constants/items.h"
+#include "time_events.h"
+#include "field_weather.h"
+#include "wallclock.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 
@@ -90,10 +94,10 @@ static void InitPlayerTrainerId(void)
 // L=A isnt set here for some reason.
 static void SetDefaultOptions(void)
 {
-    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
-    gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
+    gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SET;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
 }
@@ -101,8 +105,8 @@ static void SetDefaultOptions(void)
 static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
-    memset(&gSaveBlock2Ptr->pokedex.owned, 0, sizeof(gSaveBlock2Ptr->pokedex.owned));
-    memset(&gSaveBlock2Ptr->pokedex.seen, 0, sizeof(gSaveBlock2Ptr->pokedex.seen));
+    memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
+    memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
 }
 
 void ClearAllContestWinnerPics(void)
@@ -182,7 +186,8 @@ void NewGameInitData(void)
     ResetPokemonStorageSystem();
     ClearRoamerData();
     ClearRoamerLocationData();
-    gSaveBlock1Ptr->registeredItem = ITEM_NONE;
+    gSaveBlock1Ptr->registeredItemCompat = ITEM_NONE;
+    memset(gSaveBlock1Ptr->registeredItems, 0, sizeof(gSaveBlock1Ptr->registeredItems));
     ClearBag();
     NewGameInitPCItems();
     ClearPokeblocks();
@@ -204,6 +209,8 @@ void NewGameInitData(void)
     WipeTrainerNameRecords();
     ResetTrainerHillResults();
     ResetContestLinkResults();
+    memset(gSaveBlock1Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock1Ptr->dexNavSearchLevels));
+    gSaveBlock1Ptr->dexNavChain = 0;
 }
 
 static void ResetMiniGamesRecords(void)
@@ -212,4 +219,65 @@ static void ResetMiniGamesRecords(void)
     SetBerryPowder(&gSaveBlock2Ptr->berryCrush.berryPowderAmount, 0);
     ResetPokemonJumpRecords();
     CpuFill16(0, &gSaveBlock2Ptr->berryPick, sizeof(struct BerryPickingResults));
+}
+
+static void UpdatePerDay(struct Time *localTime);
+static void UpdatePerMinute(struct Time *localTime);
+
+static void InitTimeBasedEvents(void)
+{
+    FlagSet(FLAG_SYS_CLOCK_SET);
+    RtcCalcLocalTime();
+    gSaveBlock2Ptr->lastBerryTreeUpdate = gLocalTime;
+    VarSet(VAR_DAYS, gLocalTime.days);
+}
+
+void DoTimeBasedEvents(void)
+{
+    if (FlagGet(FLAG_SYS_CLOCK_SET) && !InPokemonCenter())
+    {
+        RtcCalcLocalTime();
+        UpdatePerDay(&gLocalTime);
+        UpdatePerMinute(&gLocalTime);
+    }
+}
+
+static void UpdatePerDay(struct Time *localTime)
+{
+    u16 *days = GetVarPointer(VAR_DAYS);
+    u16 daysSince;
+
+    if (*days != localTime->days && *days <= localTime->days)
+    {
+        daysSince = localTime->days - *days;
+        ClearDailyFlags();
+        UpdateDewfordTrendPerDay(daysSince);
+        UpdateTVShowsPerDay(daysSince);
+        UpdateWeatherPerDay(daysSince);
+        UpdatePartyPokerusTime(daysSince);
+        UpdateMirageRnd(daysSince);
+        UpdateBirchState(daysSince);
+        UpdateFrontierManiac(daysSince);
+        UpdateFrontierGambler(daysSince);
+        SetShoalItemFlag(daysSince);
+        SetRandomLotteryNumber(daysSince);
+        *days = localTime->days;
+    }
+}
+
+static void UpdatePerMinute(struct Time *localTime)
+{
+    struct Time difference;
+    int minutes;
+
+    CalcTimeDifference(&difference, &gSaveBlock2Ptr->lastBerryTreeUpdate, localTime);
+    minutes = 24 * 60 * difference.days + 60 * difference.hours + difference.minutes;
+    if (minutes != 0)
+    {
+        if (minutes >= 0)
+        {
+            BerryTreeTimeUpdate(minutes);
+            gSaveBlock2Ptr->lastBerryTreeUpdate = *localTime;
+        }
+    }
 }

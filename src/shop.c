@@ -397,7 +397,7 @@ static void Task_ShopMenu(u8 taskId)
     case MENU_NOTHING_CHOSEN:
         break;
     case MENU_B_PRESSED:
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         Task_HandleShopMenuQuit(taskId);
         break;
     default:
@@ -591,7 +591,7 @@ static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, s
 {
     const u8 *description;
     if (onInit != TRUE)
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 
     if (item != LIST_CANCEL)
         BuyMenuAddItemIcon(item, sShopData->iconSlot);
@@ -639,7 +639,10 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
                 5);
         }
 
-        StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
+        if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+            StringCopy(gStringVar4, gText_SoldOut);
+        else
+            StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
         x = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, 120);
         AddTextPrinterParameterized4(windowId, FONT_NARROW, x, y, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, gStringVar4);
     }
@@ -974,11 +977,11 @@ static void Task_BuyMenu(u8 taskId)
         case LIST_NOTHING_CHOSEN:
             break;
         case LIST_CANCEL:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ExitBuyMenu(taskId);
             break;
         default:
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             tItemId = itemId;
             ClearWindowTilemap(WIN_ITEM_DESCRIPTION);
             BuyMenuRemoveScrollIndicatorArrows();
@@ -989,7 +992,9 @@ static void Task_BuyMenu(u8 taskId)
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
-            if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
+            if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+                BuyMenuDisplayMessage(taskId, gText_ThatItemIsSoldOut, BuyMenuReturnToItemList);
+            else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
             }
@@ -998,7 +1003,15 @@ static void Task_BuyMenu(u8 taskId)
                 if (sMartInfo.martType == MART_TYPE_NORMAL)
                 {
                     CopyItemName(itemId, gStringVar1);
-                    if (ItemId_GetPocket(itemId) == POCKET_TM_HM)
+                    if (ItemId_GetImportance(itemId))
+                    {
+                        ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
+                        StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
+                        tItemCount = 1;
+                        sShopData->totalCost = (ItemId_GetPrice(tItemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)) * tItemCount;
+                        BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
+                    }
+                    else if (ItemId_GetPocket(itemId) == POCKET_TM_HM)
                     {
                         StringCopy(gStringVar2, gMoveNames[ItemIdToBattleMoveId(itemId)]);
                         BuyMenuDisplayMessage(taskId, gText_Var1CertainlyHowMany2, Task_BuyHowManyDialogueInit);
@@ -1065,7 +1078,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
     {
         if (JOY_NEW(A_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_PRICE, FALSE);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_IN_BAG, FALSE);
             ClearWindowTilemap(WIN_QUANTITY_PRICE);
@@ -1078,7 +1091,7 @@ static void Task_BuyHowManyDialogueHandleInput(u8 taskId)
         }
         else if (JOY_NEW(B_BUTTON))
         {
-            PlaySE(SE_SELECT);
+            PlaySE(SE_RG_BAG_CURSOR);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_PRICE, FALSE);
             ClearStdWindowAndFrameToTransparent(WIN_QUANTITY_IN_BAG, FALSE);
             ClearWindowTilemap(WIN_QUANTITY_PRICE);
@@ -1103,8 +1116,8 @@ static void BuyMenuTryMakePurchase(u8 taskId)
     {
         if (AddBagItem(tItemId, tItemCount) == TRUE)
         {
-            BuyMenuDisplayMessage(taskId, gText_HereYouGoThankYou, BuyMenuSubtractMoney);
             RecordItemPurchase(taskId);
+            BuyMenuDisplayMessage(taskId, gText_HereYouGoThankYou, BuyMenuSubtractMoney);
         }
         else
         {
@@ -1131,7 +1144,7 @@ static void BuyMenuSubtractMoney(u8 taskId)
 {
     IncrementGameStat(GAME_STAT_SHOPPED);
     RemoveMoney(&gSaveBlock1Ptr->money, sShopData->totalCost);
-    PlaySE(SE_SHOP);
+    PlaySE(SE_RG_SHOP);
     PrintMoneyAmountInMoneyBox(WIN_MONEY, GetMoney(&gSaveBlock1Ptr->money), 0);
 
     if (sMartInfo.martType == MART_TYPE_NORMAL)
@@ -1146,7 +1159,7 @@ static void Task_ReturnToItemListAfterItemPurchase(u8 taskId)
 
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
 
         // Purchasing 10+ Poke Balls gets the player a Premier Ball
         if (tItemId == ITEM_POKE_BALL && tItemCount >= 10 && AddBagItem(ITEM_PREMIER_BALL, 1) == TRUE)
@@ -1160,7 +1173,7 @@ static void Task_ReturnToItemListAfterDecorationPurchase(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
-        PlaySE(SE_SELECT);
+        PlaySE(SE_RG_BAG_CURSOR);
         BuyMenuReturnToItemList(taskId);
     }
 }
@@ -1170,6 +1183,7 @@ static void BuyMenuReturnToItemList(u8 taskId)
     s16 *data = gTasks[taskId].data;
 
     ClearDialogWindowAndFrameToTransparent(WIN_MESSAGE, FALSE);
+    RedrawListMenu(tListTaskId);
     BuyMenuPrintCursor(tListTaskId, COLORID_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_DESCRIPTION);
