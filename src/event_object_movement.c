@@ -434,6 +434,32 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_LUGIA                   0x1121
 #define OBJ_EVENT_PAL_TAG_RS_BRENDAN              0x1122
 #define OBJ_EVENT_PAL_TAG_RS_MAY                  0x1123
+#define OBJ_EVENT_PAL_TAG_MOM                     0x1124
+#define OBJ_EVENT_PAL_TAG_ANABEL                  0x1125
+#define OBJ_EVENT_PAL_TAG_TUCKER                  0x1126
+#define OBJ_EVENT_PAL_TAG_SPENSER                 0x1127
+#define OBJ_EVENT_PAL_TAG_GRETA                   0x1128
+#define OBJ_EVENT_PAL_TAG_NOLAND                  0x1129
+#define OBJ_EVENT_PAL_TAG_LUCY                    0x1130
+#define OBJ_EVENT_PAL_TAG_BRANDON                 0x1131
+#define OBJ_EVENT_PAL_TAG_SIDNEY                  0x1132
+#define OBJ_EVENT_PAL_TAG_PHOEBE                  0x1133
+#define OBJ_EVENT_PAL_TAG_GLACIA                  0x1134
+#define OBJ_EVENT_PAL_TAG_DRAKE                   0x1135
+#define OBJ_EVENT_PAL_TAG_ROXANNE                 0x1136
+#define OBJ_EVENT_PAL_TAG_BRAWLY                  0x1137
+#define OBJ_EVENT_PAL_TAG_WATTSON                 0x1138
+#define OBJ_EVENT_PAL_TAG_FLANNERY                0x1139
+#define OBJ_EVENT_PAL_TAG_NORMAN                  0x1140
+#define OBJ_EVENT_PAL_TAG_WINONA                  0x1141
+#define OBJ_EVENT_PAL_TAG_LIZA_TATE               0x1142
+#define OBJ_EVENT_PAL_TAG_JUAN                    0x1143
+#define OBJ_EVENT_PAL_TAG_WALLACE                 0x1144
+#define OBJ_EVENT_PAL_TAG_STEVEN                  0x1145
+#define OBJ_EVENT_PAL_TAG_WALLY                   0x1146
+#define OBJ_EVENT_PAL_TAG_ARCHIE                  0x1147
+#define OBJ_EVENT_PAL_TAG_MAXIE                   0x1148
+#define OBJ_EVENT_PAL_TAG_SCOTT                   0x1149
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -480,6 +506,31 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Lugia,                 OBJ_EVENT_PAL_TAG_LUGIA},
     {gObjectEventPal_RubySapphireBrendan,   OBJ_EVENT_PAL_TAG_RS_BRENDAN},
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
+    {gObjectEventPal_Mom,                   OBJ_EVENT_PAL_TAG_MOM},
+    {gObjectEventPal_Anabel,                OBJ_EVENT_PAL_TAG_ANABEL},
+    {gObjectEventPal_Tucker,                OBJ_EVENT_PAL_TAG_TUCKER},
+    {gObjectEventPal_Spenser,               OBJ_EVENT_PAL_TAG_SPENSER},
+    {gObjectEventPal_Greta,                 OBJ_EVENT_PAL_TAG_GRETA},
+    {gObjectEventPal_Noland,                OBJ_EVENT_PAL_TAG_NOLAND},
+    {gObjectEventPal_Lucy,                  OBJ_EVENT_PAL_TAG_LUCY},
+    {gObjectEventPal_Brandon,               OBJ_EVENT_PAL_TAG_BRANDON},
+    {gObjectEventPal_Sidney,                OBJ_EVENT_PAL_TAG_SIDNEY},
+    {gObjectEventPal_Phoebe,                OBJ_EVENT_PAL_TAG_PHOEBE},
+    {gObjectEventPal_Glacia,                OBJ_EVENT_PAL_TAG_GLACIA},
+    {gObjectEventPal_Drake,                 OBJ_EVENT_PAL_TAG_DRAKE},
+    {gObjectEventPal_Roxanne,               OBJ_EVENT_PAL_TAG_ROXANNE},
+    {gObjectEventPal_Brawly,                OBJ_EVENT_PAL_TAG_BRAWLY},
+    {gObjectEventPal_Wattson,               OBJ_EVENT_PAL_TAG_WATTSON},
+    {gObjectEventPal_Flannery,              OBJ_EVENT_PAL_TAG_FLANNERY},
+    {gObjectEventPal_Winona,                OBJ_EVENT_PAL_TAG_WINONA},
+    {gObjectEventPal_LizaTate,              OBJ_EVENT_PAL_TAG_LIZA_TATE},
+    {gObjectEventPal_Juan,                  OBJ_EVENT_PAL_TAG_JUAN},
+    {gObjectEventPal_Wallace,               OBJ_EVENT_PAL_TAG_WALLACE},
+    {gObjectEventPal_Steven,                OBJ_EVENT_PAL_TAG_STEVEN},
+    {gObjectEventPal_Wally,                 OBJ_EVENT_PAL_TAG_WALLY},
+    {gObjectEventPal_Archie,                OBJ_EVENT_PAL_TAG_ARCHIE},
+    {gObjectEventPal_Maxie,                 OBJ_EVENT_PAL_TAG_MAXIE},
+    {gObjectEventPal_Scott,                 OBJ_EVENT_PAL_TAG_SCOTT},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
