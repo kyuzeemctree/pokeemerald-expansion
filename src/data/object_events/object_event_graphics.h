@@ -440,6 +440,11 @@ const u32 gObjectEventPic_RuinManiac[] = INCBIN_U32("graphics/object_events/pics
 const u16 gObjectEventPal_RuinManiac[] = INCBIN_U16("graphics/object_events/palettes/ruin_maniac.gbapal");
 const u32 gObjectEventPic_Worker[] = INCBIN_U32("graphics/object_events/pics/people/worker.4bpp");
 const u16 gObjectEventPal_Worker[] = INCBIN_U16("graphics/object_events/palettes/worker.gbapal");
+const u32 gObjectEventPic_Mankey[] = INCBIN_U32("graphics/object_events/pics/pokemon/mankey.4bpp");
+const u16 gObjectEventPal_Mankey[] = INCBIN_U16("graphics/object_events/palettes/mankey.gbapal");
+const u32 gObjectEventPic_Slowpoke[] = INCBIN_U32("graphics/object_events/pics/pokemon/slowpoke.4bpp");
+const u16 gObjectEventPal_Slowpoke[] = INCBIN_U16("graphics/object_events/palettes/slowpoke.gbapal");
+
 
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");
 const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");

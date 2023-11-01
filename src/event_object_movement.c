@@ -488,6 +488,8 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_TWIN                    0x1175
 #define OBJ_EVENT_PAL_TAG_WORKER                  0x1176
 #define OBJ_EVENT_PAL_TAG_YOUNGSTER               0x1177
+#define OBJ_EVENT_PAL_TAG_MANKEY                  0x1178
+#define OBJ_EVENT_PAL_TAG_SLOWPOKE                0x1179
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -587,6 +589,8 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Twin,                  OBJ_EVENT_PAL_TAG_TWIN},
     {gObjectEventPal_Worker,                OBJ_EVENT_PAL_TAG_WORKER},
     {gObjectEventPal_Youngster,             OBJ_EVENT_PAL_TAG_YOUNGSTER},
+    {gObjectEventPal_Mankey,                OBJ_EVENT_PAL_TAG_MANKEY},
+    {gObjectEventPal_Slowpoke,              OBJ_EVENT_PAL_TAG_SLOWPOKE},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
