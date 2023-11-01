@@ -287,29 +287,29 @@ PlayersHouse_1F_Text_ItsOverWeMissedHim:
 
 PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor:
 	.string "Oh, yes.\n"
-	.string "One of DAD's friends lives in town.\p"
-	.string "PROF. BIRCH is his name.\p"
+	.string "One of Dad's friends lives in town.\p"
+	.string "Prof. Birch is his name.\p"
 	.string "He's doing research on Route 101, so\n"
 	.string "you should go introduce yourself!$"
 
 PlayersHouse_1F_Text_SeeYouHoney:
-	.string "MOM: See you, honey!$"
+	.string "Mom: See you, honey!$"
 
 PlayersHouse_1F_Text_DidYouMeetProfBirch:
-	.string "MOM: Did you introduce yourself to\n"
-	.string "PROF. BIRCH?$"
+	.string "Mom: Did you introduce yourself to\n"
+	.string "Prof. Birch?$"
 
 PlayersHouse_1F_Text_YouShouldRestABit:
-	.string "MOM: How are you doing, {PLAYER}?\n"
+	.string "Mom: How are you doing, {PLAYER}?\n"
 	.string "You look a little tired.\p"
 	.string "I think you should rest a bit.$"
 
 PlayersHouse_1F_Text_TakeCareHoney:
-	.string "MOM: Take care, honey!$"
+	.string "Mom: Take care, honey!$"
 
 PlayersHouse_1F_Text_GotDadsBadgeHeresSomethingFromMom:
-	.string "MOM: Oh? Did DAD give you that BADGE?\p"
-	.string "Then here's something from your MOM!$"
+	.string "Mom: Oh? Did Dad give you that badge?\p"
+	.string "Then here's something from your mom!$"
 
 PlayersHouse_1F_Text_DontPushYourselfTooHard:
 	.string "Don't push yourself too hard, dear.\n"

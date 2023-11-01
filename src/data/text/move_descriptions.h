@@ -1769,8 +1769,8 @@ static const u8 sIronHeadDescription[] = _(
     "head. May cause flinching.");
 
 static const u8 sMagnetBombDescription[] = _(
-    "Launches a magnet that\n"
-    "strikes without fail.");
+    "Launches a magnetetic blast\n"
+    "that does physical damage.");
 
 static const u8 sStoneEdgeDescription[] = _(
     "Stabs the foe with stones.\n"

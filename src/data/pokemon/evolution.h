@@ -132,7 +132,7 @@ const struct Evolution gEvolutionTable[NUM_SPECIES][EVOS_PER_MON] =
     [SPECIES_DRAGONAIR]             = {{EVO_LEVEL, 55, SPECIES_DRAGONITE}},
     [SPECIES_CHIKORITA]             = {{EVO_LEVEL, 16, SPECIES_BAYLEEF}},
     [SPECIES_BAYLEEF]               = {{EVO_LEVEL, 32, SPECIES_MEGANIUM}},
-    [SPECIES_CYNDAQUIL]             = {{EVO_LEVEL, 14, SPECIES_QUILAVA}},
+    [SPECIES_CYNDAQUIL]             = {{EVO_LEVEL, 16, SPECIES_QUILAVA}},
     [SPECIES_QUILAVA]               = {{EVO_LEVEL, 36, SPECIES_TYPHLOSION},
                                        {EVO_NONE, 0, SPECIES_TYPHLOSION_HISUIAN}},
     [SPECIES_TOTODILE]              = {{EVO_LEVEL, 18, SPECIES_CROCONAW}},

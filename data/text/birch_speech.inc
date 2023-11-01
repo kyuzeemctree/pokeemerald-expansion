@@ -1,6 +1,6 @@
 gText_Birch_Welcome::
 	.string "Hi! Sorry to keep you waiting!\p"
-	.string "My name is BIRCH.\p"
+	.string "My name is Birch.\p"
 	.string "$"
 
 gText_Birch_Pokemon::
@@ -15,7 +15,7 @@ gText_Birch_MainSpeech::
 	.string "secrets surrounding pokémon.\p"
 	.string "To unravel pokémon mysteries,\n"
 	.string "I've been undertaking research.\l"
-	.string "That's my thing.\p"
+	.string "That's what I do.\p"
 	.string "$"
 
 gText_Birch_AndYouAre::
