@@ -461,6 +461,33 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_MAXIE                   0x1148
 #define OBJ_EVENT_PAL_TAG_SCOTT                   0x1149
 #define OBJ_EVENT_PAL_TAG_BATTLE_GIRL             0x1150
+#define OBJ_EVENT_PAL_TAG_BOY_1                   0x1151
+#define OBJ_EVENT_PAL_TAG_BUG_CATCHER             0x1152
+#define OBJ_EVENT_PAL_TAG_CAMPER                  0x1153
+#define OBJ_EVENT_PAL_TAG_COWGIRL                 0x1154
+#define OBJ_EVENT_PAL_TAG_FAT_MAN                 0x1155
+#define OBJ_EVENT_PAL_TAG_FISHERMAN               0x1156
+#define OBJ_EVENT_PAL_TAG_GAMEBOY_KID             0x1157
+#define OBJ_EVENT_PAL_TAG_GENTLEMAN               0x1158
+#define OBJ_EVENT_PAL_TAG_GIRL_1                  0x1159
+#define OBJ_EVENT_PAL_TAG_GUARD                   0x1160
+#define OBJ_EVENT_PAL_TAG_HIKER                   0x1161
+#define OBJ_EVENT_PAL_TAG_LASS                    0x1162
+#define OBJ_EVENT_PAL_TAG_LEAF                    0x1163
+#define OBJ_EVENT_PAL_TAG_LITTLE_BOY              0x1164
+#define OBJ_EVENT_PAL_TAG_MAN_1                   0x1165
+#define OBJ_EVENT_PAL_TAG_MAN_2                   0x1166
+#define OBJ_EVENT_PAL_TAG_MART_EMPLOYEE           0x1167
+#define OBJ_EVENT_PAL_TAG_POKEFAN_M               0x1168
+#define OBJ_EVENT_PAL_TAG_POKEKID                 0x1169
+#define OBJ_EVENT_PAL_TAG_POKEMON_BREEDER         0x1170
+#define OBJ_EVENT_PAL_TAG_BLUE                    0x1171
+#define OBJ_EVENT_PAL_TAG_RANGER                  0x1172
+#define OBJ_EVENT_PAL_TAG_RUIN_MANIAC             0x1173
+#define OBJ_EVENT_PAL_TAG_SAILOR                  0x1174
+#define OBJ_EVENT_PAL_TAG_TWIN                    0x1175
+#define OBJ_EVENT_PAL_TAG_WORKER                  0x1176
+#define OBJ_EVENT_PAL_TAG_YOUNGSTER               0x1177
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -533,6 +560,33 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Maxie,                 OBJ_EVENT_PAL_TAG_MAXIE},
     {gObjectEventPal_Scott,                 OBJ_EVENT_PAL_TAG_SCOTT},
     {gObjectEventPal_BattleGirl,            OBJ_EVENT_PAL_TAG_BATTLE_GIRL},
+    {gObjectEventPal_Boy1,                  OBJ_EVENT_PAL_TAG_BOY_1},
+    {gObjectEventPal_BugCatcher,            OBJ_EVENT_PAL_TAG_BUG_CATCHER},
+    {gObjectEventPal_Camper,                OBJ_EVENT_PAL_TAG_CAMPER},
+    {gObjectEventPal_Cowgirl,               OBJ_EVENT_PAL_TAG_COWGIRL},
+    {gObjectEventPal_FatMan,                OBJ_EVENT_PAL_TAG_FAT_MAN},
+    {gObjectEventPal_Fisherman,             OBJ_EVENT_PAL_TAG_FISHERMAN},
+    {gObjectEventPal_GameboyKid,            OBJ_EVENT_PAL_TAG_GAMEBOY_KID},
+    {gObjectEventPal_Gentleman,             OBJ_EVENT_PAL_TAG_GENTLEMAN},
+    {gObjectEventPal_Girl1,                 OBJ_EVENT_PAL_TAG_GIRL_1},
+    {gObjectEventPal_Guard,                 OBJ_EVENT_PAL_TAG_GUARD},
+    {gObjectEventPal_Hiker,                 OBJ_EVENT_PAL_TAG_HIKER},
+    {gObjectEventPal_Lass,                  OBJ_EVENT_PAL_TAG_LASS},
+    {gObjectEventPal_Leaf,                  OBJ_EVENT_PAL_TAG_LEAF},
+    {gObjectEventPal_LittleBoy,             OBJ_EVENT_PAL_TAG_LITTLE_BOY},
+    {gObjectEventPal_Man1,                  OBJ_EVENT_PAL_TAG_MAN_1},
+    {gObjectEventPal_Man2,                  OBJ_EVENT_PAL_TAG_MAN_2},
+    {gObjectEventPal_MartEmployee,          OBJ_EVENT_PAL_TAG_MART_EMPLOYEE},
+    {gObjectEventPal_PokefanM,              OBJ_EVENT_PAL_TAG_POKEFAN_M},
+    {gObjectEventPal_Pokekid,               OBJ_EVENT_PAL_TAG_POKEKID},
+    {gObjectEventPal_PokemonBreeder,        OBJ_EVENT_PAL_TAG_POKEMON_BREEDER},
+    {gObjectEventPal_Blue,                  OBJ_EVENT_PAL_TAG_BLUE},
+    {gObjectEventPal_Ranger,                OBJ_EVENT_PAL_TAG_RANGER},
+    {gObjectEventPal_RuinManiac,            OBJ_EVENT_PAL_TAG_RUIN_MANIAC},
+    {gObjectEventPal_Sailor,                OBJ_EVENT_PAL_TAG_SAILOR},
+    {gObjectEventPal_Twin,                  OBJ_EVENT_PAL_TAG_TWIN},
+    {gObjectEventPal_Worker,                OBJ_EVENT_PAL_TAG_WORKER},
+    {gObjectEventPal_Youngster,             OBJ_EVENT_PAL_TAG_YOUNGSTER},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
