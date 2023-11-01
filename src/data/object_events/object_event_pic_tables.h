@@ -2328,3 +2328,15 @@ static const struct SpriteFrameImage sPicTable_Slowpoke[] = {
     overworld_frame(gObjectEventPic_Slowpoke, 4, 4, 2),
     overworld_frame(gObjectEventPic_Slowpoke, 4, 4, 2),
 };
+
+static const struct SpriteFrameImage sPicTable_Murkrow[] = {
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 0),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 1),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 2),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 3),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 4),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 5),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 6),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 7),
+    overworld_frame(gObjectEventPic_Murkrow, 2, 2, 8),
+};

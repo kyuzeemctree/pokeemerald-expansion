@@ -444,6 +444,8 @@ const u32 gObjectEventPic_Mankey[] = INCBIN_U32("graphics/object_events/pics/pok
 const u16 gObjectEventPal_Mankey[] = INCBIN_U16("graphics/object_events/palettes/mankey.gbapal");
 const u32 gObjectEventPic_Slowpoke[] = INCBIN_U32("graphics/object_events/pics/pokemon/slowpoke.4bpp");
 const u16 gObjectEventPal_Slowpoke[] = INCBIN_U16("graphics/object_events/palettes/slowpoke.gbapal");
+const u32 gObjectEventPic_Murkrow[] = INCBIN_U32("graphics/object_events/pics/pokemon/murkrow.4bpp");
+const u16 gObjectEventPal_Murkrow[] = INCBIN_U16("graphics/object_events/palettes/murkrow.gbapal");
 
 
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");

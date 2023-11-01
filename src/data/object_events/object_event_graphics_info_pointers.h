@@ -250,6 +250,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RuinManiac;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Worker;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Mankey;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Slowpoke;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Murkrow;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Bard;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Hipster;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Trader;
@@ -512,6 +513,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WORKER] =                   &gObjectEventGraphicsInfo_Worker,
     [OBJ_EVENT_GFX_MANKEY] =                   &gObjectEventGraphicsInfo_Mankey,
     [OBJ_EVENT_GFX_SLOWPOKE] =                 &gObjectEventGraphicsInfo_Slowpoke,
+    [OBJ_EVENT_GFX_MURKROW] =                  &gObjectEventGraphicsInfo_Murkrow,
 };
 
 const struct ObjectEventGraphicsInfo *const gMauvilleOldManGraphicsInfoPointers[] = {
