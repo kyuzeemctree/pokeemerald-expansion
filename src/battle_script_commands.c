@@ -12196,6 +12196,7 @@ static void Cmd_weatherdamage(void)
             if (!IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_ROCK)
                 && !IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_GROUND)
                 && !IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_STEEL)
+                && !IsDesertSpecies(gBattleMons[gBattlerAttacker].species) 
                 && ability != ABILITY_SAND_VEIL
                 && ability != ABILITY_SAND_FORCE
                 && ability != ABILITY_SAND_RUSH
@@ -15529,6 +15530,80 @@ static void Cmd_settelekinesis(void)
         gDisableStructs[gBattlerTarget].telekinesisTimer = 3;
         gBattlescriptCurrInstr = cmd->nextInstr;
     }
+}
+
+static const u16 sDesertSpeciesList[] =
+{
+    SPECIES_SANDSHREW,
+    SPECIES_SANDSLASH,
+    SPECIES_TRAPINCH,
+    SPECIES_VIBRAVA,
+    SPECIES_FLYGON,
+    SPECIES_CACNEA,
+    SPECIES_CACTURNE,
+    SPECIES_BALTOY,
+    SPECIES_CLAYDOL,
+    SPECIES_GIBLE,
+    SPECIES_GABITE,
+    SPECIES_GARCHOMP,
+    SPECIES_SANDILE,
+    SPECIES_KROKOROK,
+    SPECIES_KROOKODILE,
+    SPECIES_DWEBBLE,
+    SPECIES_CRUSTLE,
+    SPECIES_DIGLETT,
+    SPECIES_DIGLETT_ALOLAN,
+    SPECIES_DUGTRIO,
+    SPECIES_DUGTRIO_ALOLAN,
+    SPECIES_RHYHORN,
+    SPECIES_RHYDON,
+    SPECIES_RHYPERIOR,
+    SPECIES_HIPPOPOTAS,
+    SPECIES_HIPPOWDON,
+    SPECIES_BELDUM,
+    SPECIES_METANG,
+    SPECIES_METAGROSS,
+    SPECIES_DARUMAKA,
+    SPECIES_DARMANITAN,
+    SPECIES_MARACTUS,
+    SPECIES_SCRAGGY,
+    SPECIES_SCRAFTY,
+    SPECIES_SIGILYPH,
+    SPECIES_TRUBBISH,
+    SPECIES_GARBODOR,
+    SPECIES_MINCCINO,
+    SPECIES_CINCCINO,
+    SPECIES_RUFFLET,
+    SPECIES_BRAVIARY,
+    SPECIES_BRAVIARY_HISUIAN,
+    SPECIES_VULLABY,
+    SPECIES_MANDIBUZZ,
+    SPECIES_YAMASK,
+    SPECIES_COFAGRIGUS,
+    SPECIES_ONIX,
+    SPECIES_STEELIX,
+    SPECIES_LARVESTA,
+    SPECIES_VOLCARONA,
+    SPECIES_GOLETT,
+    SPECIES_GOLURK,
+    SPECIES_CASTFORM,
+    SPECIES_SILICOBRA,
+    SPECIES_SANDACONDA,
+    SPECIES_PHANPY,
+    SPECIES_DONPHAN,
+    SPECIES_STONJOURNER,
+};
+
+bool32 IsDesertSpecies(u16 species)
+{
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sDesertSpeciesList); i++)
+    {
+        if (species == sDesertSpeciesList[i])
+            return TRUE;
+    }
+    return FALSE;
 }
 
 static void Cmd_swapstatstages(void)
