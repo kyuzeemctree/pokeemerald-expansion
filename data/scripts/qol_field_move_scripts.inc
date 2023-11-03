@@ -8,7 +8,6 @@ EventScript_UseCutTool::
 
 EventScript_UseRockSmashTool::
     lockall
-    bufferitemname STR_VAR_2, ITEM_ROCKSMASH_TOOL
     goto EventScript_SmashRock
 
 EventScript_UseStrengthTool::

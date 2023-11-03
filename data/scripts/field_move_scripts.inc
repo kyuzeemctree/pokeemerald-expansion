@@ -4,14 +4,9 @@ EventScript_CutTree::
 @ Start qol_field_moves
 	//checkpartymove MOVE_CUT
     checkitem ITEM_CUT_TOOL, 1
-    goto_if_eq VAR_RESULT, TRUE, EventScript_UseCutTool
-	goto_if_unset FLAG_BADGE01_GET, EventScript_CheckTreeCantCut
+    goto_if_eq VAR_RESULT, TRUE, EventScript_CutTreeDown
 @ End qol_field_moves
-	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CheckTreeCantCut
-	setfieldeffectargument 0, VAR_RESULT
-	dofieldeffect FLDEFF_USE_CUT_ON_TREE
-	waitstate
-	goto EventScript_CutTreeDown
+	goto EventScript_CheckTreeCantCut
 	end
 
 @ Use cut from party menu
@@ -27,6 +22,7 @@ EventScript_CutTreeDown::
 	applymovement VAR_LAST_TALKED, Movement_CutTreeDown
 	waitmovement 0
 	removeobject VAR_LAST_TALKED
+	waitstate
 	releaseall
 	end
 
@@ -64,7 +60,7 @@ EventScript_RockSmash::
     checkitem ITEM_ROCKSMASH_TOOL,1
     goto_if_eq VAR_RESULT, TRUE, EventScript_UseRockSmashTool
 @ End qol_field_moves
-	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CantSmashRock
 	setfieldeffectargument 0, VAR_RESULT
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
@@ -82,10 +78,7 @@ EventScript_SmashRock::
 	applymovement VAR_LAST_TALKED, Movement_SmashRock
 	waitmovement 0
 	removeobject VAR_LAST_TALKED
-	specialvar VAR_RESULT, TryUpdateRusturfTunnelState
-	goto_if_eq VAR_RESULT, TRUE, EventScript_EndSmash
 	special RockSmashWildEncounter
-	goto_if_eq VAR_RESULT, FALSE, EventScript_EndSmash
 	waitstate
 	releaseall
 	end
