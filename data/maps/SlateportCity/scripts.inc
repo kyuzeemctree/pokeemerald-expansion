@@ -1,23 +1,12 @@
 .set LOCALID_FAT_MAN, 1
 .set LOCALID_MAN_1, 2
 .set LOCALID_RICH_BOY, 3
-.set LOCALID_GRUNT_1, 5
 .set LOCALID_COOK, 6
 .set LOCALID_OLD_WOMAN, 7
 .set LOCALID_GIRL, 8
 .set LOCALID_TY, 9
 .set LOCALID_GABBY, 10
 .set LOCALID_CAPT_STERN, 11
-.set LOCALID_GRUNT_2, 18
-.set LOCALID_GRUNT_3, 19
-.set LOCALID_GRUNT_4, 26
-.set LOCALID_GRUNT_5, 27
-.set LOCALID_GRUNT_6, 28
-.set LOCALID_GRUNT_7, 29
-.set LOCALID_GRUNT_8, 30
-.set LOCALID_GRUNT_9, 31
-.set LOCALID_GRUNT_11, 33
-.set LOCALID_SCOTT, 35
 
 @ Note: LOCALID_SLATEPORT_ENERGY_GURU is a local id for this map used elsewhere. It's defined in event_objects.h
 
@@ -369,154 +358,31 @@ SlateportCity_EventScript_Man2::
 	msgbox SlateportCity_Text_BattleTentBuiltRecently, MSGBOX_NPC
 	end
 
-SlateportCity_EventScript_AquaGrunt1::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_QuitPushing, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_1, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt2::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_AquaHasPolicy, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_2, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt3::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_BossIsBrilliant, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_3, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt4::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_WhatsNewSchemeIWonder, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_4, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt5::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_ShouldTakeItAll, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_5, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt6::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_DontButtIn, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_6, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt7::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_RemindsMeOfLongLineForGames, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_7, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt8::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_WhyAreWeLiningUp, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_8, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_AquaGrunt9::
-	lock
-	faceplayer
-	playse SE_PIN
-	applymovement LOCALID_GRUNT_9, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, Common_Movement_Delay48
-	waitmovement 0
-	msgbox SlateportCity_Text_WhatDoYouWant, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_9, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, SlateportCity_Movement_DelayAquaGrunt
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, Common_Movement_FacePlayer
-	waitmovement 0
-	msgbox SlateportCity_Text_IllReadSignForYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_9, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, SlateportCity_Movement_DelayAquaGrunt
-	waitmovement 0
-	msgbox SlateportCity_Text_SaysSomethingLikeSeaIsEndless, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_9, Common_Movement_FacePlayer
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, SlateportCity_Movement_DelayAquaGrunt
-	waitmovement 0
-	applymovement LOCALID_GRUNT_9, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_Movement_DelayAquaGrunt:
-	delay_16
-	delay_16
-	step_end
-
-SlateportCity_EventScript_AquaGrunt10::
-	msgbox SlateportCity_Text_ShouldveBroughtMyGameBoy, MSGBOX_SIGN
-	end
-
-SlateportCity_EventScript_AquaGrunt11::
-	lock
-	faceplayer
-	msgbox SlateportCity_Text_HotSpringsAfterOperation, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_GRUNT_11, Common_Movement_FaceOriginalDirection
-	waitmovement 0
-	release
-	end
-
-SlateportCity_EventScript_DollClerk::
+SlateportCity_EventScript_EvoClerk::
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemartdecoration SlateportCity_PokemartDecor_Dolls
+	pokemart SlateportCity_PokemartEvoItems
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-SlateportCity_PokemartDecor_Dolls:
-	.2byte DECOR_AZURILL_DOLL
-	.2byte DECOR_MARILL_DOLL
-	.2byte DECOR_SKITTY_DOLL
-	.2byte DECOR_NONE
+SlateportCity_PokemartEvoItems:
+	.2byte ITEM_FIRE_STONE
+	.2byte ITEM_WATER_STONE
+	.2byte ITEM_LEAF_STONE
+	.2byte ITEM_THUNDER_STONE
+	.2byte ITEM_ICE_STONE
+	.2byte ITEM_SHINY_STONE
+	.2byte ITEM_DAWN_STONE
+	.2byte ITEM_SUN_STONE
+	.2byte ITEM_DUSK_STONE
+	.2byte ITEM_MOON_STONE
+	.2byte ITEM_BLACK_AUGURITE
+	.2byte ITEM_PEAT_BLOCK
+	.2byte ITEM_NONE
 	release
 	end
 

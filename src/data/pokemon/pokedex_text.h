@@ -3783,9 +3783,9 @@ const u8 gVullabyPokedexText[] = _(
 
 const u8 gMandibuzzPokedexText[] = _(
     "They adorn themselves beautifully with\n"
-    "bones. This is supposedly an effort to\n"
-    "attract males, but no male Mandibuzz\n"
-    "have ever been found.");
+    "bones. Strange as this behavior may\n"
+    "seem, it's reportedly an excellent way\n"
+    "to attract mates.");
 
 const u8 gHeatmorPokedexText[] = _(
     "It draws in air through its tail, transforms\n"
