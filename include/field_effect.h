@@ -68,4 +68,11 @@ bool8 DiveFieldEffect_Init(struct Task *);
 bool8 DiveFieldEffect_TryWarp(struct Task *);
 // End qol_field_moves
 
+void FieldEffectScript_LoadFadedPaletteDayNight(u8 **script);
+void FieldEffectScript_LoadPaletteDayNight(u8 **script);
+
+bool8 FieldEffectCmd_loadfadedpaldaynight(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadpaldaynight(u8 **script, u32 *val);
+bool8 FieldEffectCmd_loadfadedpaldaynight_callnative(u8 **script, u32 *val);
+
 #endif // GUARD_FIELD_EFFECTS_H
