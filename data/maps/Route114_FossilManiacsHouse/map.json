@@ -2,8 +2,8 @@
   "id": "MAP_ROUTE114_FOSSIL_MANIACS_HOUSE",
   "name": "Route114_FossilManiacsHouse",
   "layout": "LAYOUT_ROUTE114_FOSSIL_MANIACS_HOUSE",
-  "music": "MUS_FALLARBOR",
-  "region_map_section": "MAPSEC_ROUTE_114",
+  "music": "MUS_ROUTE110",
+  "region_map_section": "MAPSEC_ROUTE_111",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -33,22 +33,22 @@
       "x": 4,
       "y": 7,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE114",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_ROUTE111",
+      "dest_warp_id": "5"
     },
     {
       "x": 5,
       "y": 7,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE114",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_ROUTE111",
+      "dest_warp_id": "5"
     },
     {
       "x": 4,
       "y": 1,
       "elevation": 0,
-      "dest_map": "MAP_ROUTE114_FOSSIL_MANIACS_TUNNEL",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE111",
+      "dest_warp_id": "6"
     }
   ],
   "coord_events": [

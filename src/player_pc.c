@@ -200,7 +200,6 @@ static const struct MenuAction sPlayerPCMenuActions[] =
 static const u8 sBedroomPC_OptionOrder[] =
 {
     MENU_ITEMSTORAGE,
-    MENU_MAILBOX,
     MENU_DECORATION,
     MENU_TURNOFF
 };
@@ -209,7 +208,6 @@ static const u8 sBedroomPC_OptionOrder[] =
 static const u8 sPlayerPC_OptionOrder[] =
 {
     MENU_ITEMSTORAGE,
-    MENU_MAILBOX,
     MENU_TURNOFF
 };
 #define NUM_PLAYER_PC_OPTIONS ARRAY_COUNT(sPlayerPC_OptionOrder)

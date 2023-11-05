@@ -248,8 +248,8 @@ NewMauville_Inside_EventScript_DefeatedVoltorb3::
 NewMauville_Inside_Text_GeneratorRadiatingHeat:
 	.string "The generator is radiating heat that\n"
 	.string "can be felt even at a distance.\p"
-	.string "It looks like it should be turned off\n"
-	.string "as soon as possible.$"
+	.string "It should probably be turned off,\n"
+	.string "but you know how capitalists are.$"
 
 NewMauville_Inside_Text_GeneratorQuietedDown:
 	.string "The generator quieted down.$"

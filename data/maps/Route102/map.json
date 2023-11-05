@@ -118,7 +118,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
-      "x": 22,
+      "x": 23,
       "y": 2,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
@@ -156,14 +156,14 @@
     {
       "type": "hidden_item",
       "x": 34,
-      "y": 14,
+      "y": 13,
       "elevation": 0,
       "item": "ITEM_HEALTH_FEATHER",
       "flag": "FLAG_HIDDEN_ITEM_R1021"
     },
     {
       "type": "hidden_item",
-      "x": 29,
+      "x": 30,
       "y": 4,
       "elevation": 0,
       "item": "ITEM_BIG_ROOT",
