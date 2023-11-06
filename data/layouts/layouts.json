@@ -1017,7 +1017,7 @@
       "width": 12,
       "height": 9,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_GenericBuilding",
+      "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/Route104_MrBrineysHouse/border.bin",
       "blockdata_filepath": "data/layouts/Route104_MrBrineysHouse/map.bin"
     },

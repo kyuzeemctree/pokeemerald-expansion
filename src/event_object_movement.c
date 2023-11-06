@@ -493,6 +493,23 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_SLOWPOKE                0x1179
 #define OBJ_EVENT_PAL_TAG_MURKROW                 0x1180
 #define OBJ_EVENT_PAL_TAG_CUTTABLE_TREE           0x1181
+#define OBJ_EVENT_PAL_TAG_AROMA_LADY              0x1182
+#define OBJ_EVENT_PAL_TAG_BEAUTY                  0x1183
+#define OBJ_EVENT_PAL_TAG_BLACK_BELT              0x1184
+#define OBJ_EVENT_PAL_TAG_BUG_MANIAC              0x1185
+#define OBJ_EVENT_PAL_TAG_BURGLAR                 0x1186
+#define OBJ_EVENT_PAL_TAG_COLLECTOR               0x1187
+#define OBJ_EVENT_PAL_TAG_COOLTRAINER             0x1188
+#define OBJ_EVENT_PAL_TAG_DRAGON_TAMER            0x1189
+#define OBJ_EVENT_PAL_TAG_EXPERT                  0x1190
+#define OBJ_EVENT_PAL_TAG_GIRL_3                  0x1191
+#define OBJ_EVENT_PAL_TAG_GUITARIST               0x1192
+#define OBJ_EVENT_PAL_TAG_HEX_MERCHANT            0x1193
+#define OBJ_EVENT_PAL_TAG_KINDLER                 0x1194
+#define OBJ_EVENT_PAL_TAG_LITTLE_GIRL             0x1195
+#define OBJ_EVENT_PAL_TAG_POKEFAN_F               0x1196
+#define OBJ_EVENT_PAL_TAG_POKEMANIAC              0x1197
+#define OBJ_EVENT_PAL_TAG_PSYCHIC                 0x1198
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -596,6 +613,23 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Slowpoke,              OBJ_EVENT_PAL_TAG_SLOWPOKE},
     {gObjectEventPal_Murkrow,               OBJ_EVENT_PAL_TAG_MURKROW},
     {gObjectEventPal_CuttableTree,          OBJ_EVENT_PAL_TAG_CUTTABLE_TREE},
+    {gObjectEventPal_AromaLady,             OBJ_EVENT_PAL_TAG_AROMA_LADY},
+    {gObjectEventPal_Beauty,                OBJ_EVENT_PAL_TAG_BEAUTY},
+    {gObjectEventPal_BlackBelt,             OBJ_EVENT_PAL_TAG_BLACK_BELT},
+    {gObjectEventPal_BugManiac,             OBJ_EVENT_PAL_TAG_BUG_MANIAC},
+    {gObjectEventPal_Burglar,               OBJ_EVENT_PAL_TAG_BURGLAR},
+    {gObjectEventPal_Collector,             OBJ_EVENT_PAL_TAG_COLLECTOR},
+    {gObjectEventPal_CoolTrainer,           OBJ_EVENT_PAL_TAG_COOLTRAINER},
+    {gObjectEventPal_DragonTamer,           OBJ_EVENT_PAL_TAG_DRAGON_TAMER},
+    {gObjectEventPal_Expert,                OBJ_EVENT_PAL_TAG_EXPERT},
+    {gObjectEventPal_Girl3,                 OBJ_EVENT_PAL_TAG_GIRL_3},
+    {gObjectEventPal_Guitarist,             OBJ_EVENT_PAL_TAG_GUITARIST},
+    {gObjectEventPal_HexMerchant,           OBJ_EVENT_PAL_TAG_HEX_MERCHANT},
+    {gObjectEventPal_Kindler,               OBJ_EVENT_PAL_TAG_KINDLER},
+    {gObjectEventPal_LittleGirl,            OBJ_EVENT_PAL_TAG_LITTLE_GIRL},
+    {gObjectEventPal_PokefanF,              OBJ_EVENT_PAL_TAG_POKEFAN_F},
+    {gObjectEventPal_Pokemaniac,            OBJ_EVENT_PAL_TAG_POKEMANIAC},
+    {gObjectEventPal_Psychic,               OBJ_EVENT_PAL_TAG_PSYCHIC},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else

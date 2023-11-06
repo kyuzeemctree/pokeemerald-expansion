@@ -1,7 +1,7 @@
 @ NOTE: Route 104's sail to Dewford script references local IDs from Dewford's map.
 @  These are labeled in DewfordTown/scripts.inc
-.set LOCALID_HEXM, 29
-.set LOCALID_POKO, 30
+.set LOCALID_HEX_MERCHANT, 25
+.set LOCALID_POKO, 26
 
 Route104_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route104_OnTransition

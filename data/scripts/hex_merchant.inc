@@ -10,10 +10,12 @@ EventScript_HexMerchant_Shop::
 	message Text_HexMerchant_Sell
 	waitmessage
 	pokemart Pokemart_HexMerchant
+	applymovement LOCALID_HEX_MERCHANT, Movement_HexMerchant_Spin
+	waitmovement 0
+	playse SE_THUNDER
 	msgbox Text_HexMerchant_Bye, MSGBOX_DEFAULT
 	savebgm MUS_DUMMY
 	fadedefaultbgm
-	applymovement LOCALID_HEXM, Common_Movement_WalkInPlaceFasterLeft
 	waitmovement 0
 	release
 	end
@@ -58,6 +60,31 @@ EventScript_Poko::
 	release
 	end
 
+Movement_HexMerchant_Spin:
+	face_up
+	delay_1
+	face_left
+	delay_1
+	face_down
+	delay_1
+	face_right
+	delay_1
+	face_up
+	delay_1
+	face_left
+	delay_1
+	face_down
+	delay_1
+	face_right
+	delay_1
+	face_up
+	delay_1
+	face_left
+	delay_1
+	face_down
+	delay_1
+	step_end
+
 Text_HexMerchant_Intro:
 	.string "Hm? You're {PLAYER}{KUN}…\n"
 	.string "I had seen visions of your\l"
@@ -81,8 +108,7 @@ Text_HexMerchant_Sell:
 	.string "Care to browse the wares?$"
 
 Text_HexMerchant_Bye:
-	.string "Take care now…$"
+	.string "I APPRECIATE YOUR PATRONAGE!$"
 
 Route104_MrBrineysHouse_Text_Poko:
 	.string "POKO: Brrrrhu!$"
-	
