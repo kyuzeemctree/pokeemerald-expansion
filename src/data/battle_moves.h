@@ -410,7 +410,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_STOMP] =
     {
         .effect = EFFECT_FLINCH_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_GROUND,
         .accuracy = 100,
         .pp = 20,
@@ -598,7 +598,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     {
         .effect = EFFECT_PARALYZE_HIT,
         .power = 70,
-        .type = TYPE_FIGHTING,
+        .type = TYPE_NORMAL,
         .accuracy = 100,
         .pp = 15,
         .secondaryEffectChance = 30,
@@ -1087,7 +1087,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_AURORA_BEAM] =
     {
         .effect = EFFECT_SPECIAL_ATTACK_DOWN_HIT,
-        .power = 75,
+        .power = 60,
         .type = TYPE_ICE,
         .accuracy = 100,
         .pp = 20,
@@ -1745,7 +1745,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_NIGHT_SHADE] =
     {
         .effect = EFFECT_SPECIAL_ATTACK_DOWN_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_GHOST,
         .accuracy = 100,
         .pp = 15,
@@ -5549,7 +5549,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_SIGNAL_BEAM] =
     {
         .effect = EFFECT_CONFUSE_HIT,
-        .power = 75,
+        .power = 70,
         .type = TYPE_BUG,
         .accuracy = 100,
         .pp = 15,
@@ -7181,7 +7181,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_THUNDER_FANG] =
     {
         .effect = EFFECT_FLINCH_STATUS,
-        .power = 75,
+        .power = 70,
         .type = TYPE_ELECTRIC,
         .accuracy = 100,
         .pp = 15,
@@ -7204,7 +7204,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
             .argument = STATUS1_FREEZE,
         #endif
         .effect = EFFECT_FLINCH_STATUS,
-        .power = 75,
+        .power = 70,
         .type = TYPE_ICE,
         .accuracy = 100,
         .pp = 15,
@@ -7221,7 +7221,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_FIRE_FANG] =
     {
         .effect = EFFECT_FLINCH_STATUS,
-        .power = 75,
+        .power = 70,
         .type = TYPE_FIRE,
         .accuracy = 100,
         .pp = 15,
@@ -7254,7 +7254,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_MUD_BOMB] =
     {
         .effect = EFFECT_ACCURACY_DOWN_HIT,
-        .power = 70,
+        .power = 80,
         .type = TYPE_GROUND,
         .accuracy = 100,
         .pp = 20,
@@ -7302,7 +7302,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_MIRROR_SHOT] =
     {
         .effect = EFFECT_ACCURACY_DOWN_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_STEEL,
         .accuracy = 100,
         .pp = 20,
@@ -12055,7 +12055,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_FALSE_SURRENDER] =
     {
         .effect = EFFECT_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_DARK,
         .accuracy = 0,
         .pp = 10,
@@ -12391,7 +12391,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_SCORCHING_SANDS] =
     {
         .effect = EFFECT_BURN_HIT,
-        .power = 70,
+        .power = 75,
         .type = TYPE_GROUND,
         .accuracy = 100,
         .pp = 10,
@@ -12511,11 +12511,11 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_FIERY_WRATH] =
     {
         .effect = EFFECT_BURN_HIT,
-        .power = 85,
+        .power = 70,
         .type = TYPE_DARK,
         .accuracy = 100,
         .pp = 15,
-        .secondaryEffectChance = 15,
+        .secondaryEffectChance = 30,
         .target = MOVE_TARGET_BOTH,
         .priority = 0,
         .split = SPLIT_SPECIAL,
@@ -13508,7 +13508,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_POUNCE] =
     {
         .effect = EFFECT_SPEED_DOWN_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_BUG,
         .accuracy = 100,
         .pp = 20,
@@ -13540,7 +13540,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_CHILLING_WATER] =
     {
         .effect = EFFECT_ATTACK_DOWN_HIT,
-        .power = 70,
+        .power = 60,
         .type = TYPE_WATER,
         .accuracy = 100,
         .pp = 20,
