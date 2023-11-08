@@ -69,7 +69,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_COMET_PUNCH] =
     {
         .effect = EFFECT_MULTI_HIT,
-        .power = 25,
+        .power = 20,
         .type = TYPE_FAIRY,
         .accuracy = 100,
         .pp = 15,
@@ -1087,7 +1087,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_AURORA_BEAM] =
     {
         .effect = EFFECT_SPECIAL_ATTACK_DOWN_HIT,
-        .power = 80,
+        .power = 75,
         .type = TYPE_ICE,
         .accuracy = 100,
         .pp = 20,
@@ -3204,7 +3204,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
             .makesContact = TRUE,
         #endif
         .effect = EFFECT_HIT,
-        .power = 60,
+        .power = 40,
         .type = TYPE_DARK,
         .accuracy = 100,
         .pp = 15,
@@ -5638,7 +5638,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .effect = EFFECT_RECOIL_33_STATUS,
         .power = 120,
         .type = TYPE_ICE,
-        .accuracy = 30,
+        .accuracy = 100,
         .pp = 5,
         .secondaryEffectChance = 15,
         .target = MOVE_TARGET_SELECTED,
@@ -7884,7 +7884,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_SEED_FLARE] =
     {
         .effect = EFFECT_SAPPY_SEED,
-        .power = 95,
+        .power = 80,
         .type = TYPE_GRASS,
         .accuracy = 100,
         .pp = 5,
@@ -8491,7 +8491,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_SCALD] =
     {
         .effect = EFFECT_BURN_HIT,
-        .power = 70,
+        .power = 75,
         .type = TYPE_WATER,
         .accuracy = 100,
         .pp = 20,
@@ -9100,6 +9100,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
         .priority = 0,
         .split = SPLIT_SPECIAL,
         .zMoveEffect = Z_EFFECT_NONE,
+        .highCritRatio = TRUE,
     },
 
     [MOVE_TAIL_SLAP] =
@@ -9824,7 +9825,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_MOONBLAST] =
     {
         .effect = EFFECT_SPECIAL_ATTACK_DOWN_HIT,
-        .power = 115,
+        .power = 110,
         .type = TYPE_FAIRY,
         .accuracy = 85,
         .pp = 10,
@@ -9939,7 +9940,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_STEAM_ERUPTION] =
     {
         .effect = EFFECT_BURN_HIT,
-        .power = 115,
+        .power = 110,
         .type = TYPE_WATER,
         .accuracy = 85,
         .pp = 5,
@@ -10744,7 +10745,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_FIRE_LASH] =
     {
         .effect = EFFECT_DEFENSE_DOWN_HIT,
-        .power = 70,
+        .power = 75,
         .type = TYPE_FIRE,
         .accuracy = 100,
         .pp = 15,
@@ -11837,7 +11838,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT_Z] =
     [MOVE_PYRO_BALL] =
     {
         .effect = EFFECT_BURN_HIT,
-        .power = 115,
+        .power = 110,
         .type = TYPE_FIRE,
         .accuracy = 85,
         .pp = 10,
