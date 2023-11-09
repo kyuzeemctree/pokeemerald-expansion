@@ -479,6 +479,8 @@ const u32 gObjectEventPic_Kindler[] = INCBIN_U32("graphics/object_events/pics/pe
 const u16 gObjectEventPal_Kindler[] = INCBIN_U16("graphics/object_events/palettes/kindler.gbapal");
 const u32 gObjectEventPic_Pokemaniac[] = INCBIN_U32("graphics/object_events/pics/people/pokemaniac.4bpp");
 const u16 gObjectEventPal_Pokemaniac[] = INCBIN_U16("graphics/object_events/palettes/pokemaniac.gbapal");
+const u32 gObjectEventPic_Nemona[] = INCBIN_U32("graphics/object_events/pics/people/nemona.4bpp");
+const u16 gObjectEventPal_Nemona[] = INCBIN_U16("graphics/object_events/palettes/nemona.gbapal");
 
 
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");

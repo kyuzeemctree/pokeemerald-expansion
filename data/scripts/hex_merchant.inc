@@ -13,6 +13,7 @@ EventScript_HexMerchant_Shop::
 	applymovement LOCALID_HEX_MERCHANT, Movement_HexMerchant_Spin
 	waitmovement 0
 	playse SE_THUNDER
+	applymovement LOCALID_HEX_MERCHANT, Movement_HexMerchant_Hooray
 	msgbox Text_HexMerchant_Bye, MSGBOX_DEFAULT
 	savebgm MUS_DUMMY
 	fadedefaultbgm
@@ -59,6 +60,11 @@ EventScript_Poko::
 	waitmovement 0
 	release
 	end
+
+Movement_HexMerchant_Hooray:
+	nurse_joy_bow
+	delay_8
+	step_end
 
 Movement_HexMerchant_Spin:
 	face_up

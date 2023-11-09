@@ -2501,3 +2501,18 @@ static const struct SpriteFrameImage sPicTable_PsychicF[] = {
     overworld_frame(gObjectEventPic_PsychicF, 2, 4, 8),
     overworld_frame(gObjectEventPic_PsychicF, 2, 4, 9),
 };
+
+static const struct SpriteFrameImage sPicTable_Nemona[] = {
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 0),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 1),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 2),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 3),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 4),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 5),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 6),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 7),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 8),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 9),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 10),
+    overworld_frame(gObjectEventPic_Nemona, 4, 4, 11),
+};

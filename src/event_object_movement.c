@@ -512,6 +512,7 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_PSYCHIC                 0x1198
 #define OBJ_EVENT_PAL_TAG_RICH_BOY                0x1199
 #define OBJ_EVENT_PAL_TAG_RUNNING_TRIATHLETE      0x11AA
+#define OBJ_EVENT_PAL_TAG_NEMONA                  0x11AB
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -634,6 +635,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Psychic,               OBJ_EVENT_PAL_TAG_PSYCHIC},
     {gObjectEventPal_RichBoy,               OBJ_EVENT_PAL_TAG_RICH_BOY},
     {gObjectEventPal_RunningTriathlete,     OBJ_EVENT_PAL_TAG_RUNNING_TRIATHLETE},
+    {gObjectEventPal_Nemona,                OBJ_EVENT_PAL_TAG_NEMONA},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
