@@ -32,6 +32,7 @@
 #include "constants/trainer_types.h"
 #include "constants/union_room.h"
 #include "day_night.h"
+#include "constants/metatile_behaviors.h"
 
 // this file was known as evobjmv.c in Game Freak's original source
 
@@ -513,6 +514,8 @@ const u8 gInitialMovementTypeFacingDirections[] = {
 #define OBJ_EVENT_PAL_TAG_RICH_BOY                0x1199
 #define OBJ_EVENT_PAL_TAG_RUNNING_TRIATHLETE      0x11AA
 #define OBJ_EVENT_PAL_TAG_NEMONA                  0x11AB
+#define OBJ_EVENT_PAL_TAG_LADY                    0x11AC
+#define OBJ_EVENT_PAL_TAG_BALL_GUY                0x11AD
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 
 #include "data/field_effects/field_effect_object_template_pointers.h"
@@ -575,6 +578,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Brawly,                OBJ_EVENT_PAL_TAG_BRAWLY},
     {gObjectEventPal_Wattson,               OBJ_EVENT_PAL_TAG_WATTSON},
     {gObjectEventPal_Flannery,              OBJ_EVENT_PAL_TAG_FLANNERY},
+    {gObjectEventPal_Norman,                OBJ_EVENT_PAL_TAG_NORMAN},
     {gObjectEventPal_Winona,                OBJ_EVENT_PAL_TAG_WINONA},
     {gObjectEventPal_LizaTate,              OBJ_EVENT_PAL_TAG_LIZA_TATE},
     {gObjectEventPal_Juan,                  OBJ_EVENT_PAL_TAG_JUAN},
@@ -636,6 +640,8 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_RichBoy,               OBJ_EVENT_PAL_TAG_RICH_BOY},
     {gObjectEventPal_RunningTriathlete,     OBJ_EVENT_PAL_TAG_RUNNING_TRIATHLETE},
     {gObjectEventPal_Nemona,                OBJ_EVENT_PAL_TAG_NEMONA},
+    {gObjectEventPal_Lady,                  OBJ_EVENT_PAL_TAG_LADY},
+    {gObjectEventPal_BallGuy,               OBJ_EVENT_PAL_TAG_BALL_GUY},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
@@ -7704,6 +7710,8 @@ void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *
     gFieldEffectArguments[5] = objEvent->mapGroup;
     gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
     gFieldEffectArguments[7] = 1;
+    if (objEvent->currentMetatileBehavior == MB_LONG_GRASS_COVERED)
+        gFieldEffectArguments[7] |= 2;
     FieldEffectStart(FLDEFF_LONG_GRASS);
 }
 
@@ -7717,6 +7725,8 @@ void GroundEffect_StepOnLongGrass(struct ObjectEvent *objEvent, struct Sprite *s
     gFieldEffectArguments[5] = objEvent->mapGroup;
     gFieldEffectArguments[6] = (u8)gSaveBlock1Ptr->location.mapNum << 8 | (u8)gSaveBlock1Ptr->location.mapGroup;
     gFieldEffectArguments[7] = 0;
+    if (objEvent->currentMetatileBehavior == MB_LONG_GRASS_COVERED)
+        gFieldEffectArguments[7] |= 2;
     FieldEffectStart(FLDEFF_LONG_GRASS);
 }
 

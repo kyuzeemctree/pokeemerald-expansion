@@ -265,7 +265,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_LADY",
       "x": 11,
       "y": 44,
       "elevation": 3,
@@ -278,7 +278,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_NEMONA",
+      "graphics_id": "OBJ_EVENT_GFX_BALL_GUY",
       "x": 18,
       "y": 67,
       "elevation": 3,

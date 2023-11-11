@@ -481,7 +481,12 @@ const u32 gObjectEventPic_Pokemaniac[] = INCBIN_U32("graphics/object_events/pics
 const u16 gObjectEventPal_Pokemaniac[] = INCBIN_U16("graphics/object_events/palettes/pokemaniac.gbapal");
 const u32 gObjectEventPic_Nemona[] = INCBIN_U32("graphics/object_events/pics/people/nemona.4bpp");
 const u16 gObjectEventPal_Nemona[] = INCBIN_U16("graphics/object_events/palettes/nemona.gbapal");
+const u32 gObjectEventPic_Lady[] = INCBIN_U32("graphics/object_events/pics/people/lady.4bpp");
+const u16 gObjectEventPal_Lady[] = INCBIN_U16("graphics/object_events/palettes/lady.gbapal");
+const u32 gObjectEventPic_BallGuy[] = INCBIN_U32("graphics/object_events/pics/people/ball_guy.4bpp");
+const u16 gObjectEventPal_BallGuy[] = INCBIN_U16("graphics/object_events/palettes/ball_guy.gbapal");
 
 
 const u32 gFieldEffectObjectPic_CaveDust[] = INCBIN_U32("graphics/field_effects/pics/cave_dust.4bpp");
 const u16 gFieldEffectObjectPalette_CaveDust[] = INCBIN_U16("graphics/field_effects/palettes/cave_dust.gbapal");
+const u32 gFieldEffectObjectPic_LongGrassCovered[] = INCBIN_U32("graphics/field_effects/pics/long_grass_covered.4bpp");

@@ -422,12 +422,17 @@ u32 FldEff_LongGrass(void)
     s16 x;
     s16 y;
     u8 spriteId;
+    u16 fldEffObj;
     struct Sprite *sprite;
 
     x = gFieldEffectArguments[0];
     y = gFieldEffectArguments[1];
     SetSpritePosToOffsetMapCoords(&x, &y, 8, 8);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_LONG_GRASS], x, y, 0);
+    if ((gFieldEffectArguments[7] & 2) == 2)
+        fldEffObj = FLDEFFOBJ_LONG_GRASS_COVERED;
+    else
+        fldEffObj = FLDEFFOBJ_LONG_GRASS;
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[fldEffObj], x, y, 0);
     if (spriteId != MAX_SPRITES)
     {
         sprite = &gSprites[spriteId];
@@ -440,7 +445,7 @@ u32 FldEff_LongGrass(void)
         sprite->sMapGroup = gFieldEffectArguments[5];
         sprite->sCurrentMap = gFieldEffectArguments[6];
 
-        if (gFieldEffectArguments[7])
+        if ((gFieldEffectArguments[7] & 1) == 1)
             SeekSpriteAnim(sprite, 6); // Skip to end of anim
     }
     return 0;
