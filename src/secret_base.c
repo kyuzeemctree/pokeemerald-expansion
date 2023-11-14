@@ -95,12 +95,6 @@ static void ReturnToMainRegistryMenu(u8);
 static void GoToSecretBasePCRegisterMenu(u8);
 static u8 GetSecretBaseOwnerType(u8);
 
-static const struct SecretBaseEntranceMetatiles sSecretBaseEntranceMetatiles[] =
-{
-    {.closedMetatileId = METATILE_Fallarbor_BrownCaveIndent,    .openMetatileId = METATILE_Fallarbor_BrownCaveOpen},
-    {.closedMetatileId = METATILE_Fortree_SecretBase_Shrub,     .openMetatileId = METATILE_Fortree_SecretBase_ShrubOpen},
-};
-
 // mapNum, warpId, x, y
 // x, y positions are for when the player warps in for the first time (in front of the computer)
 static const u8 sSecretBaseEntrancePositions[NUM_SECRET_BASE_GROUPS * 4] =
@@ -312,39 +306,6 @@ static void FindMetatileIdMapCoords(s16 *x, s16 *y, u16 metatileId)
     }
 }
 
-// Opens or closes the secret base entrance metatile in front of the player.
-void ToggleSecretBaseEntranceMetatile(void)
-{
-    u16 i;
-    s16 x, y;
-    s16 metatileId;
-
-    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
-    metatileId = MapGridGetMetatileIdAt(x, y);
-
-    // Look for entrance metatiles to open
-    for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
-    {
-        if (sSecretBaseEntranceMetatiles[i].closedMetatileId == metatileId)
-        {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
-            CurrentMapDrawMetatileAt(x, y);
-            return;
-        }
-    }
-
-    // Look for entrance metatiles to close
-    for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
-    {
-        if (sSecretBaseEntranceMetatiles[i].openMetatileId == metatileId)
-        {
-            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].closedMetatileId | MAPGRID_COLLISION_MASK);
-            CurrentMapDrawMetatileAt(x, y);
-            return;
-        }
-    }
-}
-
 static u8 GetNameLength(const u8 *secretBaseOwnerName)
 {
     u8 i;
@@ -370,38 +331,6 @@ void SetPlayerSecretBase(void)
     gSaveBlock1Ptr->secretBases[0].gender = gSaveBlock2Ptr->playerGender;
     gSaveBlock1Ptr->secretBases[0].language = GAME_LANGUAGE;
     VarSet(VAR_SECRET_BASE_MAP, gMapHeader.regionMapSectionId);
-}
-
-// Set the 'open' entrance metatile for any occupied secret base on this map
-void SetOccupiedSecretBaseEntranceMetatiles(struct MapEvents const *events)
-{
-    u16 bgId;
-    u16 i, j;
-
-    for (bgId = 0; bgId < events->bgEventCount; bgId++)
-    {
-        if (events->bgEvents[bgId].kind == BG_EVENT_SECRET_BASE)
-        {
-            for (j = 0; j < SECRET_BASES_COUNT; j++)
-            {
-                if (gSaveBlock1Ptr->secretBases[j].secretBaseId == events->bgEvents[bgId].bgUnion.secretBaseId)
-                {
-                    s16 x = events->bgEvents[bgId].x + MAP_OFFSET;
-                    s16 y = events->bgEvents[bgId].y + MAP_OFFSET;
-                    s16 tile_id = MapGridGetMetatileIdAt(x, y);
-                    for (i = 0; i < ARRAY_COUNT(sSecretBaseEntranceMetatiles); i++)
-                    {
-                        if (sSecretBaseEntranceMetatiles[i].closedMetatileId == tile_id)
-                        {
-                            MapGridSetMetatileIdAt(x, y, sSecretBaseEntranceMetatiles[i].openMetatileId | MAPGRID_COLLISION_MASK);
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-    }
 }
 
 static void SetSecretBaseWarpDestination(void)
@@ -814,49 +743,6 @@ void MoveOutOfSecretBase(void)
 {
     IncrementGameStat(GAME_STAT_MOVED_SECRET_BASE);
     ClearAndLeaveSecretBase();
-}
-
-static void ClosePlayerSecretBaseEntrance(void)
-{
-    u16 i;
-    u16 j;
-    s16 metatileId;
-    const struct MapEvents *events = gMapHeader.events;
-
-    for (i = 0; i < events->bgEventCount; i++)
-    {
-        if (events->bgEvents[i].kind == BG_EVENT_SECRET_BASE
-         && gSaveBlock1Ptr->secretBases[0].secretBaseId == events->bgEvents[i].bgUnion.secretBaseId)
-        {
-            metatileId = MapGridGetMetatileIdAt(events->bgEvents[i].x + MAP_OFFSET, events->bgEvents[i].y + MAP_OFFSET);
-            for (j = 0; j < ARRAY_COUNT(sSecretBaseEntranceMetatiles); j++)
-            {
-                if (sSecretBaseEntranceMetatiles[j].openMetatileId == metatileId)
-                {
-                    MapGridSetMetatileIdAt(events->bgEvents[i].x + MAP_OFFSET,
-                                           events->bgEvents[i].y + MAP_OFFSET,
-                                           sSecretBaseEntranceMetatiles[j].closedMetatileId | MAPGRID_COLLISION_MASK);
-                    break;
-                }
-            }
-
-            DrawWholeMapView();
-            break;
-        }
-    }
-}
-
-// When the player moves to a new secret base by interacting with a new secret base
-// entrance in the overworld.
-void MoveOutOfSecretBaseFromOutside(void)
-{
-    u16 temp;
-
-    ClosePlayerSecretBaseEntrance();
-    IncrementGameStat(GAME_STAT_MOVED_SECRET_BASE);
-    temp = gSaveBlock1Ptr->secretBases[0].numSecretBasesReceived;
-    ClearSecretBase(&gSaveBlock1Ptr->secretBases[0]);
-    gSaveBlock1Ptr->secretBases[0].numSecretBasesReceived = temp;
 }
 
 static u8 GetNumRegisteredSecretBases(void)

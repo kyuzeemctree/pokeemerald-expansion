@@ -625,16 +625,8 @@ static void SpriteCB_CaveEntranceInit(struct Sprite *sprite)
 
 static void SpriteCB_CaveEntranceOpen(struct Sprite *sprite)
 {
-    if (sprite->data[0] < 40)
-    {
-        if (++sprite->data[0] == 20)
-            ToggleSecretBaseEntranceMetatile();
-    }
-    else
-    {
-        sprite->data[0] = 0;
-        sprite->callback = SpriteCB_CaveEntranceEnd;
-    }
+    sprite->data[0] = 0;
+    sprite->callback = SpriteCB_CaveEntranceEnd;
 }
 
 static void SpriteCB_CaveEntranceEnd(struct Sprite *sprite)
@@ -682,9 +674,6 @@ bool8 FldEff_SecretPowerTree(void)
                  gSprites[gPlayerAvatar.spriteId].oam.y + gFieldEffectArguments[6],
                  148);
 
-    if (gFieldEffectArguments[7] == 1 || gFieldEffectArguments[7] == 3)
-        ToggleSecretBaseEntranceMetatile();
-
     return FALSE;
 }
 
@@ -703,9 +692,6 @@ static void SpriteCB_TreeEntranceOpen(struct Sprite *sprite)
 
     if (sprite->data[0] >= 40)
     {
-        if (gFieldEffectArguments[7] == 0 || gFieldEffectArguments[7] == 2)
-            ToggleSecretBaseEntranceMetatile();
-
         sprite->data[0] = 0;
         sprite->callback = SpriteCB_TreeEntranceEnd;
     }
@@ -764,9 +750,6 @@ static void SpriteCB_ShrubEntranceOpen(struct Sprite *sprite)
     if (sprite->data[0] < 40)
     {
         sprite->data[0]++;
-
-        if (sprite->data[0] == 20)
-            ToggleSecretBaseEntranceMetatile();
     }
     else
     {

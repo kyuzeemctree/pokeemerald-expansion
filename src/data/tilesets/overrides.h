@@ -1,5 +1,4 @@
 static const u16 sTilesetPalOverride_General01[] = INCBIN_U16("data/tilesets/primary/general/override_palettes/01.gbapal");
-static const u16 sTilesetPalOverride_General05[] = INCBIN_U16("data/tilesets/primary/general/override_palettes/05.gbapal");
 
 static const u16 sTilesetPalOverride_Petalburg06_08[] = INCBIN_U16("data/tilesets/secondary/petalburg/override_palettes/06_08.gbapal");
 
@@ -12,12 +11,6 @@ const struct PaletteOverride gTilesetPalOverrides_General[] =
         .startHour = HOUR_NIGHT,
         .endHour = HOUR_MORNING,
         .palette = sTilesetPalOverride_General01,
-    },
-    {
-        .slot = 5,
-        .startHour = HOUR_NIGHT,
-        .endHour = HOUR_MORNING,
-        .palette = sTilesetPalOverride_General05,
     },
     OVERRIDES_END
 };
